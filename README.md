@@ -1,4 +1,0 @@
-MetroSub
-========
-
-MTA subway application
