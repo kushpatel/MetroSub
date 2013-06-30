@@ -16,5 +16,13 @@
                   android:label="@string/app_name"
                   android:launchMode="singleTask"
                 />
+        <activity android:name=".activity.TripByLocationActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleTask"
+                />
+        <activity android:name=".activity.TripBySubwayLinesActivity"
+                  android:label="@string/app_name"
+                  android:launchMode="singleTask"
+                />
     </application>
 </manifest>
