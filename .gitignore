@@ -1,2 +1,10 @@
+# android projects
+.idea
+.classpath
+.settings/
+*.iws
+.DS_Store
+out/
+gen/
 *.class
 *.apk
