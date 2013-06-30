@@ -7,8 +7,11 @@
         >
     <TextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World, MyActivity"
+            android:layout_height="fill_parent"
+            android:text="Welcome splash screen"
+            android:gravity="center"
+            android:textColor="@color/blue_cobalt"
+            android:textSize="40dp"
             />
 </LinearLayout>
 
