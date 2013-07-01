@@ -1,5 +1,6 @@
 package com.MetroSub.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +16,7 @@ import com.MetroSub.R;
  * Time: 4:07 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PlanTripActivity extends Activity {
+public class PlanTripActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

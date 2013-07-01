@@ -11,7 +11,7 @@ import com.MetroSub.R;
  * Time: 5:53 PM
  * To change this template use File | Settings | File Templates.
  */
-public class TripBySubwayLinesActivity extends Activity {
+public class TripBySubwayLinesActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
