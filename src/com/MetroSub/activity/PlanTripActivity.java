@@ -1,13 +1,13 @@
 package com.MetroSub.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.MetroSub.R;
+import com.MetroSub.datamine.RetrieveFeedTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +17,8 @@ import com.MetroSub.R;
  * To change this template use File | Settings | File Templates.
  */
 public class PlanTripActivity extends BaseActivity {
+
+    private String TAG = "PlanTripActivity";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,10 @@ public class PlanTripActivity extends BaseActivity {
                 startTripBySubwayLinesActivity(PlanTripActivity.this);
             }
         });
+
+        // example of how to retrieve data feed in the background
+        RetrieveFeedTask task = new RetrieveFeedTask();
+        task.execute();
 
     }
 
