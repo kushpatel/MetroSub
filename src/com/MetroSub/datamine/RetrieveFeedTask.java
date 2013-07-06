@@ -66,10 +66,13 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
             Log.e(TAG,"InvalidProtocolBufferException: " + e.getMessage());
         }
 
-        Log.d(TAG,"Trip id = " + tripDescriptor.getTripIdBytes().toStringUtf8());
-        Log.d(TAG,"Route id = " + tripDescriptor.getRouteIdBytes().toStringUtf8());
+        Log.d(TAG,"Trip id = " + tripDescriptor.getTripId());
+        Log.d(TAG,"Route id = " + tripDescriptor.getRouteId());
         Log.d(TAG,"Start time = " + tripDescriptor.getStartTime());
-        Log.d(TAG,"Start date = " + tripDescriptor.getStartDate());
+        Log.d(TAG, "Start date = " + tripDescriptor.getStartDate());
+        Log.d(TAG, "Start date present = " + tripDescriptor.hasStartDate());
+        Log.d(TAG, "Route id present = " + tripDescriptor.hasRouteId());
+
 
         /*List<Descriptors.FieldDescriptor> fieldDescriptors = nyctTripDescriptor.getDescriptorForType().getFields();
         for (Descriptors.FieldDescriptor descriptor : fieldDescriptors) {
