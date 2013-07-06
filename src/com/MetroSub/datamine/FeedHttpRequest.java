@@ -10,6 +10,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,7 +28,7 @@ public class FeedHttpRequest {
 
     private final String url = "http://datamine.mta.info/mta_esi.php?key=07065023a9a71c6809525c31f8cb2a1e";
 
-    public String getRequestData() {
+    public InputStream getRequestData() {
 
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpParams httpParams = httpClient.getParams();
@@ -36,13 +37,14 @@ public class FeedHttpRequest {
 
         HttpRequestBase request = new HttpGet(url);
 
-        String responseString = null;
+        InputStream responseInputStream = null;
 
         try {
             HttpResponse response = httpClient.execute(request);
             if (response != null) {
                 int statusCode = response.getStatusLine().getStatusCode();
-                responseString = EntityUtils.toString(response.getEntity());
+                responseInputStream = response.getEntity().getContent();
+                //responseString = EntityUtils.toString(response.getEntity());
 
                 if (statusCode < 200 || statusCode >= 300) {
                     Log.e(TAG,"Server error code " + statusCode);
@@ -54,7 +56,7 @@ public class FeedHttpRequest {
             Log.e(TAG,"IOException: " + e.getMessage());
         }
 
-        return responseString;
+        return responseInputStream;
     }
 
 }
