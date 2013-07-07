@@ -50,13 +50,14 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
         ExtensionRegistry registry = ExtensionRegistry.newInstance();
         NyctSubway.registerAllExtensions(registry);
 
-        GtfsRealtime.TripDescriptor tripDescriptor = null;
+        GtfsRealtime.FeedMessage feedMessage = null;
+        //GtfsRealtime.TripDescriptor tripDescriptor = null;
         //NyctSubway.NyctFeedHeader nyctFeedHeader = null;
         //NyctSubway.NyctTripDescriptor nyctTripDescriptor = null;
         //NyctSubway.NyctStopTimeUpdate nyctStopTimeUpdate = null;
         //NyctSubway.TripReplacementPeriod tripReplacementPeriod = null;
         try {
-            tripDescriptor = GtfsRealtime.TripDescriptor.parseFrom(data,registry);
+            feedMessage = GtfsRealtime.FeedMessage.parseFrom(data,registry);
             //nyctFeedHeader = NyctSubway.NyctFeedHeader.parseFrom(data);
             //nyctTripDescriptor = NyctSubway.NyctTripDescriptor.parseFrom(data);
             //nyctStopTimeUpdate = NyctSubway.NyctStopTimeUpdate.parseFrom(data);
@@ -66,12 +67,14 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
             Log.e(TAG,"InvalidProtocolBufferException: " + e.getMessage());
         }
 
-        Log.d(TAG,"Trip id = " + tripDescriptor.getTripId());
+        Log.d(TAG,"Header realtime version = " + feedMessage.getHeader().getGtfsRealtimeVersion());
+
+        /*Log.d(TAG,"Trip id = " + tripDescriptor.getTripId());
         Log.d(TAG,"Route id = " + tripDescriptor.getRouteId());
         Log.d(TAG,"Start time = " + tripDescriptor.getStartTime());
         Log.d(TAG, "Start date = " + tripDescriptor.getStartDate());
         Log.d(TAG, "Start date present = " + tripDescriptor.hasStartDate());
-        Log.d(TAG, "Route id present = " + tripDescriptor.hasRouteId());
+        Log.d(TAG, "Route id present = " + tripDescriptor.hasRouteId()); */
 
 
         /*List<Descriptors.FieldDescriptor> fieldDescriptors = nyctTripDescriptor.getDescriptorForType().getFields();
