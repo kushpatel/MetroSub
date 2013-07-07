@@ -8,9 +8,6 @@ import com.google.transit.realtime.NyctSubway;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,14 +16,15 @@ import java.util.Map;
  * Time: 10:03 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
+public class RetrieveFeedTask extends AsyncTask<InputStream, Void, ByteString> {
 
     private String TAG = "RetrieveFeedTask";
 
     @Override
-    protected ByteString doInBackground(Void... params) {
-        FeedHttpRequest feed = new FeedHttpRequest();
-        InputStream inputStream = feed.getRequestData();
+    protected ByteString doInBackground(InputStream... inputStreamArr) {
+
+        // first parameter will be the required input stream
+        InputStream inputStream = inputStreamArr[0];
 
         ByteString feedByteString = null;
         try {

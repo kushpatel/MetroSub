@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.MetroSub.R;
+import com.MetroSub.datamine.FeedHttpRequest;
 import com.MetroSub.datamine.RetrieveFeedTask;
+
+import java.io.InputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,9 +44,16 @@ public class PlanTripActivity extends BaseActivity {
             }
         });
 
+        // get gtfs data stream from http request
+        //FeedHttpRequest feed = new FeedHttpRequest();
+        //InputStream inputStream = feed.getRequestData();
+
+        // get static gtfs data stream from local resource (res/raw/gtfs) -- for testing only!
+        InputStream inputStream = getResources().openRawResource(R.raw.gtfs);
+
         // example of how to retrieve data feed in the background
         RetrieveFeedTask task = new RetrieveFeedTask();
-        task.execute();
+        task.execute(inputStream);
 
     }
 
