@@ -8,6 +8,7 @@ import com.google.transit.realtime.NyctSubway;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -66,6 +67,9 @@ public class RetrieveFeedTask extends AsyncTask<InputStream, Void, ByteString> {
         }
 
         Log.d(TAG,"Header realtime version = " + feedMessage.getHeader().getGtfsRealtimeVersion());
+        for (int i = 0; i < feedMessage.getEntityCount(); i++) {
+            Log.d(TAG,"Entity stop id at " + i + " = " + feedMessage.getEntity(i).getTripUpdate().getTrip().getTripId());
+        }
 
         /*Log.d(TAG,"Trip id = " + tripDescriptor.getTripId());
         Log.d(TAG,"Route id = " + tripDescriptor.getRouteId());
