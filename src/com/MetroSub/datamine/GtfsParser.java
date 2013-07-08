@@ -112,7 +112,11 @@ public class GtfsParser {
          */
         Log.d(TAG, "Entity 1, alert header text = " + feedEntity_1.getAlert().getHeaderText());
 
+        // TODO: What is EntitySelector and how is it used?
+        //GtfsRealtime.EntitySelector entitySelector = GtfsRealtime.EntitySelector.getDefaultInstance();
+        //entitySelector.getRouteId();
 
+        // TODO: How to access StopTimeEvent?
     }
 
 }
