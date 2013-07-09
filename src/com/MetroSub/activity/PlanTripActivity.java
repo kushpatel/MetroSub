@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.MetroSub.R;
+import com.MetroSub.database.StaticDataParser;
 import com.MetroSub.datamine.FeedHttpRequest;
 import com.MetroSub.datamine.RetrieveFeedTask;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,6 +56,15 @@ public class PlanTripActivity extends BaseActivity {
         // example of how to retrieve data feed in the background
         RetrieveFeedTask task = new RetrieveFeedTask();
         task.execute(inputStream);
+
+        // example of how to parse static data ... use AsycTask!
+        InputStream inputStream1 = getResources().openRawResource(R.raw.shapes);
+        ArrayList<String[]> staticData = StaticDataParser.parseStaticData(inputStream1);
+        Log.d(TAG,"Static data rows = " + staticData.size());
+        Log.d(TAG,"Static data columns = " + staticData.get(0).length);
+        for(int i = 0; i < staticData.get(0).length; i++) {
+            Log.d(TAG,"Static data column " + i + " = " + staticData.get(0)[i]);
+        }
 
     }
 
