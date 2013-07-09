@@ -7,7 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import com.MetroSub.R;
+import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.StaticDataParser;
+import com.MetroSub.database.dao.StopsDao;
+import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.datamine.FeedHttpRequest;
 import com.MetroSub.datamine.RetrieveFeedTask;
 
@@ -65,6 +68,22 @@ public class PlanTripActivity extends BaseActivity {
         for(int i = 0; i < staticData.get(0).length; i++) {
             Log.d(TAG,"Static data column " + i + " = " + staticData.get(0)[i]);
         }
+
+        // example of how to access database
+        DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
+        StopsDao stopsDao = databaseHelper.getStopsDao();
+        StopData sampleData = new StopData();
+        sampleData.setStopId("SampleStopId");
+        sampleData.setStopName("SampleStopName");
+        sampleData.setStopLat("SampleStopLat");
+        sampleData.setStopLon("SampleStopLon");
+        sampleData.setLocationType("SampleLocationType");
+        sampleData.setParentStation("SampleParentStation");
+        stopsDao.create(sampleData);
+
+        StopData queriedData = stopsDao.queryForId("SampleStopId");
+        Log.d(TAG,"Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
+                queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
 
     }
 

@@ -3,6 +3,7 @@ package com.MetroSub.activity;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import com.MetroSub.MainApp;
 import com.MetroSub.R;
 
 /**
@@ -16,6 +17,8 @@ public class BaseActivity extends Activity {
 
     //private String ACTION_BAR_TITLE = "MetroSub";
     protected ActionBar mActionBar;
+    private MainApp mainApp = MainApp.getAppInstance();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -27,5 +30,9 @@ public class BaseActivity extends Activity {
         mActionBar.setDisplayShowTitleEnabled(false);
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setCustomView(R.layout.action_bar);
+    }
+
+    public MainApp getMainApp() {
+        return mainApp;
     }
 }
