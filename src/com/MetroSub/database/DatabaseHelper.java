@@ -148,11 +148,39 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
+    public RoutesDao getRoutesDao() {
+        if(mRoutesDao == null) {
+            setupDao();
+        }
+        return mRoutesDao;
+    }
+
+    public ShapesDao getShapesDao() {
+        if(mShapesDao == null) {
+            setupDao();
+        }
+        return mShapesDao;
+    }
+
     public StopsDao getStopsDao() {
         if(mStopsDao == null) {
             setupDao();
         }
         return mStopsDao;
+    }
+
+    public TransfersDao getTrasfersDao() {
+        if(mTransfersDao == null) {
+            setupDao();
+        }
+        return mTransfersDao;
+    }
+
+    public TripsDao getTripsDao() {
+        if(mTripsDao == null) {
+            setupDao();
+        }
+        return mTripsDao;
     }
 
     // Clear any cached DAOs

@@ -2,7 +2,9 @@ package com.MetroSub.database;
 
 import android.text.TextUtils;
 import android.util.Log;
+import com.MetroSub.database.dao.RoutesDao;
 import com.MetroSub.database.dao.StopsDao;
+import com.MetroSub.database.dataobjects.RouteData;
 import com.MetroSub.database.dataobjects.StopData;
 
 import java.io.BufferedReader;
@@ -64,36 +66,37 @@ public class DatabaseLoader {
         final int ROUTE_COLOR_POS = 7;
         final int ROUTE_TEXT_COLOR_POS = 8;
 
-//        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-//        StopsDao stopsDao = databaseHelper.getStopsDao();
-//
-//        try {
-//            // skip the first header line
-//            String row = in.readLine();
-//
-//            while ((row = in.readLine()) != null) {
-//                String[] tokens = TextUtils.split(row,DELIMITER);
-//
-//                StopData stopData = new StopData();
-//                stopData.setStopId(tokens[STOP_ID_POS]);
-//                stopData.setStopName(tokens[STOP_NAME_POS]);
-//                stopData.setStopLat(tokens[STOP_LAT_POS]);
-//                stopData.setStopLon(tokens[STOP_LON_POS]);
-//                stopData.setLocationType(tokens[LOCATION_TYPE_POS]);
-//                stopData.setParentStation(tokens[PARENT_STATION_POS]);
-//
-//                stopsDao.create(stopData);
-//            }
-//
-//        } catch (IOException e) {
-//            Log.e(TAG, "IOException: " + e.getMessage());
-//        } finally {
-//            try {
-//                in.close();
-//            } catch (Exception e) {
-//                // don't really care what happens here
-//            }
-//        }
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        RoutesDao routesDao = databaseHelper.getRoutesDao();
+
+        try {
+            // skip the first header line
+            String row = in.readLine();
+
+            while ((row = in.readLine()) != null) {
+                String[] tokens = TextUtils.split(row,DELIMITER);
+
+                RouteData routeData = new RouteData();
+                routeData.setRouteId(tokens[ROUTE_ID_POS]);
+                routeData.setShortName(tokens[ROUTE_SHORT_NAME_POS]);
+                routeData.setLongName(tokens[ROUTE_LONG_NAME_POS]);
+                routeData.setRouteDesc(tokens[ROUTE_DESC_POS]);
+                routeData.setRouteType(tokens[ROUTE_TYPE_POS]);
+                routeData.setRouteUrl(tokens[ROUTE_URL_POS]);
+                routeData.setRouteColor(tokens[ROUTE_COLOR_POS]);
+
+                routesDao.create(routeData);
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // don't really care what happens here
+            }
+        }
     }
 
     /* Function for loading data from shapes.txt
