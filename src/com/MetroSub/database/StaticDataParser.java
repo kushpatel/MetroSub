@@ -51,6 +51,12 @@ public class StaticDataParser {
 
         } catch (IOException e) {
             Log.e(TAG, "IOException: " + e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch(Exception e) {
+                // don't really care what happens here
+            }
         }
 
         return parsedData;

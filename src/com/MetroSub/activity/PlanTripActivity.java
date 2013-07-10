@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import com.MetroSub.R;
 import com.MetroSub.database.DatabaseHelper;
+import com.MetroSub.database.DatabaseLoader;
 import com.MetroSub.database.StaticDataParser;
 import com.MetroSub.database.dao.StopsDao;
 import com.MetroSub.database.dataobjects.StopData;
@@ -60,17 +61,28 @@ public class PlanTripActivity extends BaseActivity {
         RetrieveFeedTask task = new RetrieveFeedTask();
         task.execute(inputStream);
 
+        // example of how to load txt resource data into database
+        InputStream inputStream1 = getResources().openRawResource(R.raw.stops);
+        DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
+        DatabaseLoader.loadDatabase(databaseHelper,inputStream1,DatabaseLoader.LOAD_STOPS);
+
+        StopsDao stopsDao = databaseHelper.getStopsDao();
+        StopData queriedData = stopsDao.queryForId("127N");   // should be Times Sq.
+        Log.d(TAG,"Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
+                queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
+
         // example of how to parse static data ... use AsycTask!
-        InputStream inputStream1 = getResources().openRawResource(R.raw.shapes);
+        /*InputStream inputStream1 = getResources().openRawResource(R.raw.shapes);
         ArrayList<String[]> staticData = StaticDataParser.parseStaticData(inputStream1);
         Log.d(TAG,"Static data rows = " + staticData.size());
         Log.d(TAG,"Static data columns = " + staticData.get(0).length);
         for(int i = 0; i < staticData.get(0).length; i++) {
             Log.d(TAG,"Static data column " + i + " = " + staticData.get(0)[i]);
         }
+        */
 
-        // example of how to access database
-        DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
+        // example of how to access database (write then read)
+        /*DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
         StopsDao stopsDao = databaseHelper.getStopsDao();
         StopData sampleData = new StopData();
         sampleData.setStopId("SampleStopId");
@@ -84,6 +96,7 @@ public class PlanTripActivity extends BaseActivity {
         StopData queriedData = stopsDao.queryForId("SampleStopId");
         Log.d(TAG,"Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
                 queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
+         */
 
     }
 
