@@ -3,8 +3,8 @@ package com.MetroSub.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
-import com.MetroSub.database.dao.StopsDao;
-import com.MetroSub.database.dataobjects.StopData;
+import com.MetroSub.database.dao.*;
+import com.MetroSub.database.dataobjects.*;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
@@ -75,7 +75,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private void createSchema(ConnectionSource connectionSource) {
 
         try {
+            TableUtils.createTable(connectionSource, RouteData.class);
+            TableUtils.createTable(connectionSource, ShapeData.class);
             TableUtils.createTable(connectionSource, StopData.class);
+            TableUtils.createTable(connectionSource, TransferData.class);
+            TableUtils.createTable(connectionSource, TripData.class);
         } catch (SQLException e) {
             Log.e(TAG,"Could not create database table: " + e.getMessage());
         }
@@ -86,7 +90,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private void dropSchema(ConnectionSource connectionSource) {
 
         try {
+            TableUtils.dropTable(connectionSource, RouteData.class, true);
+            TableUtils.dropTable(connectionSource, ShapeData.class, true);
             TableUtils.dropTable(connectionSource, StopData.class, true);
+            TableUtils.dropTable(connectionSource, TransferData.class, true);
+            TableUtils.dropTable(connectionSource, TripData.class, true);
         } catch(SQLException e) {
             Log.e(TAG,"Could not delete database table: " + e.getMessage());
         }
@@ -96,28 +104,63 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     ====================================================================================================================*/
 
     // The DAO objects used to access the table
-    private StopsDao mStopDao = null;
+    private RoutesDao mRoutesDao = null;
+    private ShapesDao mShapesDao = null;
+    private StopsDao mStopsDao = null;
+    private TransfersDao mTransfersDao = null;
+    private TripsDao mTripsDao = null;
 
     private void setupDao() {
-
-        if(mStopDao == null) {
+        if(mRoutesDao == null) {
             try {
-                mStopDao = new StopsDao(getConnectionSource());
+                mRoutesDao = new RoutesDao(getConnectionSource());
+            } catch(SQLException e) {
+                Log.e(TAG,"RoutesDao setup failed: " + e.getMessage());
+            }
+        }
+        if(mShapesDao == null) {
+            try {
+                mShapesDao = new ShapesDao(getConnectionSource());
+            } catch(SQLException e) {
+                Log.e(TAG,"ShapesDao setup failed: " + e.getMessage());
+            }
+        }
+        if(mStopsDao == null) {
+            try {
+                mStopsDao = new StopsDao(getConnectionSource());
             } catch(SQLException e) {
                 Log.e(TAG,"StopsDao setup failed: " + e.getMessage());
+            }
+        }
+        if(mTransfersDao == null) {
+            try {
+                mTransfersDao = new TransfersDao(getConnectionSource());
+            } catch(SQLException e) {
+                Log.e(TAG,"TransfersDao setup failed: " + e.getMessage());
+            }
+        }
+        if(mTripsDao == null) {
+            try {
+                mTripsDao = new TripsDao(getConnectionSource());
+            } catch(SQLException e) {
+                Log.e(TAG,"TripsDao setup failed: " + e.getMessage());
             }
         }
     }
 
     public StopsDao getStopsDao() {
-        if(mStopDao == null) {
+        if(mStopsDao == null) {
             setupDao();
         }
-        return mStopDao;
+        return mStopsDao;
     }
 
     // Clear any cached DAOs
     private void releaseDao() {
-        mStopDao = null;
+        mRoutesDao = null;
+        mShapesDao = null;
+        mStopsDao = null;
+        mTransfersDao = null;
+        mTripsDao = null;
     }
 }

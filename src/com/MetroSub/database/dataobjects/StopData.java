@@ -35,10 +35,10 @@ public class StopData {
     @DatabaseField(canBeNull = false, columnName = STOP_LON_COL_NAME)
     protected String mStopLon;
 
-    @DatabaseField(canBeNull = false, columnName = STOP_LOCATION_TYPE_COL_NAME)
+    @DatabaseField(canBeNull = true, columnName = STOP_LOCATION_TYPE_COL_NAME)
     protected String mLocationType;
 
-    @DatabaseField(canBeNull = false, columnName = STOP_PARENT_STATION_COL_NAME)
+    @DatabaseField(canBeNull = true, columnName = STOP_PARENT_STATION_COL_NAME)
     protected String mParentStation;
 
     /* Accessor and Mutator methods

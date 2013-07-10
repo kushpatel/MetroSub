@@ -61,7 +61,7 @@ public class PlanTripActivity extends BaseActivity {
         RetrieveFeedTask task = new RetrieveFeedTask();
         task.execute(inputStream);
 
-        // example of how to load txt resource data into database
+        // example of how to load txt resource data into database... Should use AsyncTask!!
         InputStream inputStream1 = getResources().openRawResource(R.raw.stops);
         DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
         DatabaseLoader.loadDatabase(databaseHelper,inputStream1,DatabaseLoader.LOAD_STOPS);
@@ -80,23 +80,6 @@ public class PlanTripActivity extends BaseActivity {
             Log.d(TAG,"Static data column " + i + " = " + staticData.get(0)[i]);
         }
         */
-
-        // example of how to access database (write then read)
-        /*DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
-        StopsDao stopsDao = databaseHelper.getStopsDao();
-        StopData sampleData = new StopData();
-        sampleData.setStopId("SampleStopId");
-        sampleData.setStopName("SampleStopName");
-        sampleData.setStopLat("SampleStopLat");
-        sampleData.setStopLon("SampleStopLon");
-        sampleData.setLocationType("SampleLocationType");
-        sampleData.setParentStation("SampleParentStation");
-        stopsDao.create(sampleData);
-
-        StopData queriedData = stopsDao.queryForId("SampleStopId");
-        Log.d(TAG,"Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
-                queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
-         */
 
     }
 
