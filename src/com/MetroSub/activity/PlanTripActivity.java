@@ -9,14 +9,13 @@ import android.widget.Button;
 import com.MetroSub.R;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.DatabaseLoader;
-import com.MetroSub.database.StaticDataParser;
 import com.MetroSub.database.dao.StopsDao;
+import com.MetroSub.database.dao.TripsDao;
 import com.MetroSub.database.dataobjects.StopData;
-import com.MetroSub.datamine.FeedHttpRequest;
+import com.MetroSub.database.dataobjects.TripData;
 import com.MetroSub.datamine.RetrieveFeedTask;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -63,23 +62,20 @@ public class PlanTripActivity extends BaseActivity {
 
         // example of how to load txt resource data into database... Should use AsyncTask!!
         InputStream inputStream1 = getResources().openRawResource(R.raw.stops);
+        InputStream inputStream2 = getResources().openRawResource(R.raw.trips);
         DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
         DatabaseLoader.loadDatabase(databaseHelper,inputStream1,DatabaseLoader.LOAD_STOPS);
+        DatabaseLoader.loadDatabase(databaseHelper,inputStream2,DatabaseLoader.LOAD_TRIPS);
 
         StopsDao stopsDao = databaseHelper.getStopsDao();
         StopData queriedData = stopsDao.queryForId("127N");   // should be Times Sq.
         Log.d(TAG,"Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
                 queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
 
-        // example of how to parse static data ... use AsycTask!
-        /*InputStream inputStream1 = getResources().openRawResource(R.raw.shapes);
-        ArrayList<String[]> staticData = StaticDataParser.parseStaticData(inputStream1);
-        Log.d(TAG,"Static data rows = " + staticData.size());
-        Log.d(TAG,"Static data columns = " + staticData.get(0).length);
-        for(int i = 0; i < staticData.get(0).length; i++) {
-            Log.d(TAG,"Static data column " + i + " = " + staticData.get(0)[i]);
-        }
-        */
+        TripsDao tripsDao = databaseHelper.getTripsDao();
+        TripData queriedData2 = tripsDao.queryForId("A20121216WKD_036000_1..N03R");   // should be Van Cortlandt Park - 242 St
+        Log.d(TAG,"Queried data = " + queriedData2.getRouteId() + " " + queriedData2.getServiceId() + " " + queriedData2.getTripId() + " " +
+                queriedData2.getTripHeadSign() + " " + queriedData2.getDirectionId() + " " + queriedData2.getShapeId());
 
     }
 
