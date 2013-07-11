@@ -9,6 +9,7 @@ import android.widget.Button;
 import com.MetroSub.R;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.DatabaseLoader;
+import com.MetroSub.database.LoadDatabaseTask;
 import com.MetroSub.database.dao.StopsDao;
 import com.MetroSub.database.dao.TripsDao;
 import com.MetroSub.database.dataobjects.StopData;
@@ -60,32 +61,31 @@ public class PlanTripActivity extends BaseActivity {
         RetrieveFeedTask task = new RetrieveFeedTask();
         task.execute(inputStream);
 
-        // example of how to load txt resource data into database... Should use AsyncTask!!
-        InputStream inputStream1 = getResources().openRawResource(R.raw.stops);
-        InputStream inputStream2 = getResources().openRawResource(R.raw.trips);
+        // Example of how to query the loaded database
         DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
-        DatabaseLoader.loadDatabase(databaseHelper,inputStream1,DatabaseLoader.LOAD_STOPS);
-        DatabaseLoader.loadDatabase(databaseHelper,inputStream2,DatabaseLoader.LOAD_TRIPS);
-
         StopsDao stopsDao = databaseHelper.getStopsDao();
         StopData queriedData = stopsDao.queryForId("127N");   // should be Times Sq.
-        Log.d(TAG,"Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
-                queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
+        if (queriedData != null) {
+            Log.d(TAG, "Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
+                    queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
+        }
 
         TripsDao tripsDao = databaseHelper.getTripsDao();
         TripData queriedData2 = tripsDao.queryForId("A20121216WKD_036000_1..N03R");   // should be Van Cortlandt Park - 242 St
-        Log.d(TAG,"Queried data = " + queriedData2.getRouteId() + " " + queriedData2.getServiceId() + " " + queriedData2.getTripId() + " " +
-                queriedData2.getTripHeadSign() + " " + queriedData2.getDirectionId() + " " + queriedData2.getShapeId());
+        if (queriedData2 != null) {
+            Log.d(TAG, "Queried data = " + queriedData2.getRouteId() + " " + queriedData2.getServiceId() + " " + queriedData2.getTripId() + " " +
+                    queriedData2.getTripHeadSign() + " " + queriedData2.getDirectionId() + " " + queriedData2.getShapeId());
+        }
 
     }
 
     private void startTripByLocationActivity(Context ctx) {
-        Intent intent = new Intent(ctx,TripByLocationActivity.class);
+        Intent intent = new Intent(ctx, TripByLocationActivity.class);
         startActivity(intent);
     }
 
     private void startTripBySubwayLinesActivity(Context ctx) {
-        Intent intent = new Intent(ctx,TripBySubwayLinesActivity.class);
+        Intent intent = new Intent(ctx, TripBySubwayLinesActivity.class);
         startActivity(intent);
     }
 }
