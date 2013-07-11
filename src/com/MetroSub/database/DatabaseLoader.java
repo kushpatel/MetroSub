@@ -2,10 +2,8 @@ package com.MetroSub.database;
 
 import android.text.TextUtils;
 import android.util.Log;
-import com.MetroSub.database.dao.RoutesDao;
-import com.MetroSub.database.dao.StopsDao;
-import com.MetroSub.database.dataobjects.RouteData;
-import com.MetroSub.database.dataobjects.StopData;
+import com.MetroSub.database.dao.*;
+import com.MetroSub.database.dataobjects.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -110,36 +108,33 @@ public class DatabaseLoader {
         final int SHAPE_PT_SEQUENCE_POS = 3;
         final int SHAPE_DIST_TRAVELED = 4;
 
-//        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-//        StopsDao stopsDao = databaseHelper.getStopsDao();
-//
-//        try {
-//            // skip the first header line
-//            String row = in.readLine();
-//
-//            while ((row = in.readLine()) != null) {
-//                String[] tokens = TextUtils.split(row,DELIMITER);
-//
-//                StopData stopData = new StopData();
-//                stopData.setStopId(tokens[STOP_ID_POS]);
-//                stopData.setStopName(tokens[STOP_NAME_POS]);
-//                stopData.setStopLat(tokens[STOP_LAT_POS]);
-//                stopData.setStopLon(tokens[STOP_LON_POS]);
-//                stopData.setLocationType(tokens[LOCATION_TYPE_POS]);
-//                stopData.setParentStation(tokens[PARENT_STATION_POS]);
-//
-//                stopsDao.create(stopData);
-//            }
-//
-//        } catch (IOException e) {
-//            Log.e(TAG, "IOException: " + e.getMessage());
-//        } finally {
-//            try {
-//                in.close();
-//            } catch (Exception e) {
-//                // don't really care what happens here
-//            }
-//        }
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        ShapesDao shapesDao = databaseHelper.getShapesDao();
+
+        try {
+            // skip the first header line
+            String row = in.readLine();
+
+            while ((row = in.readLine()) != null) {
+                String[] tokens = TextUtils.split(row,DELIMITER);
+
+                ShapeData shapeData = new ShapeData();
+                shapeData.setGeneratedKey(tokens[SHAPE_ID_POS], tokens[SHAPE_PT_SEQUENCE_POS]);
+                shapeData.setShapePtLat(tokens[SHAPE_PT_LAT_POS]);
+                shapeData.setShapePtLon(tokens[SHAPE_PT_LON_POS]);
+
+                shapesDao.create(shapeData);
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // don't really care what happens here
+            }
+        }
     }
 
     /* Function for loading data from stops.txt
@@ -196,6 +191,46 @@ public class DatabaseLoader {
 
     private static void loadTransfers(DatabaseHelper databaseHelper, InputStream inputStream) {
 
+        final int FROM_STOP_ID_POS = 0;
+        final int TO_STOP_ID_POS = 1;
+        final int TRANSFER_TYPE_POS = 2;
+        final int MIN_TRANSFER_TYPE_POS = 3;
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        TransfersDao transfersDao = databaseHelper.getTransfersDao();
+
+        try {
+            // skip the first header line
+            String row = in.readLine();
+
+            while ((row = in.readLine()) != null) {
+                String[] tokens = TextUtils.split(row,DELIMITER);
+
+                TransferData transferData = new TransferData();
+                transferData.setFromStopId(tokens[FROM_STOP_ID_POS]);
+                transferData.setToStopId(tokens[TO_STOP_ID_POS]);
+                transferData.setTransferType(tokens[TRANSFER_TYPE_POS]);
+                transferData.setMinTransferTime(tokens[MIN_TRANSFER_TYPE_POS]);
+
+                transfersDao.create(transferData);
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // don't really care what happens here
+            }
+        }
+    }
+
+    /* Function for loading data from trips.txt
+    ====================================================================================================================*/
+
+    private static void loadTrips(DatabaseHelper databaseHelper, InputStream inputStream) {
+
         final int ROUTE_ID_POS = 0;
         final int SERVICE_ID_POS = 1;
         final int TRIP_ID_POS = 2;
@@ -204,78 +239,33 @@ public class DatabaseLoader {
         final int BLOCK_ID_POS = 5;
         final int SHAPE_ID_POS = 6;
 
-//        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-//        StopsDao stopsDao = databaseHelper.getStopsDao();
-//
-//        try {
-//            // skip the first header line
-//            String row = in.readLine();
-//
-//            while ((row = in.readLine()) != null) {
-//                String[] tokens = TextUtils.split(row,DELIMITER);
-//
-//                StopData stopData = new StopData();
-//                stopData.setStopId(tokens[STOP_ID_POS]);
-//                stopData.setStopName(tokens[STOP_NAME_POS]);
-//                stopData.setStopLat(tokens[STOP_LAT_POS]);
-//                stopData.setStopLon(tokens[STOP_LON_POS]);
-//                stopData.setLocationType(tokens[LOCATION_TYPE_POS]);
-//                stopData.setParentStation(tokens[PARENT_STATION_POS]);
-//
-//                stopsDao.create(stopData);
-//            }
-//
-//        } catch (IOException e) {
-//            Log.e(TAG, "IOException: " + e.getMessage());
-//        } finally {
-//            try {
-//                in.close();
-//            } catch (Exception e) {
-//                // don't really care what happens here
-//            }
-//        }
-    }
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        TripsDao tripsDao = databaseHelper.getTripsDao();
 
-    /* Function for loading data from trips.txt
-    ====================================================================================================================*/
+        try {
+            // skip the first header line
+            String row = in.readLine();
 
-    private static void loadTrips(DatabaseHelper databaseHelper, InputStream inputStream) {
+            while ((row = in.readLine()) != null) {
+                String[] tokens = TextUtils.split(row,DELIMITER);
 
-        final int FROM_STOP_ID_POS = 0;
-        final int TO_STOP_ID_POS = 1;
-        final int TRANSFER_TYPE_POS = 2;
-        final int MIN_TRANSFER_TYPE_POS = 3;
+                TripData tripData = new TripData();
+                tripData.setTripId(tokens[TRIP_ID_POS]);
+                tripData.setTripHeadsign(tokens[TRIP_HEADSIGN_POS]);
+                tripData.setDirectionId(tokens[DIRECTION_ID_POS]);
 
-//        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-//        StopsDao stopsDao = databaseHelper.getStopsDao();
-//
-//        try {
-//            // skip the first header line
-//            String row = in.readLine();
-//
-//            while ((row = in.readLine()) != null) {
-//                String[] tokens = TextUtils.split(row,DELIMITER);
-//
-//                StopData stopData = new StopData();
-//                stopData.setStopId(tokens[STOP_ID_POS]);
-//                stopData.setStopName(tokens[STOP_NAME_POS]);
-//                stopData.setStopLat(tokens[STOP_LAT_POS]);
-//                stopData.setStopLon(tokens[STOP_LON_POS]);
-//                stopData.setLocationType(tokens[LOCATION_TYPE_POS]);
-//                stopData.setParentStation(tokens[PARENT_STATION_POS]);
-//
-//                stopsDao.create(stopData);
-//            }
-//
-//        } catch (IOException e) {
-//            Log.e(TAG, "IOException: " + e.getMessage());
-//        } finally {
-//            try {
-//                in.close();
-//            } catch (Exception e) {
-//                // don't really care what happens here
-//            }
-//        }
+                tripsDao.create(tripData);
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // don't really care what happens here
+            }
+        }
     }
 
 }

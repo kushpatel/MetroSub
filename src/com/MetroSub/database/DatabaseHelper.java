@@ -169,7 +169,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return mStopsDao;
     }
 
-    public TransfersDao getTrasfersDao() {
+    public TransfersDao getTransfersDao() {
         if(mTransfersDao == null) {
             setupDao();
         }
