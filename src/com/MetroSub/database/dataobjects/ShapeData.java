@@ -15,7 +15,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "ShapeData", daoClass = ShapesDao.class)
 public class ShapeData {
 
-    public static final String SHAPES_TABLE_KEY_SEPARATOR = "-";
+    public static final String SHAPES_TABLE_KEY_SEPARATOR = ShapesDao.SHAPES_TABLE_KEY_SEPARATOR;
 
     // Primary key composed of shape_id[SEPARATOR]shape_pt_sequence for fast queries
     private static final String GENERATED_KEY_COL_NAME = "key";

@@ -18,6 +18,7 @@ import java.util.List;
 public class ShapesDao extends BaseDaoImpl<ShapeData, String> {
 
     private static String TAG = "ShapesDao";
+    public static final String SHAPES_TABLE_KEY_SEPARATOR = "-";
 
     public ShapesDao(ConnectionSource connectionSource) throws SQLException {
         super(connectionSource, ShapeData.class);
@@ -41,5 +42,20 @@ public class ShapesDao extends BaseDaoImpl<ShapeData, String> {
             Log.e(TAG,"Query for all failed: " + e.getMessage());
             return null;
         }
+    }
+
+    @Override
+    public ShapeData queryForId(String generatedKey) {
+        try {
+            return super.queryForId(generatedKey);
+        } catch(Exception e) {
+            Log.e(TAG,"Query for generated key " + generatedKey + " failed: " + e.getMessage());
+            return null;
+        }
+    }
+
+    // Overload method to query with shapeId and shapePtSequence as arguments
+    public ShapeData queryForId(String shapeId, String shapePtSequence) {
+        return queryForId(shapeId + SHAPES_TABLE_KEY_SEPARATOR + shapePtSequence);
     }
 }

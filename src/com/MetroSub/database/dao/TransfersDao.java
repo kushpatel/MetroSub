@@ -42,4 +42,14 @@ public class TransfersDao extends BaseDaoImpl<TransferData, String> {
             return null;
         }
     }
+
+    @Override
+    public TransferData queryForId(String fromStopId) {
+        try {
+            return super.queryForId(fromStopId);
+        } catch(Exception e) {
+            Log.e(TAG,"Query for from stop id " + fromStopId + " failed: " + e.getMessage());
+            return null;
+        }
+    }
 }

@@ -42,4 +42,14 @@ public class TripsDao extends BaseDaoImpl<TripData, String> {
             return null;
         }
     }
+
+    @Override
+    public TripData queryForId(String tripId) {
+        try {
+            return super.queryForId(tripId);
+        } catch(Exception e) {
+            Log.e(TAG,"Query for trip id " + tripId + " failed: " + e.getMessage());
+            return null;
+        }
+    }
 }

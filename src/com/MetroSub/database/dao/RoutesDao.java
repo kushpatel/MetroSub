@@ -43,4 +43,14 @@ public class RoutesDao extends BaseDaoImpl<RouteData, String> {
         }
     }
 
+    @Override
+    public RouteData queryForId(String routeId) {
+        try {
+            return super.queryForId(routeId);
+        } catch(Exception e) {
+            Log.e(TAG,"Query for route id " + routeId + " failed: " + e.getMessage());
+            return null;
+        }
+    }
+
 }
