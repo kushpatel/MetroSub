@@ -25,7 +25,12 @@ public class DatabaseConcatenator {
 
     public static void createDatabaseFromChunks(Context ctx) {
 
-        boolean databaseExists = doesDatabaseExist();
+        Log.d(TAG,"Setting up database on device...");
+
+        String databasePathName = DEVICE_DATABASE_PATH + DATABASE_NAME;
+        File database = ctx.getDatabasePath(databasePathName);
+        boolean databaseExists = database.exists();
+
         if (!databaseExists) {
             // Create database by concatenation of .db files in res/raw ... there's probably a better way to do this!
             InputStream dbStream1 = ctx.getResources().openRawResource(R.raw.database_chunk_01);
@@ -56,7 +61,6 @@ public class DatabaseConcatenator {
                                                         new SequenceInputStream(dbStream11,
                                                             new SequenceInputStream(dbStream12, dbStream13))))))))))));
 
-            String databasePathName = DEVICE_DATABASE_PATH + DATABASE_NAME;
             OutputStream databaseOutStream = null;
 
             try {
@@ -79,26 +83,9 @@ public class DatabaseConcatenator {
             } catch (Exception e) {
                 // Don't care if unable to close the input stream
             }
+            Log.d(TAG,"Loading database from chunks successful!");
+        } else {
+            Log.d(TAG,"Database already exists.");
         }
-    }
-
-    // Helper method to check if database already exists
-    private static boolean doesDatabaseExist() {
-
-        SQLiteDatabase database = null;
-
-        try {
-            String databasePath = DEVICE_DATABASE_PATH + DATABASE_NAME;
-            database = SQLiteDatabase.openDatabase(databasePath, null, SQLiteDatabase.OPEN_READONLY);
-
-        } catch (SQLiteCantOpenDatabaseException e) {
-            //database doesn't exist yet.
-        }
-
-        if (database != null) {
-            database.close();
-        }
-
-        return database != null ? true : false;
     }
 }
