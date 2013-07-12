@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import com.MetroSub.database.ConcatenateDatabaseTask;
+import com.MetroSub.database.DatabaseConcatenator;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.LoadDatabaseTask;
 
@@ -32,9 +34,16 @@ public class MainApp extends Application {
 
         appInstance = this;
 
-        setupDatabase();
-        mDatabaseHelper = getDatabaseHelper();
+        // Uncomment this line to load database on device --- !! TAKES VERY LONG !!
+        // instead concatenate the .db chunks in res/raw and copy the .db file to device's database folder
+        //setupDatabase();
 
+        // Concatenates .db chunk files in res/raw to create database .. runs in background!
+        //ConcatenateDatabaseTask concatenateDatabaseTask = new ConcatenateDatabaseTask();
+        //concatenateDatabaseTask.execute(getApplicationContext());
+        DatabaseConcatenator.createDatabaseFromChunks(getApplicationContext());
+
+        mDatabaseHelper = getDatabaseHelper();
     }
 
     @Override

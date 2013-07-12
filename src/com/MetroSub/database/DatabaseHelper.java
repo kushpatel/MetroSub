@@ -22,7 +22,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static String TAG = "DatabaseHelper";
 
-    private static final String DATABASE_NAME = "NyctStaticData.db";
+    public static final String DATABASE_NAME = "NyctStaticData.db";
 
     // Increase database version when making changes to the database
     private static final int DATABASE_VERSION = 1;
@@ -56,13 +56,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database, ConnectionSource connectionSource) {
-        createSchema(connectionSource);
+        // Uncomment this to create new tables!
+        //createSchema(connectionSource);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
-        dropSchema(connectionSource);
-        createSchema(connectionSource);
+        // Uncomment this to destroy old tables and create new ones!
+        //dropSchema(connectionSource);
+        //createSchema(connectionSource);
     }
 
     @Override
