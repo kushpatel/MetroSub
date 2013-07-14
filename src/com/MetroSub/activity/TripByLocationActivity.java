@@ -25,8 +25,6 @@ public class TripByLocationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.map);
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
                 .getMap();
         if (map!=null){
