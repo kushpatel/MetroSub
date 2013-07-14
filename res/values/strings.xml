@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MetroSub</string>
-    <string name="plan_trip_location">Plan trip by location</string>
-    <string name="plan_trip_subway_lines">Plan trip by Subway Lines</string>
+    <string name="plan_trip_location">Trip by Location</string>
+    <string name="plan_trip_subway_lines">Trip by Lines</string>
 </resources>

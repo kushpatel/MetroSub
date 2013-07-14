@@ -9,15 +9,15 @@
                     android:endColor="@color/red_light"
                     android:angle="270" />
             <stroke
-                    android:width="3dp"
+                    android:width="2dp"
                     android:color="@color/red_dark" />
             <corners
-                    android:radius="3dp" />
+                    android:radius="@dimen/button_radius_small" />
             <padding
-                    android:left="10dp"
-                    android:top="10dp"
-                    android:right="10dp"
-                    android:bottom="10dp" />
+                    android:left="@dimen/button_padding_small"
+                    android:top="@dimen/button_padding_small"
+                    android:right="@dimen/button_padding_small"
+                    android:bottom="@dimen/button_padding_small" />
         </shape>
     </item>
 
@@ -28,15 +28,15 @@
                     android:startColor="@color/red_light"
                     android:angle="270" />
             <stroke
-                    android:width="3dp"
+                    android:width="2dp"
                     android:color="@color/red_dark" />
             <corners
-                    android:radius="3dp" />
+                    android:radius="@dimen/button_radius_small" />
             <padding
-                    android:left="10dp"
-                    android:top="10dp"
-                    android:right="10dp"
-                    android:bottom="10dp" />
+                    android:left="@dimen/button_padding_small"
+                    android:top="@dimen/button_padding_small"
+                    android:right="@dimen/button_padding_small"
+                    android:bottom="@dimen/button_padding_small" />
         </shape>
     </item>
 
@@ -47,15 +47,15 @@
                     android:startColor="@color/blue_light"
                     android:angle="270" />
             <stroke
-                    android:width="3dp"
+                    android:width="2dp"
                     android:color="@color/blue_cobalt" />
             <corners
-                    android:radius="3dp" />
+                    android:radius="@dimen/button_radius_small" />
             <padding
-                    android:left="10dp"
-                    android:top="10dp"
-                    android:right="10dp"
-                    android:bottom="10dp" />
+                    android:left="@dimen/button_padding_small"
+                    android:top="@dimen/button_padding_small"
+                    android:right="@dimen/button_padding_small"
+                    android:bottom="@dimen/button_padding_small" />
         </shape>
     </item>
 </selector>

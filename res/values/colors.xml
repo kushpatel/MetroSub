@@ -10,7 +10,5 @@
     <color name="grey">#999999</color>
     <color name="white">#FFFFFF</color>
     <color name="yellow_gold">#FDD017</color>
-
-
-
+    <color name="black">#000000</color>
 </resources>
