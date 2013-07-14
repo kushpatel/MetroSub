@@ -16,6 +16,16 @@ import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.database.dataobjects.TripData;
 import com.MetroSub.datamine.RetrieveFeedTask;
 
+/* //code to troubleshoot if key for google maps api is incorrect
+import android.content.pm.PackageInfo;
+import 	android.content.pm.PackageManager;
+import android.content.pm.*;
+import java.security.MessageDigest;
+import android.util.Base64;
+import android.content.pm.PackageManager.NameNotFoundException;
+import java.security.NoSuchAlgorithmException;
+                                */
+
 import java.io.InputStream;
 
 /**
@@ -76,7 +86,7 @@ public class PlanTripActivity extends BaseActivity {
             Log.d(TAG, "Queried data = " + queriedData2.getRouteId() + " " + queriedData2.getServiceId() + " " + queriedData2.getTripId() + " " +
                     queriedData2.getTripHeadSign() + " " + queriedData2.getDirectionId() + " " + queriedData2.getShapeId());
         }
-
+                            //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
     }
 
     private void startTripByLocationActivity(Context ctx) {
@@ -88,4 +98,26 @@ public class PlanTripActivity extends BaseActivity {
         Intent intent = new Intent(ctx, TripBySubwayLinesActivity.class);
         startActivity(intent);
     }
+             /*                   //code to troubleshoot if key for google maps api is incorrect
+    private void getShaKey() {
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.MetroSub.activity",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.v(TAG, "KeyHash:" + Base64.encodeToString(md.digest(),
+                        Base64.DEFAULT));
+            }
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+
+        }
+
+    }                */
+
 }

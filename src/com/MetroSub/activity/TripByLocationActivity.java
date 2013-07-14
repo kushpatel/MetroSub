@@ -15,7 +15,8 @@ public class TripByLocationActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trip_location);
+        setContentView(R.layout.map);
+       // setContentView(R.layout.trip_location);
 
     }
 }
