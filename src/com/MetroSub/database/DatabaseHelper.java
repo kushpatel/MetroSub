@@ -82,6 +82,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, StopData.class);
             TableUtils.createTable(connectionSource, TransferData.class);
             TableUtils.createTable(connectionSource, TripData.class);
+            TableUtils.createTable(connectionSource, StationEntranceData.class);
         } catch (SQLException e) {
             Log.e(TAG,"Could not create database table: " + e.getMessage());
         }
@@ -97,6 +98,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, StopData.class, true);
             TableUtils.dropTable(connectionSource, TransferData.class, true);
             TableUtils.dropTable(connectionSource, TripData.class, true);
+            TableUtils.dropTable(connectionSource, StationEntranceData.class, true);
         } catch(SQLException e) {
             Log.e(TAG,"Could not delete database table: " + e.getMessage());
         }
@@ -111,6 +113,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private StopsDao mStopsDao = null;
     private TransfersDao mTransfersDao = null;
     private TripsDao mTripsDao = null;
+    private StationEntrancesDao mStationEntrancesDao = null;
 
     private void setupDao() {
         if(mRoutesDao == null) {
@@ -146,6 +149,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
                 mTripsDao = new TripsDao(getConnectionSource());
             } catch(SQLException e) {
                 Log.e(TAG,"TripsDao setup failed: " + e.getMessage());
+            }
+        }
+        if(mStationEntrancesDao == null) {
+            try {
+                mStationEntrancesDao = new StationEntrancesDao(getConnectionSource());
+            } catch(SQLException e) {
+                Log.e(TAG,"StationEntrancesDao setup failed: " + e.getMessage());
             }
         }
     }
@@ -185,6 +195,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return mTripsDao;
     }
 
+    public StationEntrancesDao getStationEntrancesDao() {
+        if(mStationEntrancesDao == null) {
+            setupDao();
+        }
+        return mStationEntrancesDao;
+    }
+
     // Clear any cached DAOs
     private void releaseDao() {
         mRoutesDao = null;
@@ -192,5 +209,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         mStopsDao = null;
         mTransfersDao = null;
         mTripsDao = null;
+        mStationEntrancesDao = null;
     }
 }
