@@ -2,9 +2,10 @@ package com.MetroSub.database.dataobjects;
 
 import com.MetroSub.database.dao.StationEntrancesDao;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,8 +49,8 @@ public class StationEntranceData {
     @DatabaseField(canBeNull = false, columnName = STATION_LON_COL_NAME)
     protected String mStationLon;
 
-    @DatabaseField(canBeNull = false, columnName = ROUTE_LINES_COL_NAME)
-    protected List<String> mRouteLines;
+    @ForeignCollectionField(columnName = ROUTE_LINES_COL_NAME)
+    protected Collection<RouteLine> mRouteLines;
 
     @DatabaseField(canBeNull = false, columnName = NORTH_SOUTH_STREET_COL_NAME)
     protected String mNorthSouthStreet;
@@ -93,7 +94,7 @@ public class StationEntranceData {
         return this.mStationLon;
     }
 
-    public List<String> getRouteLine() {
+    public Collection<RouteLine> getRouteLine() {
         return this.mRouteLines;
     }
 
@@ -137,7 +138,7 @@ public class StationEntranceData {
         this.mStationLon = stationLon;
     }
 
-    public void setRouteLines(List<String> routeLines) {
+    public void setRouteLines(Collection<RouteLine> routeLines) {
         this.mRouteLines = routeLines;
     }
 
