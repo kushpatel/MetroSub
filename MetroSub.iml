@@ -11,12 +11,21 @@
       <sourceFolder url="file://$MODULE_DIR$/gen" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Android 4.2.2 Google APIs" jdkType="Android SDK" />
     <orderEntry type="module" module-name="google-play-services_lib" exported="" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar:///usr/local/adt-bundle-mac/sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar!/" />
+=======
+    <orderEntry type="jdk" jdkName="Android 4.2.2 Platform (1)" jdkType="Android SDK" />
+    <orderEntry type="module" module-name="google-play-services_lib" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../android_dev/adt-bundle-windows-x86_64-20130522/sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar!/" />
+>>>>>>> 5c138718a83a785b1e714a2b92a089199200cf80
         </CLASSES>
         <JAVADOC />
         <SOURCES />
