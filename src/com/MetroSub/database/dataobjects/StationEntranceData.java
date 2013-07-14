@@ -95,7 +95,7 @@ public class StationEntranceData {
         return this.mStationLon;
     }
 
-    public ArrayList<String> getRouteLine() {
+    public ArrayList<String> getRouteLines() {
         return this.mRouteLines;
     }
 

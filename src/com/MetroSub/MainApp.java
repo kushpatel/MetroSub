@@ -7,6 +7,7 @@ import android.util.Log;
 import com.MetroSub.database.DatabaseConcatenator;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.LoadDatabaseTask;
+import com.MetroSub.database.QueryHelper;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,6 +23,7 @@ public class MainApp extends Application {
 
     private static MainApp appInstance = null;
     protected DatabaseHelper mDatabaseHelper = null;
+    protected QueryHelper mQueryHelper = null;
 
     public static MainApp getAppInstance() {
         return appInstance;
@@ -41,33 +43,39 @@ public class MainApp extends Application {
         DatabaseConcatenator.createDatabaseFromChunks(getApplicationContext());
 
         mDatabaseHelper = getDatabaseHelper();
+        mQueryHelper = new QueryHelper(mDatabaseHelper);
+
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
         // close database connection when app terminates
-        if(mDatabaseHelper != null) {
+        if (mDatabaseHelper != null) {
             mDatabaseHelper.close();
         }
     }
 
     public void setupDatabase() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
-        boolean isDatabaseLoaded = preferences.getBoolean(DATABASE_IS_LOADED_SHARED_PREFERENCE,false);
-        if(!isDatabaseLoaded) {
-            Log.d(TAG,"Loading database in background...");
+        boolean isDatabaseLoaded = preferences.getBoolean(DATABASE_IS_LOADED_SHARED_PREFERENCE, false);
+        if (!isDatabaseLoaded) {
+            Log.d(TAG, "Loading database in background...");
             LoadDatabaseTask loadDatabaseTask = new LoadDatabaseTask();
             loadDatabaseTask.execute(this.getApplicationContext());
         } else {
-            Log.d(TAG,"Database was already loaded.");
+            Log.d(TAG, "Database was already loaded.");
         }
     }
 
     public DatabaseHelper getDatabaseHelper() {
-        if(mDatabaseHelper == null) {
+        if (mDatabaseHelper == null) {
             mDatabaseHelper = DatabaseHelper.init(this);
         }
         return mDatabaseHelper;
+    }
+
+    public QueryHelper getQueryHelper() {
+        return mQueryHelper;
     }
 }

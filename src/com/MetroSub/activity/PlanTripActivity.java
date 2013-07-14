@@ -10,6 +10,7 @@ import com.MetroSub.R;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.DatabaseLoader;
 import com.MetroSub.database.LoadDatabaseTask;
+import com.MetroSub.database.QueryHelper;
 import com.MetroSub.database.dao.StopsDao;
 import com.MetroSub.database.dao.TripsDao;
 import com.MetroSub.database.dataobjects.StopData;
@@ -27,6 +28,7 @@ import java.security.NoSuchAlgorithmException;
                                 */
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -86,7 +88,13 @@ public class PlanTripActivity extends BaseActivity {
             Log.d(TAG, "Queried data = " + queriedData2.getRouteId() + " " + queriedData2.getServiceId() + " " + queriedData2.getTripId() + " " +
                     queriedData2.getTripHeadSign() + " " + queriedData2.getDirectionId() + " " + queriedData2.getShapeId());
         }
-                            //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
+
+        // Example of how to use QueryHelper to query the database
+        QueryHelper queryHelper = getMainApp().getQueryHelper();
+        ArrayList<String> routeLines = queryHelper.queryForStopLines("127");  // should give Times Sq lines
+        Log.d(TAG,routeLines.toString());
+
+        //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
     }
 
     private void startTripByLocationActivity(Context ctx) {
@@ -98,8 +106,9 @@ public class PlanTripActivity extends BaseActivity {
         Intent intent = new Intent(ctx, TripBySubwayLinesActivity.class);
         startActivity(intent);
     }
-             /*                   //code to troubleshoot if key for google maps api is incorrect
-    private void getShaKey() {
+
+    //code to troubleshoot if key for google maps api is incorrect
+    /*private void getShaKey() {
 
         try {
             PackageInfo info = getPackageManager().getPackageInfo("com.MetroSub.activity",
@@ -118,6 +127,6 @@ public class PlanTripActivity extends BaseActivity {
 
         }
 
-    }                */
+    } */
 
 }
