@@ -3,6 +3,8 @@ package com.MetroSub.database.dao;
 import android.util.Log;
 import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.j256.ormlite.dao.BaseDaoImpl;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
@@ -42,5 +44,21 @@ public class StationEntrancesDao extends BaseDaoImpl<StationEntranceData, Intege
             Log.e(TAG, "Query for all failed: " + e.getMessage());
             return null;
         }
+    }
+
+    // Returns only the first matching station. Database has duplicate station entries!
+    public StationEntranceData queryForStation(String lat, String lon) {
+
+        StationEntranceData data = null;
+        try {
+            QueryBuilder<StationEntranceData, Integer> queryBuilder = queryBuilder();
+            queryBuilder.where().eq(StationEntranceData.STATION_LAT_COL_NAME, lat).and()
+                    .eq(StationEntranceData.STATION_LON_COL_NAME, lon);
+            PreparedQuery<StationEntranceData> preparedQuery = queryBuilder.prepare();
+            data = queryForFirst(preparedQuery);
+        } catch (SQLException e) {
+            Log.e(TAG,"Query for station lat = " + lat + " lon = " + lon + " failed: " + e.getMessage());
+        }
+        return data;
     }
 }

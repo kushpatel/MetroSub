@@ -1,10 +1,11 @@
 package com.MetroSub.database.dataobjects;
 
 import com.MetroSub.database.dao.StationEntrancesDao;
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -18,18 +19,18 @@ import java.util.Collection;
 @DatabaseTable(tableName = "StationEntranceData", daoClass = StationEntrancesDao.class)
 public class StationEntranceData {
 
-    private static final String AUTO_GENERATED_ID_COL_NAME = "auto_generated_id";
-    private static final String DIVISION_COL_NAME = "division";
-    private static final String LINE_COL_NAME = "line";
-    private static final String STATION_NAME_COL_NAME = "station_name";
-    private static final String STATION_LAT_COL_NAME = "station_latitude";
-    private static final String STATION_LON_COL_NAME = "station_longitude";
-    private static final String ROUTE_LINES_COL_NAME = "route_lines";
-    private static final String NORTH_SOUTH_STREET_COL_NAME = "north_south_street";
-    private static final String EAST_WEST_STREET_COL_NAME = "east_west_street";
-    private static final String CORNER_COL_NAME = "corner";
-    private static final String CORNER_LAT_COL_NAME = "latitude";
-    private static final String CORNER_LON_COL_NAME = "longitude";
+    public static final String AUTO_GENERATED_ID_COL_NAME = "auto_generated_id";
+    public static final String DIVISION_COL_NAME = "division";
+    public static final String LINE_COL_NAME = "line";
+    public static final String STATION_NAME_COL_NAME = "station_name";
+    public static final String STATION_LAT_COL_NAME = "station_latitude";
+    public static final String STATION_LON_COL_NAME = "station_longitude";
+    public static final String ROUTE_LINES_COL_NAME = "route_lines";
+    public static final String NORTH_SOUTH_STREET_COL_NAME = "north_south_street";
+    public static final String EAST_WEST_STREET_COL_NAME = "east_west_street";
+    public static final String CORNER_COL_NAME = "corner";
+    public static final String CORNER_LAT_COL_NAME = "latitude";
+    public static final String CORNER_LON_COL_NAME = "longitude";
 
     @DatabaseField(generatedId = true, columnName = AUTO_GENERATED_ID_COL_NAME)
     protected Integer mAutoId;
@@ -49,8 +50,8 @@ public class StationEntranceData {
     @DatabaseField(canBeNull = false, columnName = STATION_LON_COL_NAME)
     protected String mStationLon;
 
-    @ForeignCollectionField(columnName = ROUTE_LINES_COL_NAME)
-    protected Collection<RouteLine> mRouteLines;
+    @DatabaseField(dataType = DataType.SERIALIZABLE, columnName = ROUTE_LINES_COL_NAME)
+    protected ArrayList<String> mRouteLines;
 
     @DatabaseField(canBeNull = false, columnName = NORTH_SOUTH_STREET_COL_NAME)
     protected String mNorthSouthStreet;
@@ -94,7 +95,7 @@ public class StationEntranceData {
         return this.mStationLon;
     }
 
-    public Collection<RouteLine> getRouteLine() {
+    public ArrayList<String> getRouteLine() {
         return this.mRouteLines;
     }
 
@@ -138,7 +139,7 @@ public class StationEntranceData {
         this.mStationLon = stationLon;
     }
 
-    public void setRouteLines(Collection<RouteLine> routeLines) {
+    public void setRouteLines(ArrayList<String> routeLines) {
         this.mRouteLines = routeLines;
     }
 

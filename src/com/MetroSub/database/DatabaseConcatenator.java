@@ -46,6 +46,7 @@ public class DatabaseConcatenator {
             InputStream dbStream11 = ctx.getResources().openRawResource(R.raw.database_chunk_11);
             InputStream dbStream12 = ctx.getResources().openRawResource(R.raw.database_chunk_12);
             InputStream dbStream13 = ctx.getResources().openRawResource(R.raw.database_chunk_13);
+            InputStream dbStream14 = ctx.getResources().openRawResource(R.raw.database_chunk_14);
 
             // Recursively line up input streams for .db concatenations ... feels like programming in Scheme!
             SequenceInputStream sequenceInputStream = new SequenceInputStream(dbStream1,
@@ -59,7 +60,8 @@ public class DatabaseConcatenator {
                                                 new SequenceInputStream(dbStream9,
                                                     new SequenceInputStream(dbStream10,
                                                         new SequenceInputStream(dbStream11,
-                                                            new SequenceInputStream(dbStream12, dbStream13))))))))))));
+                                                            new SequenceInputStream(dbStream12,
+                                                                new SequenceInputStream(dbStream13, dbStream14)))))))))))));
 
             OutputStream databaseOutStream = null;
 

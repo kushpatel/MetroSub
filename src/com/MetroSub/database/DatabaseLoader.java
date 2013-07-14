@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,6 +30,7 @@ public class DatabaseLoader {
     public static final int LOAD_STOPS = 3;
     public static final int LOAD_TRANSFERS = 4;
     public static final int LOAD_TRIPS = 5;
+    public static final int LOAD_STATION_ENTRANCES = 6;
 
     public static void loadDatabase(DatabaseHelper databaseHelper, InputStream inputStream, int selector) {
         switch (selector) {
@@ -46,6 +49,8 @@ public class DatabaseLoader {
             case LOAD_TRIPS:
                 loadTrips(databaseHelper, inputStream);
                 break;
+            case LOAD_STATION_ENTRANCES:
+                loadStationEntrances(databaseHelper, inputStream);
         }
     }
 
@@ -255,6 +260,82 @@ public class DatabaseLoader {
                 tripData.setDirectionId(tokens[DIRECTION_ID_POS]);
 
                 tripsDao.create(tripData);
+            }
+
+        } catch (IOException e) {
+            Log.e(TAG, "IOException: " + e.getMessage());
+        } finally {
+            try {
+                in.close();
+            } catch (Exception e) {
+                // don't really care what happens here
+            }
+        }
+    }
+
+    /* Function for loading data from routes.txt
+    ====================================================================================================================*/
+
+    private static void loadStationEntrances(DatabaseHelper databaseHelper, InputStream inputStream) {
+
+        final int DIVISION_POS = 0;
+        final int LINE_POS = 1;
+        final int STATION_NAME_POS = 2;
+        final int STATION_LAT_POS = 3;
+        final int STATION_LON_POS = 4;
+        final int ROUTES_START_POS = 5;
+        final int ROUTE_END_POS = 15;
+        final int ENTRANCE_TYPE_POS = 16;
+        final int ENTRY_POS = 17;
+        final int EXIT_ONLY_POS = 18;
+        final int VENDING_POS = 19;
+        final int STAFFING_POS = 20;
+        final int STAFFING_HOURS_POS = 21;
+        final int ADA_POS = 22;
+        final int ADA_NOTES_POS = 23;
+        final int FREE_CROSSOVER_POS = 24;
+        final int NORTH_SOUTH_STREET_POS = 25;
+        final int EAST_WEST_STREET_POS = 26;
+        final int CORNER_POS = 27;
+        final int CORNER_LAT_POS = 28;
+        final int CORNER_LON_POS = 29;
+
+        final int NUM_ROUTE_LINES = ROUTE_END_POS - ROUTES_START_POS + 1;
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        StationEntrancesDao stationEntrancesDao = databaseHelper.getStationEntrancesDao();
+
+        try {
+            // skip the first header line
+            String row = in.readLine();
+
+            while ((row = in.readLine()) != null) {
+                String[] tokens = TextUtils.split(row,DELIMITER);
+
+                StationEntranceData stationEntranceData = new StationEntranceData();
+                stationEntranceData.setDivision(tokens[DIVISION_POS]);
+                stationEntranceData.setLine(tokens[LINE_POS]);
+                stationEntranceData.setStationName(tokens[STATION_NAME_POS]);
+                stationEntranceData.setStationLat(tokens[STATION_LAT_POS]);
+                stationEntranceData.setStationLon(tokens[STATION_LON_POS]);
+                ArrayList<String> routeLines = new ArrayList<String>();
+                for(int collectionCount = 0; collectionCount < NUM_ROUTE_LINES; collectionCount++) {
+                    String routeLine = tokens[ROUTES_START_POS + collectionCount];
+                    if(routeLine != null && !routeLine.equals("")) {
+                        routeLines.add(routeLine);
+                    } else {
+                        // reached end of route lines list
+                        break;
+                    }
+                }
+                stationEntranceData.setRouteLines(routeLines);
+                stationEntranceData.setNorthSouthStreet(tokens[NORTH_SOUTH_STREET_POS]);
+                stationEntranceData.setEastWestStreet(tokens[EAST_WEST_STREET_POS]);
+                stationEntranceData.setCorner(tokens[CORNER_POS]);
+                stationEntranceData.setCornerLat(tokens[CORNER_LAT_POS]);
+                stationEntranceData.setCornerLon(tokens[CORNER_LON_POS]);
+
+                stationEntrancesDao.create(stationEntranceData);
             }
 
         } catch (IOException e) {

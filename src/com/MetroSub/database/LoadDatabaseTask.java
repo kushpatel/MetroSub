@@ -35,6 +35,7 @@ public class LoadDatabaseTask extends AsyncTask<Context, Integer, Integer> {
         InputStream stopsStream = ctx.getResources().openRawResource(R.raw.stops);
         InputStream transfersStream = ctx.getResources().openRawResource(R.raw.transfers);
         InputStream tripsStream = ctx.getResources().openRawResource(R.raw.trips);
+        InputStream stationEntrancesStream = ctx.getResources().openRawResource(R.raw.station_entrances);
 
         // Load files in database
         DatabaseLoader.loadDatabase(databaseHelper,routesStream,DatabaseLoader.LOAD_ROUTES);
@@ -42,6 +43,7 @@ public class LoadDatabaseTask extends AsyncTask<Context, Integer, Integer> {
         DatabaseLoader.loadDatabase(databaseHelper,stopsStream,DatabaseLoader.LOAD_STOPS);
         DatabaseLoader.loadDatabase(databaseHelper,transfersStream,DatabaseLoader.LOAD_TRANSFERS);
         DatabaseLoader.loadDatabase(databaseHelper,tripsStream,DatabaseLoader.LOAD_TRIPS);
+        DatabaseLoader.loadDatabase(databaseHelper,stationEntrancesStream,DatabaseLoader.LOAD_STATION_ENTRANCES);
 
         // Set a flag in SharedPreferences to avoid loading database on every startup
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ctx);
