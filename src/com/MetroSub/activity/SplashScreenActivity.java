@@ -20,13 +20,13 @@ public class SplashScreenActivity extends BaseActivity {
         // Hide action bar in splash screen
         mActionBar.hide();
 
-        /* New Handler to start the PlanTripActivity
+        /* New Handler to start the MapActivity
          * and close this Splash-Screen after some seconds.*/
         new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                /* Create an Intent that will start the PlanTripActivity. */
-                Intent mainIntent = new Intent(SplashScreenActivity.this,PlanTripActivity.class);
+                /* Create an Intent that will start the MapActivity. */
+                Intent mainIntent = new Intent(SplashScreenActivity.this,MapActivity.class);
                 SplashScreenActivity.this.startActivity(mainIntent);
                 SplashScreenActivity.this.finish();
             }
