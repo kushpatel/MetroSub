@@ -3,4 +3,5 @@
     <string name="app_name">MetroSub</string>
     <string name="plan_trip_location">Trip by Location</string>
     <string name="plan_trip_subway_lines">Trip by Lines</string>
+    <string name="go_back">Back</string>
 </resources>

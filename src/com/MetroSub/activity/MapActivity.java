@@ -75,6 +75,15 @@ public class MapActivity extends BaseActivity {
             }
         });
 
+
+        Button backButton = (Button) findViewById(R.id.go_back_button);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToMapWithOptionsScreen();
+            }
+        });
+
         Button lineButton_1 = (Button) findViewById(R.id.line_1_button);
         lineButton_1.setOnClickListener(new View.OnClickListener() {
             @Override
