@@ -27,9 +27,9 @@ public class BaseActivity extends Activity {
         mActionBar = getActionBar();
         //mActionBar.setTitle(ACTION_BAR_TITLE);
         mActionBar.setDisplayShowCustomEnabled(true);
-        mActionBar.setDisplayShowTitleEnabled(false);
+        //mActionBar.setDisplayShowTitleEnabled(false);
         mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setCustomView(R.layout.action_bar);
+        //mActionBar.setCustomView(R.layout.action_bar);
     }
 
     public MainApp getMainApp() {
