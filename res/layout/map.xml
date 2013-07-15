@@ -8,6 +8,117 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:name="com.google.android.gms.maps.MapFragment"/>
+
+    <ScrollView
+            android:id="@+id/select_trip_by_line_screen"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:alpha=".7"/>
+            <TableLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_marginTop="@dimen/large_padding"
+                        android:layout_marginBottom="@dimen/large_padding">
+                    <Button
+                            android:id="@+id/line_1_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_red"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="1"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                    <Button
+                            android:id="@+id/line_2_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_red"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="2"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                    <Button
+                            android:id="@+id/line_3_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_red"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="3"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                    <Button
+                            android:id="@+id/line_4_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_green"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="4"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                </TableRow>
+                <TableRow
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:layout_marginTop="@dimen/large_padding"
+                        android:layout_marginBottom="@dimen/large_padding">
+                    <Button
+                            android:id="@+id/line_5_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_green"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="5"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                    <Button
+                            android:id="@+id/line_6_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_green"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="6"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                    <Button
+                            android:id="@+id/line_S_button"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/custom_round_button_grey"
+                            android:gravity="center"
+                            android:textSize="@dimen/button_font_extra_large"
+                            android:text="S"
+                            android:textColor="@color/white"
+                            android:layout_marginLeft="@dimen/large_padding"
+                            android:layout_marginRight="@dimen/large_padding"/>
+                </TableRow>
+            </TableLayout>
+        </FrameLayout>
+    </ScrollView>
+
     <FrameLayout
             android:id="@+id/map_options_bar"
             android:layout_height="50dp"
@@ -17,8 +128,7 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:background="@color/black"
-                android:alpha=".5">
-        </ImageView>
+                android:alpha=".7"/>
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -29,7 +139,7 @@
                     android:layout_width="130dp"
                     android:text="@string/plan_trip_subway_lines"
                     android:gravity="center"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/custom_rectangular_button"
                     android:textSize="@dimen/button_font_small"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/small_padding"
@@ -44,7 +154,7 @@
                     android:layout_width="130dp"
                     android:text="@string/plan_trip_location"
                     android:gravity="center"
-                    android:background="@drawable/custom_button"
+                    android:background="@drawable/custom_rectangular_button"
                     android:textSize="@dimen/button_font_small"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/small_padding"

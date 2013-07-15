@@ -2,6 +2,9 @@ package com.MetroSub.activity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 import com.MetroSub.R;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.QueryHelper;
@@ -42,6 +45,9 @@ public class MapActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
+        /* Map setup
+        ================================================================================================================*/
+
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         // Center and zoom camera on New York City
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
@@ -58,6 +64,76 @@ public class MapActivity extends BaseActivity {
             //      .fromResource(R.drawable.ic_launcher)));
         }
 
+        /* Map screen UI setup
+        ================================================================================================================*/
+
+        Button tripByLinesButton = (Button) findViewById(R.id.plan_trip_lines_button);
+        tripByLinesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectTripByLine();
+            }
+        });
+
+        Button lineButton_1 = (Button) findViewById(R.id.line_1_button);
+        lineButton_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_1();
+            }
+        });
+
+        Button lineButton_2 = (Button) findViewById(R.id.line_2_button);
+        lineButton_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_2();
+            }
+        });
+
+        Button lineButton_3 = (Button) findViewById(R.id.line_3_button);
+        lineButton_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_3();
+            }
+        });
+
+        Button lineButton_4 = (Button) findViewById(R.id.line_4_button);
+        lineButton_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_4();
+            }
+        });
+
+        Button lineButton_5 = (Button) findViewById(R.id.line_5_button);
+        lineButton_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_5();
+            }
+        });
+
+        Button lineButton_6 = (Button) findViewById(R.id.line_6_button);
+        lineButton_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_6();
+            }
+        });
+
+        Button lineButton_S = (Button) findViewById(R.id.line_S_button);
+        lineButton_S.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine_S();
+            }
+        });
+
+
+        /* GTFS feed examples
+        ================================================================================================================*/
 
         // get gtfs data stream from http request
         //FeedHttpRequest feed = new FeedHttpRequest();
@@ -69,6 +145,9 @@ public class MapActivity extends BaseActivity {
         // example of how to retrieve data feed in the background
         RetrieveFeedTask task = new RetrieveFeedTask();
         task.execute(inputStream);
+
+        /* Database query examples
+        ================================================================================================================*/
 
         // Example of how to query the loaded database
         DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
@@ -92,6 +171,82 @@ public class MapActivity extends BaseActivity {
         Log.d(TAG,routeLines.toString());
 
         //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
+    }
+
+    private void selectTripByLine() {
+
+        // Hide the options bar with trip selector buttons
+        findViewById(R.id.map_options_bar).setVisibility(View.GONE);
+
+        // Show the select trip by lines screen
+        findViewById(R.id.select_trip_by_line_screen).setVisibility(View.VISIBLE);
+
+    }
+
+    public void backToMapWithOptionsScreen() {
+
+        // Hide the select trip by lines screen
+        findViewById(R.id.select_trip_by_line_screen).setVisibility(View.GONE);
+
+        // Show the options bar with trip selector buttons
+        findViewById(R.id.map_options_bar).setVisibility(View.VISIBLE);
+
+    }
+
+    public void selectLine_1() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line 1 selected!", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void selectLine_2() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line 2 selected!", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void selectLine_3() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line 3 selected!", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void selectLine_4() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line 4 selected!", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void selectLine_5() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line 5 selected!", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void selectLine_6() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line 6 selected!", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void selectLine_S() {
+
+        backToMapWithOptionsScreen();
+
+        Toast.makeText(MapActivity.this, "Line S selected!", Toast.LENGTH_LONG).show();
+
     }
 
     //code to troubleshoot if key for google maps api is incorrect

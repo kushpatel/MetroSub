@@ -19,7 +19,7 @@
                 android:layout_width="fill_parent"
                 android:text="@string/plan_trip_location"
                 android:gravity="center"
-                android:background="@drawable/custom_button"
+                android:background="@drawable/custom_rectangular_button"
                 android:textSize="@dimen/button_font_large"
                 android:textColor="@color/white"
                 android:layout_marginBottom="60dp"
@@ -32,7 +32,7 @@
                 android:text="@string/plan_trip_subway_lines"
                 android:gravity="center"
                 android:layout_toEndOf="@id/plan_trip_location_button"
-                android:background="@drawable/custom_button"
+                android:background="@drawable/custom_rectangular_button"
                 android:textSize="@dimen/button_font_large"
                 android:textColor="@color/white"
                 />
