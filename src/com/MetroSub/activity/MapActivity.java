@@ -16,6 +16,7 @@ import com.MetroSub.datamine.RetrieveFeedTask;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -36,8 +37,9 @@ public class MapActivity extends BaseActivity {
 
     public static final LatLng HAMBURG = new LatLng(53.558, 9.927);
     public static final LatLng KIEL = new LatLng(53.551, 9.993);
-    public static final LatLng MANHATTAN = new LatLng(40.7697,-73.9735);
+    public static final LatLng MANHATTAN = new LatLng(40.7697, -73.9735);
     public static final float DEFAULT_ZOOM_LEVEL = 12;
+    public static final float CLOSE_UP_ZOOM_LEVEL = 17;
     private GoogleMap map;
 
     @Override
@@ -57,7 +59,7 @@ public class MapActivity extends BaseActivity {
         // TODO: add custom zoom buttons
 
         // Add sample markers
-        if (map!=null){
+        if (map != null) {
             Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG)
                     .title("Hamburg"));
             Marker kiel = map.addMarker(new MarkerOptions()
@@ -181,7 +183,7 @@ public class MapActivity extends BaseActivity {
         // Example of how to use QueryHelper to query the database
         QueryHelper queryHelper = getMainApp().getQueryHelper();
         ArrayList<String> routeLines = queryHelper.queryForStopLines("127");  // should give Times Sq lines
-        Log.d(TAG,routeLines.toString());
+        Log.d(TAG, routeLines.toString());
 
         //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
     }
@@ -211,6 +213,16 @@ public class MapActivity extends BaseActivity {
         backToMapWithOptionsScreen();
 
         Toast.makeText(MapActivity.this, "Line 1 selected!", Toast.LENGTH_LONG).show();
+
+        // Reposition map to a station with the selected line near current location
+        // Sample code
+        LatLng TIMES_SQUARE = new LatLng(40.7566, -73.9863);
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(TIMES_SQUARE, CLOSE_UP_ZOOM_LEVEL));
+        map.addMarker(new MarkerOptions().position(TIMES_SQUARE)
+                .title("Next subways:")
+                .snippet("In 3 minutes")
+                .snippet("In 5 minutes")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.number_1)));
 
     }
 
@@ -261,6 +273,14 @@ public class MapActivity extends BaseActivity {
         Toast.makeText(MapActivity.this, "Line S selected!", Toast.LENGTH_LONG).show();
 
     }
+
+//    public class CustomInfoWindowAdapter extends GoogleMap.InfoWindowAdapter {
+//
+//        public View getInfoWindow(Marker marker) {
+//            return getWindow();
+//        }
+//
+//    }
 
     //code to troubleshoot if key for google maps api is incorrect
     /*private void getShaKey() {
