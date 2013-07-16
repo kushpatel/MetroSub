@@ -28,7 +28,7 @@ public class BaseActivity extends Activity {
         //mActionBar.setTitle(ACTION_BAR_TITLE);
         mActionBar.setDisplayShowCustomEnabled(true);
         //mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setDisplayShowHomeEnabled(false);
+        //mActionBar.setDisplayShowHomeEnabled(false);
         //mActionBar.setCustomView(R.layout.action_bar);
     }
 
