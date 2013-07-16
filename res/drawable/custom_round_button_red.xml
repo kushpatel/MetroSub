@@ -6,7 +6,7 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
                android:shape="oval">
             <solid android:color="@color/subway_line_red"/>
-            <stroke android:width="3sp" android:color="@color/red_dark" />
+            <stroke android:width="@dimen/round_button_stroke" android:color="@color/red_dark" />
         </shape>
     </item>
 
@@ -14,7 +14,7 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
                android:shape="oval">
             <solid android:color="@color/subway_line_red"/>
-            <stroke android:width="3sp" android:color="@color/white" />
+            <stroke android:width="@dimen/round_button_stroke" android:color="@color/white" />
         </shape>
     </item>
 </selector>

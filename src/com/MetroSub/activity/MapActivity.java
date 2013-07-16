@@ -51,6 +51,10 @@ public class MapActivity extends BaseActivity {
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         // Center and zoom camera on New York City
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
+        // Hide default zoom buttons
+        map.getUiSettings().setZoomControlsEnabled(false);
+
+        // TODO: add custom zoom buttons
 
         // Add sample markers
         if (map!=null){

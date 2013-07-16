@@ -5,15 +5,15 @@
     <item android:state_pressed="true" >
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
                android:shape="oval">
-            <solid android:color="@color/subway_line_grey"/>
-            <stroke android:width="@dimen/round_button_stroke" android:color="@color/grey_dark" />
+            <solid android:color="@color/subway_line_purple"/>
+            <stroke android:width="@dimen/round_button_stroke" android:color="@color/indigo" />
         </shape>
     </item>
 
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
                android:shape="oval">
-            <solid android:color="@color/subway_line_grey"/>
+            <solid android:color="@color/subway_line_purple"/>
             <stroke android:width="@dimen/round_button_stroke" android:color="@color/white" />
         </shape>
     </item>

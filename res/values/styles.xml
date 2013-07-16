@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="subway_round_button_style">
+        <item name="android:layout_width">@dimen/round_button_size</item>
+        <item name="android:layout_height">@dimen/round_button_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/button_font_extra_large</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginLeft">@dimen/large_padding</item>
+        <item name="android:layout_marginRight">@dimen/large_padding</item>
+    </style>
+
+    <style name="rectangle_button_style">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">130dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/custom_rectangular_button</item>
+        <item name="android:textSize">@dimen/button_font_small</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_margin">@dimen/small_padding</item>
+    </style>
+</resources>

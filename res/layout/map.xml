@@ -38,48 +38,19 @@
                             android:gravity="center">
                         <Button
                                 android:id="@+id/line_1_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
                                 android:background="@drawable/custom_round_button_red"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
                                 android:text="1"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
+                                style="@style/subway_round_button_style"/>
                         <Button
                                 android:id="@+id/line_2_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
                                 android:background="@drawable/custom_round_button_red"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
                                 android:text="2"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
+                                style="@style/subway_round_button_style"/>
                         <Button
                                 android:id="@+id/line_3_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
                                 android:background="@drawable/custom_round_button_red"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
                                 android:text="3"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
-                        <Button
-                                android:id="@+id/line_4_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:background="@drawable/custom_round_button_green"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
-                                android:text="4"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
+                                style="@style/subway_round_button_style"/>
                     </TableRow>
                     <TableRow
                             android:layout_height="wrap_content"
@@ -88,38 +59,37 @@
                             android:layout_marginBottom="@dimen/large_padding"
                             android:gravity="center">
                         <Button
-                                android:id="@+id/line_5_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
+                                android:id="@+id/line_4_button"
                                 android:background="@drawable/custom_round_button_green"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
+                                android:text="4"
+                                style="@style/subway_round_button_style"/>
+                        <Button
+                                android:id="@+id/line_5_button"
+                                android:background="@drawable/custom_round_button_green"
                                 android:text="5"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
+                                style="@style/subway_round_button_style"/>
                         <Button
                                 android:id="@+id/line_6_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
                                 android:background="@drawable/custom_round_button_green"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
                                 android:text="6"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
+                                style="@style/subway_round_button_style"/>
+                    </TableRow>
+                    <TableRow
+                            android:layout_height="wrap_content"
+                            android:layout_width="fill_parent"
+                            android:layout_marginTop="@dimen/large_padding"
+                            android:layout_marginBottom="@dimen/large_padding"
+                            android:gravity="center">
+                        <Button
+                                android:id="@+id/line_7_button"
+                                android:background="@drawable/custom_round_button_purple"
+                                android:text="7"
+                                style="@style/subway_round_button_style"/>
                         <Button
                                 android:id="@+id/line_S_button"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
                                 android:background="@drawable/custom_round_button_grey"
-                                android:gravity="center"
-                                android:textSize="@dimen/button_font_extra_large"
                                 android:text="S"
-                                android:textColor="@color/white"
-                                android:layout_marginLeft="@dimen/large_padding"
-                                android:layout_marginRight="@dimen/large_padding"/>
+                                style="@style/subway_round_button_style"/>
                     </TableRow>
                 </TableLayout>
             </FrameLayout>
@@ -131,17 +101,8 @@
                 android:layout_alignParentBottom="true">
             <Button
                     android:id="@+id/go_back_button"
-                    android:layout_height="wrap_content"
-                    android:layout_width="130dp"
+                    style="@style/rectangle_button_style"
                     android:text="@string/go_back"
-                    android:gravity="center"
-                    android:background="@drawable/custom_rectangular_button"
-                    android:textSize="@dimen/button_font_small"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/small_padding"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:layout_marginLeft="@dimen/small_padding"
-                    android:layout_marginRight="@dimen/small_padding"
                     />
         </LinearLayout>
     </RelativeLayout>
@@ -163,32 +124,14 @@
 
             <Button
                     android:id="@+id/plan_trip_lines_button"
-                    android:layout_height="wrap_content"
-                    android:layout_width="130dp"
                     android:text="@string/plan_trip_subway_lines"
-                    android:gravity="center"
-                    android:background="@drawable/custom_rectangular_button"
-                    android:textSize="@dimen/button_font_small"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/small_padding"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:layout_marginLeft="@dimen/small_padding"
-                    android:layout_marginRight="@dimen/small_padding"
+                    style="@style/rectangle_button_style"
                     />
 
             <Button
                     android:id="@+id/plan_trip_location_button"
-                    android:layout_height="wrap_content"
-                    android:layout_width="130dp"
                     android:text="@string/plan_trip_location"
-                    android:gravity="center"
-                    android:background="@drawable/custom_rectangular_button"
-                    android:textSize="@dimen/button_font_small"
-                    android:textColor="@color/white"
-                    android:layout_marginTop="@dimen/small_padding"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:layout_marginLeft="@dimen/small_padding"
-                    android:layout_marginRight="@dimen/small_padding"
+                    style="@style/rectangle_button_style"
                     />
 
         </LinearLayout>

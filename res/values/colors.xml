@@ -13,6 +13,7 @@
     <color name="black">#000000</color>
     <color name="green_dark">#254117</color>
     <color name="grey_dark">#3B3131</color>
+    <color name="indigo">#4B0082</color>
 
     <color name="subway_line_green">#00933C</color>
     <color name="subway_line_red">#EE352E</color>
