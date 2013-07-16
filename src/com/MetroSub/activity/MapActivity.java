@@ -216,12 +216,12 @@ public class MapActivity extends BaseActivity {
 
         // Reposition map to a station with the selected line near current location
         // Sample code
+        // TODO: Add custom info window to marker
         LatLng TIMES_SQUARE = new LatLng(40.7566, -73.9863);
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(TIMES_SQUARE, CLOSE_UP_ZOOM_LEVEL));
         map.addMarker(new MarkerOptions().position(TIMES_SQUARE)
                 .title("Next subways:")
                 .snippet("In 3 minutes")
-                .snippet("In 5 minutes")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.number_1)));
 
     }
