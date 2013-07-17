@@ -33,11 +33,18 @@ public class QueryHelper {
         mStationEntrancesDao = databaseHelper.getStationEntrancesDao();
     }
 
-    public ArrayList<String> queryForStopLines(String stopId) {
+    public ArrayList<Character> queryForStopLines(String stopId) {
         StopData stopData = mStopsDao.queryForId(stopId);
         StationEntranceData stationEntranceData = mStationEntrancesDao.
                 queryForStation(stopData.getStopLat(),stopData.getStopLon());
         return stationEntranceData.getRouteLines();
+    }
+
+    public boolean sample(String stopId) {
+        StopData stopData = mStopsDao.queryForId(stopId);
+        StationEntranceData stationEntranceData = mStationEntrancesDao.
+                queryForStation(stopData.getStopLat(),stopData.getStopLon());
+        return stationEntranceData.getLine_1();
     }
 
 }

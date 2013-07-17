@@ -273,7 +273,7 @@ public class DatabaseLoader {
         }
     }
 
-    /* Function for loading data from routes.txt
+    /* Function for loading data from station_entrances.csv
     ====================================================================================================================*/
 
     private static void loadStationEntrances(DatabaseHelper databaseHelper, InputStream inputStream) {
@@ -318,16 +318,17 @@ public class DatabaseLoader {
                 stationEntranceData.setStationName(tokens[STATION_NAME_POS]);
                 stationEntranceData.setStationLat(tokens[STATION_LAT_POS]);
                 stationEntranceData.setStationLon(tokens[STATION_LON_POS]);
-                ArrayList<String> routeLines = new ArrayList<String>();
+                ArrayList<Character> routeLines = new ArrayList<Character>();
                 for(int collectionCount = 0; collectionCount < NUM_ROUTE_LINES; collectionCount++) {
                     String routeLine = tokens[ROUTES_START_POS + collectionCount];
                     if(routeLine != null && !routeLine.equals("")) {
-                        routeLines.add(routeLine);
+                        routeLines.add(routeLine.charAt(0));
                     } else {
                         // reached end of route lines list
                         break;
                     }
                 }
+                loadLinesPassingStation(routeLines,stationEntranceData);
                 stationEntranceData.setRouteLines(routeLines);
                 stationEntranceData.setNorthSouthStreet(tokens[NORTH_SOUTH_STREET_POS]);
                 stationEntranceData.setEastWestStreet(tokens[EAST_WEST_STREET_POS]);
@@ -345,6 +346,80 @@ public class DatabaseLoader {
                 in.close();
             } catch (Exception e) {
                 // don't really care what happens here
+            }
+        }
+    }
+
+    private static void loadLinesPassingStation(ArrayList<Character> routeLines, StationEntranceData stationEntranceData) {
+
+        for (int routeLinePos = 0; routeLinePos < routeLines.size(); routeLinePos++) {
+            switch (routeLines.get(routeLinePos)) {
+                case '1':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case '2':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case '3':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case '4':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case '5':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case '6':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case '7':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'A':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'B':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'C':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'D':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'E':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'F':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'G':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'J':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'L':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'M':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'N':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'Q':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'R':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'S':
+                    stationEntranceData.setLine_1(true);
+                    break;
+                case 'Z':
+                    stationEntranceData.setLine_1(true);
+                    break;
             }
         }
     }
