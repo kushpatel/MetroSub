@@ -96,7 +96,7 @@ public class MapActivity extends BaseActivity {
         lineButton_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_1();
+                selectLine("1");
             }
         });
 
@@ -104,7 +104,7 @@ public class MapActivity extends BaseActivity {
         lineButton_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_2();
+                selectLine("2");
             }
         });
 
@@ -112,7 +112,7 @@ public class MapActivity extends BaseActivity {
         lineButton_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_3();
+                selectLine("3");
             }
         });
 
@@ -120,7 +120,7 @@ public class MapActivity extends BaseActivity {
         lineButton_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_4();
+                selectLine("4");
             }
         });
 
@@ -128,7 +128,7 @@ public class MapActivity extends BaseActivity {
         lineButton_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_5();
+                selectLine("5");
             }
         });
 
@@ -136,7 +136,15 @@ public class MapActivity extends BaseActivity {
         lineButton_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_6();
+                selectLine("6");
+            }
+        });
+
+        Button lineButton_7 = (Button) findViewById(R.id.line_7_button);
+        lineButton_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectLine("7");
             }
         });
 
@@ -144,7 +152,7 @@ public class MapActivity extends BaseActivity {
         lineButton_S.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectLine_S();
+                selectLine("S");
             }
         });
 
@@ -195,6 +203,10 @@ public class MapActivity extends BaseActivity {
         //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
     }
 
+
+    /* Map setup helper functions
+    ====================================================================================================================*/
+
     private void selectTripByLine() {
 
         // Hide the options bar with trip selector buttons
@@ -215,11 +227,11 @@ public class MapActivity extends BaseActivity {
 
     }
 
-    public void selectLine_1() {
+    public void selectLine(String line) {
 
         backToMapWithOptionsScreen();
 
-        Toast.makeText(MapActivity.this, "Line 1 selected!", Toast.LENGTH_LONG).show();
+        Toast.makeText(MapActivity.this, "Line " + line + " selected!", Toast.LENGTH_LONG).show();
 
         // Reposition map to a station with the selected line near current location
         // Sample code
@@ -230,54 +242,6 @@ public class MapActivity extends BaseActivity {
                 .title("Next subways:")
                 .snippet("In 3 minutes")
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.number_1)));
-
-    }
-
-    public void selectLine_2() {
-
-        backToMapWithOptionsScreen();
-
-        Toast.makeText(MapActivity.this, "Line 2 selected!", Toast.LENGTH_LONG).show();
-
-    }
-
-    public void selectLine_3() {
-
-        backToMapWithOptionsScreen();
-
-        Toast.makeText(MapActivity.this, "Line 3 selected!", Toast.LENGTH_LONG).show();
-
-    }
-
-    public void selectLine_4() {
-
-        backToMapWithOptionsScreen();
-
-        Toast.makeText(MapActivity.this, "Line 4 selected!", Toast.LENGTH_LONG).show();
-
-    }
-
-    public void selectLine_5() {
-
-        backToMapWithOptionsScreen();
-
-        Toast.makeText(MapActivity.this, "Line 5 selected!", Toast.LENGTH_LONG).show();
-
-    }
-
-    public void selectLine_6() {
-
-        backToMapWithOptionsScreen();
-
-        Toast.makeText(MapActivity.this, "Line 6 selected!", Toast.LENGTH_LONG).show();
-
-    }
-
-    public void selectLine_S() {
-
-        backToMapWithOptionsScreen();
-
-        Toast.makeText(MapActivity.this, "Line S selected!", Toast.LENGTH_LONG).show();
 
     }
 
