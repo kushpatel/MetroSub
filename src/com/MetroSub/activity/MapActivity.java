@@ -143,7 +143,7 @@ public class MapActivity extends BaseActivity {
         Button lineButton_7 = (Button) findViewById(R.id.line_7_button);
         lineButton_7.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 selectLine("7");
             }
         });
