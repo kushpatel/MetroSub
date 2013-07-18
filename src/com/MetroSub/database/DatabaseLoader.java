@@ -328,7 +328,7 @@ public class DatabaseLoader {
                         break;
                     }
                 }
-                loadLinesPassingStation(routeLines,stationEntranceData);
+                stationEntranceData = loadLinesPassingStation(routeLines,stationEntranceData);
                 stationEntranceData.setRouteLines(routeLines);
                 stationEntranceData.setNorthSouthStreet(tokens[NORTH_SOUTH_STREET_POS]);
                 stationEntranceData.setEastWestStreet(tokens[EAST_WEST_STREET_POS]);
@@ -350,7 +350,7 @@ public class DatabaseLoader {
         }
     }
 
-    private static void loadLinesPassingStation(ArrayList<Character> routeLines, StationEntranceData stationEntranceData) {
+    private static StationEntranceData loadLinesPassingStation(ArrayList<Character> routeLines, StationEntranceData stationEntranceData) {
 
         for (int routeLinePos = 0; routeLinePos < routeLines.size(); routeLinePos++) {
             switch (routeLines.get(routeLinePos)) {
@@ -422,6 +422,7 @@ public class DatabaseLoader {
                     break;
             }
         }
+        return stationEntranceData;
     }
 
 }
