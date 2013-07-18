@@ -32,6 +32,9 @@ public class StationEntranceData {
     public static final String CORNER_LAT_COL_NAME = "latitude";
     public static final String CORNER_LON_COL_NAME = "longitude";
 
+    // Useful constant in doing queries on columns selected by lines
+    public static final String LINE_COL_NAME_PREFIX = "line_";
+
     public static final String LINE_1_COL_NAME = "line_1";
     public static final String LINE_2_COL_NAME = "line_2";
     public static final String LINE_3_COL_NAME = "line_3";

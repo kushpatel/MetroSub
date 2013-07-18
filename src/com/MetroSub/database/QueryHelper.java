@@ -5,6 +5,8 @@ import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.database.dataobjects.StopData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -40,11 +42,21 @@ public class QueryHelper {
         return stationEntranceData.getRouteLines();
     }
 
-    public boolean sample(String stopId) {
-        StopData stopData = mStopsDao.queryForId(stopId);
-        StationEntranceData stationEntranceData = mStationEntrancesDao.
-                queryForStation(stopData.getStopLat(),stopData.getStopLon());
-        return stationEntranceData.getLine_1();
+    public List<StationEntranceData> queryForLineStops(String subwayLine) {
+
+        List<StationEntranceData> dataWithDuplicateStations = mStationEntrancesDao.queryForStations(subwayLine);
+        List<StationEntranceData> uniqueStationsData = new ArrayList<StationEntranceData>();
+
+        // Keep only unique entries in the list of stations
+        HashSet<String> stationsHashSet = new HashSet<String>();
+        for (StationEntranceData entry : dataWithDuplicateStations) {
+            if (!stationsHashSet.contains(entry.getStationName())) {
+                uniqueStationsData.add(entry);
+                stationsHashSet.add(entry.getStationName());
+            }
+        }
+
+        return uniqueStationsData;
     }
 
 }

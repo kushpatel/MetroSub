@@ -10,6 +10,7 @@ import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.QueryHelper;
 import com.MetroSub.database.dao.StopsDao;
 import com.MetroSub.database.dao.TripsDao;
+import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.database.dataobjects.TripData;
 import com.MetroSub.datamine.RetrieveFeedTask;
@@ -23,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -184,7 +186,11 @@ public class MapActivity extends BaseActivity {
         QueryHelper queryHelper = getMainApp().getQueryHelper();
         ArrayList<Character> routeLines = queryHelper.queryForStopLines("127");  // should give Times Sq lines
         Log.d(TAG, routeLines.toString());
-        Log.d(TAG, "" + queryHelper.sample("127"));
+
+        List<StationEntranceData> stations = queryHelper.queryForLineStops("3");
+        for (StationEntranceData station : stations) {
+            Log.d(TAG, "Line 3 goes through: " + station.getStationName());
+        }
 
         //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
     }

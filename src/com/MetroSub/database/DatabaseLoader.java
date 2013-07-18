@@ -358,67 +358,67 @@ public class DatabaseLoader {
                     stationEntranceData.setLine_1(true);
                     break;
                 case '2':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_2(true);
                     break;
                 case '3':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_3(true);
                     break;
                 case '4':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_4(true);
                     break;
                 case '5':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_5(true);
                     break;
                 case '6':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_6(true);
                     break;
                 case '7':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_7(true);
                     break;
                 case 'A':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_A(true);
                     break;
                 case 'B':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_B(true);
                     break;
                 case 'C':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_C(true);
                     break;
                 case 'D':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_D(true);
                     break;
                 case 'E':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_E(true);
                     break;
                 case 'F':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_F(true);
                     break;
                 case 'G':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_G(true);
                     break;
                 case 'J':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_J(true);
                     break;
                 case 'L':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_L(true);
                     break;
                 case 'M':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_M(true);
                     break;
                 case 'N':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_N(true);
                     break;
                 case 'Q':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_Q(true);
                     break;
                 case 'R':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_R(true);
                     break;
                 case 'S':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_S(true);
                     break;
                 case 'Z':
-                    stationEntranceData.setLine_1(true);
+                    stationEntranceData.setLine_Z(true);
                     break;
             }
         }

@@ -30,8 +30,8 @@ public class StationEntrancesDao extends BaseDaoImpl<StationEntranceData, Intege
     public int create(StationEntranceData data) {
         try {
             return super.create(data);
-        } catch(SQLException e) {
-            Log.e(TAG,"Creation of new row failed: " + e.getMessage());
+        } catch (SQLException e) {
+            Log.e(TAG, "Creation of new row failed: " + e.getMessage());
             return 0;
         }
     }
@@ -40,7 +40,7 @@ public class StationEntrancesDao extends BaseDaoImpl<StationEntranceData, Intege
     public List<StationEntranceData> queryForAll() {
         try {
             return super.queryForAll();
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             Log.e(TAG, "Query for all failed: " + e.getMessage());
             return null;
         }
@@ -57,7 +57,21 @@ public class StationEntrancesDao extends BaseDaoImpl<StationEntranceData, Intege
             PreparedQuery<StationEntranceData> preparedQuery = queryBuilder.prepare();
             data = queryForFirst(preparedQuery);
         } catch (SQLException e) {
-            Log.e(TAG,"Query for station lat = " + lat + " lon = " + lon + " failed: " + e.getMessage());
+            Log.e(TAG, "Query for station lat = " + lat + " lon = " + lon + " failed: " + e.getMessage());
+        }
+        return data;
+    }
+
+    // Data returned has duplicate station entries for all gates in the same parent station!
+    public List<StationEntranceData> queryForStations(String line) {
+
+        String lineColumn = StationEntranceData.LINE_COL_NAME_PREFIX + line;
+
+        List<StationEntranceData> data = null;
+        try {
+            data = queryForEq(lineColumn, true);
+        } catch (SQLException e) {
+            Log.e(TAG, "Query for stations with line " + line + " failed: " + e.getMessage());
         }
         return data;
     }
