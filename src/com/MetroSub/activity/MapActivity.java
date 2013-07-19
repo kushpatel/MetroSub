@@ -16,12 +16,12 @@ import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.database.dataobjects.TripData;
 import com.MetroSub.datamine.RetrieveFeedTask;
 import com.MetroSub.ui.StationListAdapter;
+import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.InputStream;
@@ -37,15 +37,15 @@ import java.util.List;
  */
 public class MapActivity extends BaseActivity {
 
-    public static final LatLng HAMBURG = new LatLng(53.558, 9.927);
-    public static final LatLng KIEL = new LatLng(53.551, 9.993);
+    private static final String TAG = "MapActivity";
+
     public static final LatLng MANHATTAN = new LatLng(40.7697, -73.9735);
     public static final float DEFAULT_ZOOM_LEVEL = 12;
     public static final float CLOSE_UP_ZOOM_LEVEL = 17;
-    private static final String TAG = "MapActivity";
-    protected GoogleMap map;
+
     private QueryHelper mQueryHelper;
 
+    protected GoogleMap map;
     protected View mMapOptionsBar;
     protected View mSelectTripByLinesScreen;
     protected View mStationsListScreen;
@@ -73,18 +73,6 @@ public class MapActivity extends BaseActivity {
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
 
         // TODO: add custom zoom buttons
-
-        // Add sample markers
-        if (map != null) {
-            Marker hamburg = map.addMarker(new MarkerOptions().position(HAMBURG)
-                    .title("Hamburg"));
-            Marker kiel = map.addMarker(new MarkerOptions()
-                    .position(KIEL)
-                    .title("Kiel")
-                    .snippet("Kiel is cool"));
-            //.icon(BitmapDescriptorFactory
-            //      .fromResource(R.drawable.ic_launcher)));
-        }
 
         /* Map screen UI setup
         ================================================================================================================*/
@@ -233,7 +221,7 @@ public class MapActivity extends BaseActivity {
             Log.d(TAG, "Line 3 goes through: " + station.getStationName());
         }
 
-        //getShaKey();     //code to troubleshoot if key for google maps api is incorrect
+        //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
     }
 
 
@@ -241,8 +229,6 @@ public class MapActivity extends BaseActivity {
     ====================================================================================================================*/
 
     public void selectLine(String line) {
-
-        //backToMapWithOptionsScreen();
 
         // Hide the select trip by lines screen
         mSelectTripByLinesScreen.setVisibility(View.GONE);
@@ -282,7 +268,7 @@ public class MapActivity extends BaseActivity {
 
                 //set up marker on google map
                 StationEntranceData stationEntranceData = (StationEntranceData) adapterView.getAdapter().getItem(position);
-                int iconResId = getIconForLine(line.charAt(0));
+                int iconResId = UIUtils.getIconForLine(line.charAt(0));
                 String stationLat = stationEntranceData.getStationLat();
                 String stationLon = stationEntranceData.getCornerLon();
                 LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat),Double.parseDouble(stationLon));
@@ -297,79 +283,6 @@ public class MapActivity extends BaseActivity {
 
     }
 
-    public int getIconForLine(char line) {
-        int iconResId = 0;
-        switch (line) {
-            case '1':
-                iconResId = R.drawable.number_1;
-                break;
-            case '2':
-                iconResId = R.drawable.number_2;
-                break;
-            case '3':
-                iconResId = R.drawable.number_3;
-                break;
-            case '4':
-                iconResId = R.drawable.number_4;
-                break;
-            case '5':
-                iconResId = R.drawable.number_5;
-                break;
-            case '6':
-                iconResId = R.drawable.number_6;
-                break;
-            case '7':
-                iconResId = R.drawable.number_7;
-                break;
-            case 'A':
-                iconResId = R.drawable.letter_a;
-                break;
-            case 'B':
-                iconResId = R.drawable.letter_b;
-                break;
-            case 'C':
-                iconResId = R.drawable.letter_c;
-                break;
-            case 'D':
-                iconResId = R.drawable.letter_d;
-                break;
-            case 'E':
-                iconResId = R.drawable.letter_e;
-                break;
-            case 'F':
-                iconResId = R.drawable.letter_f;
-                break;
-            case 'G':
-                iconResId = R.drawable.letter_g;
-                break;
-            case 'J':
-                iconResId = R.drawable.letter_j;
-                break;
-            case 'L':
-                iconResId = R.drawable.letter_l;
-                break;
-            case 'M':
-                iconResId = R.drawable.letter_m;
-                break;
-            case 'N':
-                iconResId = R.drawable.letter_n;
-                break;
-            case 'Q':
-                iconResId = R.drawable.letter_q;
-                break;
-            case 'R':
-                iconResId = R.drawable.letter_r;
-                break;
-            case 'S':
-                iconResId = R.drawable.letter_s;
-                break;
-            case 'Z':
-                iconResId = R.drawable.letter_z;
-                break;
-        }
-        return iconResId;
-    }
-
 //    public class CustomInfoWindowAdapter extends GoogleMap.InfoWindowAdapter {
 //
 //        public View getInfoWindow(Marker marker) {
@@ -378,26 +291,6 @@ public class MapActivity extends BaseActivity {
 //
 //    }
 
-    //code to troubleshoot if key for google maps api is incorrect
-    /*private void getShaKey() {
 
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.MetroSub.activity",
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.v(TAG, "KeyHash:" + Base64.encodeToString(md.digest(),
-                        Base64.DEFAULT));
-            }
-        } catch (NameNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-
-        }
-
-    } */
 
 }
