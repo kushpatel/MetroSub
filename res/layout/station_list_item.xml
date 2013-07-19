@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="40dip" >
+                android:layout_height="40dp" >
 
     <ImageView
             android:id="@+id/line_image"
-            android:layout_width="40dip"
-            android:layout_height="match_parent"
-            android:src="@drawable/metro_icon_transparent"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/custom_round_button_green"
+            android:paddingLeft="5dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"/>
 
     <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_toRightOf="@id/line_image"
             android:orientation="vertical"
             android:paddingLeft="10sp">
 
         <TextView
                 android:id="@+id/station_name"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:textSize="25sp"
-                android:text="Times Sq."
-                android:gravity="center_vertical"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_marginTop="@dimen/small_padding"/>
     </LinearLayout>
 
 </RelativeLayout>

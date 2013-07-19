@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ListView;
 import com.MetroSub.R;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.QueryHelper;
@@ -14,6 +14,7 @@ import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.database.dataobjects.TripData;
 import com.MetroSub.datamine.RetrieveFeedTask;
+import com.MetroSub.ui.StationListAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -37,6 +38,11 @@ public class MapActivity extends BaseActivity {
 
     private static final String TAG = "MapActivity";
 
+    public static final String EXTRA_PLAN_TRIP_BY_LINE = "flag_plan_trip_by_line";
+    public static final String EXTRA_LINE = "extra_line";
+    public static final String EXTRA_STATION_LAT = "extra_station_lat";
+    public static final String EXTRA_STATION_LON = "extra_station_lon";
+
     public static final LatLng HAMBURG = new LatLng(53.558, 9.927);
     public static final LatLng KIEL = new LatLng(53.551, 9.993);
     public static final LatLng MANHATTAN = new LatLng(40.7697, -73.9735);
@@ -44,19 +50,38 @@ public class MapActivity extends BaseActivity {
     public static final float CLOSE_UP_ZOOM_LEVEL = 17;
     private GoogleMap map;
 
+    private QueryHelper mQueryHelper;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
+        mQueryHelper = getMainApp().getQueryHelper();
+
         /* Map setup
         ================================================================================================================*/
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
-        // Center and zoom camera on New York City
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
         // Hide default zoom buttons
         map.getUiSettings().setZoomControlsEnabled(false);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null && extras.containsKey(EXTRA_PLAN_TRIP_BY_LINE)) {
+            String line = extras.getString(EXTRA_LINE);
+            int iconResId = getIconForLine(line.charAt(0));
+            String stationLat = extras.getString(EXTRA_STATION_LAT);
+            String stationLon = extras.getString(EXTRA_STATION_LON);
+            LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat),Double.parseDouble(stationLon));
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(stationCoordinates, CLOSE_UP_ZOOM_LEVEL));
+            map.addMarker(new MarkerOptions().position(stationCoordinates)
+                    .title("Next subways:")
+                    .snippet("In 3 minutes")
+                    .icon(BitmapDescriptorFactory.fromResource(iconResId)));
+        } else {
+            // Center and zoom camera on New York City ... default onStart case
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
+        }
 
         // TODO: add custom zoom buttons
 
@@ -79,16 +104,36 @@ public class MapActivity extends BaseActivity {
         tripByLinesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectTripByLine();
+                // Hide the options bar with trip selector buttons
+                mapOptionsBar().setVisibility(View.GONE);
+
+                // Show the select trip by lines screen
+                selectTripByLineScreen().setVisibility(View.VISIBLE);
             }
         });
 
 
-        Button backButton = (Button) findViewById(R.id.go_back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Button backButtonLines = (Button) findViewById(R.id.go_back_button_select_line);
+        backButtonLines.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMapWithOptionsScreen();
+                // Hide the select trip by lines screen
+                selectTripByLineScreen().setVisibility(View.GONE);
+
+                // Show the options bar with trip selector buttons
+                findViewById(R.id.map_options_bar).setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button backButtonStations = (Button) findViewById(R.id.go_back_button_stations_list);
+        backButtonStations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the select stations screen
+                stationsListScreen().setVisibility(View.GONE);
+
+                //Show the select trip by lines screen
+                selectTripByLineScreen().setVisibility(View.VISIBLE);
             }
         });
 
@@ -191,11 +236,10 @@ public class MapActivity extends BaseActivity {
         }
 
         // Example of how to use QueryHelper to query the database
-        QueryHelper queryHelper = getMainApp().getQueryHelper();
-        ArrayList<Character> routeLines = queryHelper.queryForStopLines("127");  // should give Times Sq lines
+        ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
         Log.d(TAG, routeLines.toString());
 
-        List<StationEntranceData> stations = queryHelper.queryForLineStops("3");
+        List<StationEntranceData> stations = mQueryHelper.queryForLineStops("3");
         for (StationEntranceData station : stations) {
             Log.d(TAG, "Line 3 goes through: " + station.getStationName());
         }
@@ -207,42 +251,76 @@ public class MapActivity extends BaseActivity {
     /* Map setup helper functions
     ====================================================================================================================*/
 
-    private void selectTripByLine() {
-
-        // Hide the options bar with trip selector buttons
-        findViewById(R.id.map_options_bar).setVisibility(View.GONE);
-
-        // Show the select trip by lines screen
-        findViewById(R.id.select_trip_by_line_screen).setVisibility(View.VISIBLE);
-
+    public View mapOptionsBar() {
+        return findViewById(R.id.map_options_bar);
     }
 
-    public void backToMapWithOptionsScreen() {
+    public View selectTripByLineScreen() {
+        return findViewById(R.id.select_trip_by_line_screen);
+    }
 
-        // Hide the select trip by lines screen
-        findViewById(R.id.select_trip_by_line_screen).setVisibility(View.GONE);
-
-        // Show the options bar with trip selector buttons
-        findViewById(R.id.map_options_bar).setVisibility(View.VISIBLE);
-
+    public View stationsListScreen() {
+        return findViewById(R.id.stations_list_screen);
     }
 
     public void selectLine(String line) {
 
-        backToMapWithOptionsScreen();
+        //backToMapWithOptionsScreen();
 
-        Toast.makeText(MapActivity.this, "Line " + line + " selected!", Toast.LENGTH_LONG).show();
+        // Hide the select trip by lines screen
+        selectTripByLineScreen().setVisibility(View.GONE);
 
-        // Reposition map to a station with the selected line near current location
-        // Sample code
+        // Set up stations list screen using list view adapter
+        setupStationsListScreen(line);
+
+        // Show the stations list screen
+        stationsListScreen().setVisibility(View.VISIBLE);
+
+        //Toast.makeText(MapActivity.this, "Line " + line + " selected!", Toast.LENGTH_LONG).show();
         // TODO: Add custom info window to marker
-        LatLng TIMES_SQUARE = new LatLng(40.7566, -73.9863);
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(TIMES_SQUARE, CLOSE_UP_ZOOM_LEVEL));
-        map.addMarker(new MarkerOptions().position(TIMES_SQUARE)
-                .title("Next subways:")
-                .snippet("In 3 minutes")
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.number_1)));
 
+    }
+
+    public void setupStationsListScreen(String line) {
+
+        List<StationEntranceData> stationEntranceDataList = mQueryHelper.queryForLineStops(line);
+
+        // TODO: setup proper subway line icon in the stations list
+        StationListAdapter stationListAdapter = new StationListAdapter(MapActivity.this, R.layout.station_list_item,
+                                                 stationEntranceDataList, R.drawable.metro_icon_transparent, line);
+
+        ListView stationsListView = (ListView) findViewById(R.id.stations_list);
+        stationsListView.setAdapter(stationListAdapter);
+
+    }
+
+    public int getIconForLine(char line) {
+        int iconResId = 0;
+        switch (line) {
+            case '1': iconResId = R.drawable.number_1; break;
+            case '2': iconResId = R.drawable.number_2; break;
+            case '3': iconResId = R.drawable.number_3; break;
+            case '4': iconResId = R.drawable.number_4; break;
+            case '5': iconResId = R.drawable.number_5; break;
+            case '6': iconResId = R.drawable.number_6; break;
+            case '7': iconResId = R.drawable.number_7; break;
+            case 'A': iconResId = R.drawable.letter_a; break;
+            case 'B': iconResId = R.drawable.letter_b; break;
+            case 'C': iconResId = R.drawable.letter_c; break;
+            case 'D': iconResId = R.drawable.letter_d; break;
+            case 'E': iconResId = R.drawable.letter_e; break;
+            case 'F': iconResId = R.drawable.letter_f; break;
+            case 'G': iconResId = R.drawable.letter_g; break;
+            case 'J': iconResId = R.drawable.letter_j; break;
+            case 'L': iconResId = R.drawable.letter_l; break;
+            case 'M': iconResId = R.drawable.letter_m; break;
+            case 'N': iconResId = R.drawable.letter_n; break;
+            case 'Q': iconResId = R.drawable.letter_q; break;
+            case 'R': iconResId = R.drawable.letter_r; break;
+            case 'S': iconResId = R.drawable.letter_s; break;
+            case 'Z': iconResId = R.drawable.letter_z; break;
+        }
+        return iconResId;
     }
 
 //    public class CustomInfoWindowAdapter extends GoogleMap.InfoWindowAdapter {

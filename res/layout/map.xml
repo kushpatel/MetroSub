@@ -3,11 +3,45 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent">
 
+    <!-- map fragment -->
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/map"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:name="com.google.android.gms.maps.MapFragment"/>
+
+    <!-- option bar showing plan trip by line and location buttons overlaid on map fragment -->
+    <FrameLayout
+            android:id="@+id/map_options_bar"
+            android:layout_height="@dimen/option_bar_button_container_height"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true">
+        <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:alpha=".7"/>
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+            <Button
+                    android:id="@+id/plan_trip_lines_button"
+                    android:text="@string/plan_trip_subway_lines"
+                    style="@style/rectangle_button_style"
+                    />
+
+            <Button
+                    android:id="@+id/plan_trip_location_button"
+                    android:text="@string/plan_trip_location"
+                    style="@style/rectangle_button_style"
+                    />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- trip by line screen showing clickable subway line buttons -->
     <RelativeLayout
             android:id="@+id/select_trip_by_line_screen"
             android:layout_width="fill_parent"
@@ -29,7 +63,7 @@
                 <TableLayout
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:paddingBottom="50dp">
+                        android:paddingBottom="@dimen/option_bar_button_container_height">
                     <TableRow
                             android:layout_height="wrap_content"
                             android:layout_width="fill_parent"
@@ -96,44 +130,53 @@
         </ScrollView>
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/option_bar_button_container_height"
                 android:gravity="center"
                 android:layout_alignParentBottom="true">
             <Button
-                    android:id="@+id/go_back_button"
+                    android:id="@+id/go_back_button_select_line"
                     style="@style/rectangle_button_style"
                     android:text="@string/go_back"
                     />
         </LinearLayout>
     </RelativeLayout>
 
-    <FrameLayout
-            android:id="@+id/map_options_bar"
-            android:layout_height="50dp"
-            android:layout_width="match_parent"
-            android:layout_alignParentBottom="true">
-        <ImageView
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:background="@color/black"
-                android:alpha=".7"/>
+    <!-- All the stations on the selected line in an inflated list view -->
+    <RelativeLayout
+            android:id="@+id/stations_list_screen"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone">
+
+        <FrameLayout
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent">
+            <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:alpha=".7"/>
+
+            <ListView
+                    android:id="@+id/stations_list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:paddingBottom="@dimen/option_bar_button_container_height"
+                    android:divider="@color/grey"
+                    android:dividerHeight="1dip">
+            </ListView>
+        </FrameLayout>
+
         <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
+                android:layout_height="@dimen/option_bar_button_container_height"
+                android:gravity="center"
+                android:layout_alignParentBottom="true">
             <Button
-                    android:id="@+id/plan_trip_lines_button"
-                    android:text="@string/plan_trip_subway_lines"
+                    android:id="@+id/go_back_button_stations_list"
                     style="@style/rectangle_button_style"
+                    android:text="@string/go_back"
                     />
-
-            <Button
-                    android:id="@+id/plan_trip_location_button"
-                    android:text="@string/plan_trip_location"
-                    style="@style/rectangle_button_style"
-                    />
-
         </LinearLayout>
-    </FrameLayout>
+    </RelativeLayout>
 </RelativeLayout>
