@@ -29,16 +29,13 @@ public class StationListAdapter extends ArrayAdapter {
     private LayoutInflater mLayoutInflator;
     private Context mContext;
     private int mImageResId;
-    private String mLine;
 
-    public StationListAdapter(Context context, int resourceId, List<StationEntranceData> stationsList,
-                              int imageResId, String line) {
+    public StationListAdapter(Context context, int resourceId, List<StationEntranceData> stationsList, int imageResId) {
         super(context, resourceId, stationsList);
         mResourceId = resourceId;
         mContext = context;
         mLayoutInflator = LayoutInflater.from(context);
         mImageResId = imageResId;
-        mLine = line;
     }
 
     @Override
@@ -52,19 +49,6 @@ public class StationListAdapter extends ArrayAdapter {
 
         final ImageView lineImage = (ImageView) convertView.findViewById(R.id.line_image);
         lineImage.setImageDrawable(mContext.getResources().getDrawable(mImageResId));
-
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Reload MapActivity passing marker point information in Bundle extras
-                Intent intent = new Intent(mContext, MapActivity.class);
-                intent.putExtra(MapActivity.EXTRA_PLAN_TRIP_BY_LINE, true);
-                intent.putExtra(MapActivity.EXTRA_LINE, mLine);
-                intent.putExtra(MapActivity.EXTRA_STATION_LAT, stationEntranceData.getStationLat());
-                intent.putExtra(MapActivity.EXTRA_STATION_LON, stationEntranceData.getStationLon());
-                mContext.startActivity(intent);
-            }
-        });
 
         return convertView;
     }
