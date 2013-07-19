@@ -14,15 +14,16 @@ import java.io.InputStream;
  * Time: 10:03 PM
  * To change this template use File | Settings | File Templates.
  */
-public class RetrieveFeedTask extends AsyncTask<InputStream, Void, ByteString> {
+public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
 
     private String TAG = "RetrieveFeedTask";
 
     @Override
-    protected ByteString doInBackground(InputStream... inputStreamArr) {
+    protected ByteString doInBackground(Void... voids) {
 
-        // first parameter will be the required input stream
-        InputStream inputStream = inputStreamArr[0];
+        // get GTFS data stream from http request
+        FeedHttpRequest feed = new FeedHttpRequest();
+        InputStream inputStream = feed.getRequestData();
 
         ByteString feedByteString = null;
         try {

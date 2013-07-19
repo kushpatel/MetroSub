@@ -7,6 +7,10 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.transit.realtime.GtfsRealtime;
 import com.google.transit.realtime.NyctSubway;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: kushpatel
@@ -35,6 +39,53 @@ public class GtfsParser {
         }
     }
 
+    private List<Long> getNextTrainsTimestamps(String line, String stopId) {
+
+        List<Long> nextTrainTimesList = new ArrayList<Long>();
+
+        // for each entity (train) in the feed
+        for (GtfsRealtime.FeedEntity feedEntity : feedMessage.getEntityList()) {
+            // trains matching the line provided as parameter
+            if (feedEntity.getTripUpdate().getTrip().getRouteId().equals(line)) {
+                // Iterate over all the trains stops
+                for (GtfsRealtime.TripUpdate.StopTimeUpdate stopTimeUpdate : feedEntity.getTripUpdate().getStopTimeUpdateList()) {
+                    // trains having stops at the stopId specified
+                    if (stopTimeUpdate.getStopId().equals(stopId)) {
+                        nextTrainTimesList.add(stopTimeUpdate.getArrival().getTime());
+                    }
+                }
+            }
+        }
+        return nextTrainTimesList;
+    }
+
+    // Fun fact: Unix timestamp = number of seconds since 1st Jan 1970, 00:00:00 UTC
+    private Calendar getTimeFromUnixTimeStamp(long unixTimeStamp) {
+        // java.util.Date expects time in milliseconds
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(unixTimeStamp * 1000);
+        return calendar;
+    }
+
+    public List<Integer> getNextTrainsArrival(String line, String stopId) {
+
+        // Current time is in seconds
+        long currentTime = System.currentTimeMillis() / 1000;
+
+        List<Long> trainTimestamps = getNextTrainsTimestamps(line, stopId);
+        List<Integer> nextTrainsInMinutesList = new ArrayList<Integer>();
+
+        for (long trainTimestamp : trainTimestamps) {
+            int timeDifference = (int) (trainTimestamp - currentTime) / 60;
+            // only add train time if it is yet to arrive
+            if (timeDifference > 0) {
+                nextTrainsInMinutesList.add(timeDifference);
+            }
+        }
+
+        return nextTrainsInMinutesList;
+    }
+
     public void sampleAPILogger() {
 
         /**
@@ -52,6 +103,7 @@ public class GtfsParser {
          *                 4) extension = nyctFeedHeader
          **/
         Log.d(TAG,"Header realtime version = " + feedHeader.getGtfsRealtimeVersion());
+        Log.d(TAG, "Feed timestamp = " + feedHeader.getTimestamp());
 
         /**
          * Extension = nyctFeedHeader has: 1) nyct_subway_version
@@ -87,11 +139,17 @@ public class GtfsParser {
 
         GtfsRealtime.TripDescriptor tripDescriptor = tripUpdate.getTrip();
         Log.d(TAG, "Entity 1, trip id = " + tripDescriptor.getTripId());
+        Log.d(TAG, "Entity 1, route id = " + tripDescriptor.getRouteId());
         Log.d(TAG,"Entity 1, train id = " + tripDescriptor.getExtension(NyctSubway.nyctTripDescriptor).getTrainId());
+        Log.d(TAG, "Entity 1, direction = " + tripDescriptor.getExtension(NyctSubway.nyctTripDescriptor).getDirection().toString());
+        Log.d(TAG, "Entity 1, start time = " + tripDescriptor.getStartTime());
+        Log.d(TAG, "Entity 1, start date = " + tripDescriptor.getStartDate());
 
         Log.d(TAG,"Entity 1, number of stations = " + tripUpdate.getStopTimeUpdateCount());
         GtfsRealtime.TripUpdate.StopTimeUpdate stopTimeUpdate_1 = tripUpdate.getStopTimeUpdate(0);
         Log.d(TAG, "Entity 1, 1st stop id = " + stopTimeUpdate_1.getStopId());
+        Log.d(TAG, "Entity 1, 1st stop arrival = " + stopTimeUpdate_1.getArrival().getTime());
+        Log.d(TAG, "Entity 1, 1st stop departure = " + stopTimeUpdate_1.getDeparture().getTime());
         Log.d(TAG,"Entity 1, 1st stop id's actual track = " +
                 stopTimeUpdate_1.getExtension(NyctSubway.nyctStopTimeUpdate).getActualTrack());
 
@@ -117,6 +175,10 @@ public class GtfsParser {
         //entitySelector.getRouteId();
 
         // TODO: How to access StopTimeEvent?
+
+
+        List<Integer> times = getNextTrainsArrival("1","137N");
+        Log.d(TAG, "Next line 1 at station 137N times are: " + times.toString());
     }
 
 }
