@@ -196,23 +196,6 @@ public class MapActivity extends BaseActivity {
         /* Database query examples
         ================================================================================================================*/
 
-        // Example of how to query the loaded database
-        DatabaseHelper databaseHelper = getMainApp().getDatabaseHelper();
-        StopsDao stopsDao = databaseHelper.getStopsDao();
-        StopData queriedData = stopsDao.queryForId("127N");   // should be Times Sq.
-        if (queriedData != null) {
-            Log.d(TAG, "Queried data = " + queriedData.getStopId() + " " + queriedData.getStopName() + " " + queriedData.getStopLat() + " " +
-                    queriedData.getStopLon() + " " + queriedData.getLocationType() + " " + queriedData.getParentStation());
-        }
-
-        TripsDao tripsDao = databaseHelper.getTripsDao();
-        TripData queriedData2 = tripsDao.queryForId("A20121216WKD_036000_1..N03R");   // should be Van Cortlandt Park - 242 St
-        if (queriedData2 != null) {
-            Log.d(TAG, "Queried data = " + queriedData2.getRouteId() + " " + queriedData2.getServiceId() + " " + queriedData2.getTripId() + " " +
-                    queriedData2.getTripHeadSign() + " " + queriedData2.getDirectionId() + " " + queriedData2.getShapeId());
-        }
-
-        // Example of how to use QueryHelper to query the database
         ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
         Log.d(TAG, routeLines.toString());
 
