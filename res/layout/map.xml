@@ -177,6 +177,21 @@
                     style="@style/rectangle_button_style"
                     android:text="@string/go_back"
                     />
+
         </LinearLayout>
     </RelativeLayout>
+    <Button
+            android:id="@+id/zoomin"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:layout_alignParentLeft="true" android:layout_marginLeft="11dp"
+            android:layout_below="@+id/select_trip_by_line_screen"/>
+    <Button
+            android:id="@+id/zoomout"
+            android:layout_width="119dp"
+            android:layout_height="43dp"
+            android:text="-"
+            android:layout_alignLeft="@+id/zoomin" android:layout_below="@+id/zoomin"
+            android:layout_alignRight="@+id/zoomin"/>
 </RelativeLayout>

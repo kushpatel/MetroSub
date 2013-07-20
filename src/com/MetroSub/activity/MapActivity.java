@@ -16,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
@@ -109,6 +110,23 @@ public class MapActivity extends BaseActivity {
             }
         });
 
+        Button zoominButton = (Button) findViewById(R.id.zoomin);
+        zoominButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.animateCamera(CameraUpdateFactory.zoomIn());
+
+            }
+        });
+        Button zoomoutButton = (Button) findViewById(R.id.zoomout);
+        zoomoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.animateCamera(CameraUpdateFactory.zoomOut());
+
+            }
+        });
+
         Button lineButton_1 = (Button) findViewById(R.id.line_1_button);
         lineButton_1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,14 +206,14 @@ public class MapActivity extends BaseActivity {
         /* Database query examples
         ================================================================================================================*/
 
-        ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
+/*        ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
         Log.d(TAG, routeLines.toString());
 
         List<StationEntranceData> stations = mQueryHelper.queryForLineStops("3");
         for (StationEntranceData station : stations) {
             Log.d(TAG, "Line 3 goes through: " + station.getStationName());
         }
-
+  *///SHENIL
         //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
 
     }
