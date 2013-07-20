@@ -206,14 +206,14 @@ public class MapActivity extends BaseActivity {
         /* Database query examples
         ================================================================================================================*/
 
-/*        ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
+        ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
         Log.d(TAG, routeLines.toString());
 
         List<StationEntranceData> stations = mQueryHelper.queryForLineStops("3");
         for (StationEntranceData station : stations) {
             Log.d(TAG, "Line 3 goes through: " + station.getStationName());
         }
-  *///SHENIL
+
         //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
 
     }
