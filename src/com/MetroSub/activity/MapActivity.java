@@ -1,7 +1,6 @@
 package com.MetroSub.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,7 +15,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
@@ -72,6 +70,23 @@ public class MapActivity extends BaseActivity {
         /* Map screen UI setup
         ================================================================================================================*/
 
+        Button zoominButton = (Button) findViewById(R.id.zoomin);
+        zoominButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.animateCamera(CameraUpdateFactory.zoomIn());
+
+            }
+        });
+        Button zoomoutButton = (Button) findViewById(R.id.zoomout);
+        zoomoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.animateCamera(CameraUpdateFactory.zoomOut());
+
+            }
+        });
+
         Button tripByLinesButton = (Button) findViewById(R.id.plan_trip_lines_button);
         tripByLinesButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,22 +124,6 @@ public class MapActivity extends BaseActivity {
             }
         });
 
-        Button zoominButton = (Button) findViewById(R.id.zoomin);
-        zoominButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map.animateCamera(CameraUpdateFactory.zoomIn());
-
-            }
-        });
-        Button zoomoutButton = (Button) findViewById(R.id.zoomout);
-        zoomoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map.animateCamera(CameraUpdateFactory.zoomOut());
-
-            }
-        });
 
         Button lineButton_1 = (Button) findViewById(R.id.line_1_button);
         lineButton_1.setOnClickListener(new View.OnClickListener() {
