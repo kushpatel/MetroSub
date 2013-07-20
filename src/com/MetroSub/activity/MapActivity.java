@@ -18,7 +18,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -185,16 +184,6 @@ public class MapActivity extends BaseActivity {
         //task.execute();
         //mGtfsParser.sampleAPILogger();
 
-        /* Database query examples
-        ================================================================================================================*/
-
-        ArrayList<Character> routeLines = mQueryHelper.queryForStopLines("127");  // should give Times Sq lines
-        Log.d(TAG, routeLines.toString());
-
-        List<StationEntranceData> stations = mQueryHelper.queryForLineStops("3");
-        for (StationEntranceData station : stations) {
-            Log.d(TAG, "Line 3 goes through: " + station.getStationName());
-        }
 
         //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
 
