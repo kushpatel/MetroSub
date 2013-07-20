@@ -9,8 +9,7 @@ import android.widget.ListView;
 import com.MetroSub.R;
 import com.MetroSub.database.QueryHelper;
 import com.MetroSub.database.dataobjects.StationEntranceData;
-import com.MetroSub.datamine.FeedHttpRequest;
-import com.MetroSub.datamine.RetrieveFeedTask;
+import com.MetroSub.datamine.GtfsParser;
 import com.MetroSub.ui.StationListAdapter;
 import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,8 +18,6 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +37,7 @@ public class MapActivity extends BaseActivity {
     public static final float CLOSE_UP_ZOOM_LEVEL = 17;
 
     private QueryHelper mQueryHelper;
+    private GtfsParser mGtfsParser;
 
     protected GoogleMap map;
     protected View mMapOptionsBar;
@@ -52,6 +50,7 @@ public class MapActivity extends BaseActivity {
         setContentView(R.layout.map);
 
         mQueryHelper = getMainApp().getQueryHelper();
+        mGtfsParser = getMainApp().getGtfsParser();
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMapOptionsBar = findViewById(R.id.map_options_bar);
@@ -182,8 +181,9 @@ public class MapActivity extends BaseActivity {
         //InputStream inputStream = getResources().openRawResource(R.raw.gtfs);
 
         // example of how to retrieve data feed in the background
-        RetrieveFeedTask task = new RetrieveFeedTask();
-        task.execute();
+        //RetrieveFeedTask task = new RetrieveFeedTask();
+        //task.execute();
+        //mGtfsParser.sampleAPILogger();
 
         /* Database query examples
         ================================================================================================================*/
@@ -197,6 +197,7 @@ public class MapActivity extends BaseActivity {
         }
 
         //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
+
     }
 
 
@@ -241,17 +242,26 @@ public class MapActivity extends BaseActivity {
                 // show the default map options bar
                 mMapOptionsBar.setVisibility(View.VISIBLE);
 
-                //set up marker on google map
+                // Pre-processing before marker can be set up on the map
                 StationEntranceData stationEntranceData = (StationEntranceData) adapterView.getAdapter().getItem(position);
                 int iconResId = UIUtils.getIconForLine(line.charAt(0));
                 String stationLat = stationEntranceData.getStationLat();
-                String stationLon = stationEntranceData.getCornerLon();
-                LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat),Double.parseDouble(stationLon));
+                String stationLon = stationEntranceData.getStationLon();
+
+                String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
+                // TODO : check for North or South here using switch to be added
+                String lineDirection = "N";
+                List<Integer> nextTrainTimes  = mGtfsParser.getNextTrainsArrival(line, stopId + lineDirection);
+                String markerTitle = nextTrainTimes.isEmpty() ? "No subways available."  : "Next subway:";
+                String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + " minutes.";
+
+                // Set up marker on google map
+                LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat), Double.parseDouble(stationLon));
                 map.clear();
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(stationCoordinates, CLOSE_UP_ZOOM_LEVEL));
                 map.addMarker(new MarkerOptions().position(stationCoordinates)
-                        .title("Next subways:")
-                        .snippet("In 3 minutes")
+                        .title(markerTitle)
+                        .snippet(markerSnippet)
                         .icon(BitmapDescriptorFactory.fromResource(iconResId)));
             }
         });

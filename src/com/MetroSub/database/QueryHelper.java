@@ -59,4 +59,8 @@ public class QueryHelper {
         return uniqueStationsData;
     }
 
+    public String queryForStopId(String lat, String lon) {
+        return mStopsDao.queryForStopId(lat,lon);
+    }
+
 }

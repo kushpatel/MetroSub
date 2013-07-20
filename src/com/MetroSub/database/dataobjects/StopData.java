@@ -15,12 +15,12 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "StopData", daoClass = StopsDao.class)
 public class StopData {
 
-    private static final String STOP_ID_COL_NAME = "stop_id";
-    private static final String STOP_NAME_COL_NAME = "stop_name";
-    private static final String STOP_LAT_COL_NAME = "stop_lat";
-    private static final String STOP_LON_COL_NAME = "stop_lon";
-    private static final String STOP_LOCATION_TYPE_COL_NAME = "location_type";
-    private static final String STOP_PARENT_STATION_COL_NAME = "parent_station";
+    public static final String STOP_ID_COL_NAME = "stop_id";
+    public static final String STOP_NAME_COL_NAME = "stop_name";
+    public static final String STOP_LAT_COL_NAME = "stop_lat";
+    public static final String STOP_LON_COL_NAME = "stop_lon";
+    public static final String STOP_LOCATION_TYPE_COL_NAME = "location_type";
+    public static final String STOP_PARENT_STATION_COL_NAME = "parent_station";
 
 
     @DatabaseField(id = true, uniqueIndex = true, columnName = STOP_ID_COL_NAME)

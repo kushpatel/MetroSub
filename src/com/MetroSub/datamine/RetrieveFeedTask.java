@@ -1,7 +1,10 @@
 package com.MetroSub.datamine;
 
+import android.app.Activity;
+import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
+import com.MetroSub.MainApp;
 import com.google.protobuf.*;
 
 import java.io.IOException;
@@ -37,13 +40,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
 
     protected void onPostExecute(ByteString data) {
 
-        // do stuff with feed data here!
-
         Log.d(TAG, "Http data feed = " + data.toStringUtf8());
-
-        GtfsParser gtfsParser = new GtfsParser(data);
-        // stub method that currently just Log.d various items parsed from GTFS data
-        gtfsParser.sampleAPILogger();
 
     }
 }

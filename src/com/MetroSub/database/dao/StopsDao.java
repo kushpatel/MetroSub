@@ -1,8 +1,11 @@
 package com.MetroSub.database.dao;
 
 import android.util.Log;
+import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.database.dataobjects.StopData;
 import com.j256.ormlite.dao.BaseDaoImpl;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
@@ -51,6 +54,22 @@ public class StopsDao extends BaseDaoImpl<StopData, String> {
             Log.e(TAG,"Query for stop id " + stopId + " failed: " + e.getMessage());
             return null;
         }
+    }
+
+    public String queryForStopId(String lat, String lon) {
+        String stopId = null;
+        try {
+            QueryBuilder<StopData, String> queryBuilder = queryBuilder();
+            queryBuilder.where().eq(StopData.STOP_LAT_COL_NAME, lat).and()
+                    .eq(StopData.STOP_LON_COL_NAME, lon);
+            PreparedQuery<StopData> preparedQuery = queryBuilder.prepare();
+            StopData data = queryForFirst(preparedQuery);
+            stopId = (data.getParentStation() == null || data.getParentStation().equals("")) ?
+                            data.getStopId() : data.getParentStation();
+        } catch (SQLException e) {
+            Log.e(TAG, "Query for station lat = " + lat + " lon = " + lon + " failed: " + e.getMessage());
+        }
+        return stopId;
     }
 
 }

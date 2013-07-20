@@ -8,6 +8,9 @@ import com.MetroSub.database.DatabaseCopier;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.LoadDatabaseTask;
 import com.MetroSub.database.QueryHelper;
+import com.MetroSub.datamine.GtfsParser;
+import com.MetroSub.datamine.RetrieveFeedTask;
+import com.google.protobuf.ByteString;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +27,8 @@ public class MainApp extends Application {
     private static MainApp appInstance = null;
     protected DatabaseHelper mDatabaseHelper = null;
     protected QueryHelper mQueryHelper = null;
+
+    public GtfsParser mGtfsParser = null;
 
     public static MainApp getAppInstance() {
         return appInstance;
@@ -44,6 +49,15 @@ public class MainApp extends Application {
 
         mDatabaseHelper = getDatabaseHelper();
         mQueryHelper = new QueryHelper(mDatabaseHelper);
+
+        try {
+            RetrieveFeedTask task = new RetrieveFeedTask();
+            ByteString data = task.execute().get();
+            mGtfsParser = new GtfsParser(data);
+        } catch (Exception e) {
+            Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
+        }
+
 
     }
 
@@ -77,5 +91,9 @@ public class MainApp extends Application {
 
     public QueryHelper getQueryHelper() {
         return mQueryHelper;
+    }
+
+    public GtfsParser getGtfsParser() {
+        return mGtfsParser;
     }
 }
