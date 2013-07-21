@@ -180,17 +180,7 @@ public class MapActivity extends BaseActivity {
         });
 
 
-        /* GTFS feed examples
-        ================================================================================================================*/
-
-        // get static gtfs data stream from local resource (res/raw/gtfs) -- for testing only!
-        //InputStream inputStream = getResources().openRawResource(R.raw.gtfs);
-
-        // example of how to retrieve data feed in the background
-        //RetrieveFeedTask task = new RetrieveFeedTask();
-        //task.execute();
         //mGtfsFeed.sampleAPILogger();
-
 
         //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
 

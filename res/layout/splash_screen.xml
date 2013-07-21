@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:background="@drawable/background"
-        >
-    <TextView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@color/black"
+                android:gravity="center">
+    <LinearLayout
+            android:id="@+id/splash_screen_icon"
+            android:layout_height="wrap_content"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="Welcome splash screen"
-            android:gravity="center"
-            android:textColor="@color/blue_cobalt"
-            android:textSize="40dp"
-            />
-</LinearLayout>
+            android:gravity="center">
+        <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@drawable/metro_icon_transparent">
+        </ImageView>
+    </LinearLayout>
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_below="@id/splash_screen_icon"
+            android:gravity="center">
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="MetroSub"
+
+                android:textColor="@color/white"
+                android:textSize="35dp">
+        </TextView>
+    </LinearLayout>
+</RelativeLayout>
 
