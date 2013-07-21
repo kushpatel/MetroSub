@@ -9,9 +9,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import com.MetroSub.MainApp;
-import com.MetroSub.R;
 import com.MetroSub.database.QueryHelper;
-import com.MetroSub.datamine.GtfsParser;
+import com.MetroSub.datamine.GtfsFeed;
 import com.MetroSub.datamine.RetrieveFeedTask;
 import com.google.protobuf.ByteString;
 
@@ -33,7 +32,7 @@ public class BaseActivity extends Activity {
     private MainApp mainApp = MainApp.getAppInstance();
 
     protected QueryHelper mQueryHelper;
-    protected GtfsParser mGtfsParser;
+    protected GtfsFeed mGtfsFeed;
 
     protected final long RETRIEVE_FEED_TASK_DELAY = 60 * 1000;
 
@@ -46,11 +45,11 @@ public class BaseActivity extends Activity {
         }
 
         mQueryHelper = getMainApp().getQueryHelper();
-        mGtfsParser = getMainApp().getGtfsParser();
+        mGtfsFeed = getMainApp().getGtfsFeed();
 
         // Periodically fetch new GTFS feed in the background .. after every 1 minute
-        //Timer retrieveFeedTimer = new Timer();
-        //retrieveFeedTimer.scheduleAtFixedRate(new RetrieveFeedTimerTask(), RETRIEVE_FEED_TASK_DELAY, RETRIEVE_FEED_TASK_DELAY);
+        Timer retrieveFeedTimer = new Timer();
+        retrieveFeedTimer.scheduleAtFixedRate(new RetrieveFeedTimerTask(), RETRIEVE_FEED_TASK_DELAY, RETRIEVE_FEED_TASK_DELAY);
 
         mActionBar = getActionBar();
         //mActionBar.setTitle(ACTION_BAR_TITLE);
@@ -66,10 +65,22 @@ public class BaseActivity extends Activity {
 
     private class RetrieveFeedTimerTask extends TimerTask {
         public void run() {
-            mGtfsParser = mainApp.fetchFeedData();
+            updateFeedData();
         }
     }
 
+    protected void updateFeedData() {
+        if (mainApp.isNetworkAvailable()) {
+            try {
+                RetrieveFeedTask task = new RetrieveFeedTask();
+                Log.d(TAG, "Retrieving feed...");
+                ByteString data = task.execute().get();
+                mGtfsFeed.updateGtfsFeed(data);
+            } catch (Exception e) {
+                Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
+            }
+        }
+    }
 
     public String getApplicationName() {
         final PackageManager packageManager = getApplicationContext().getPackageManager();

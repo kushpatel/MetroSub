@@ -11,7 +11,7 @@ import com.MetroSub.database.DatabaseCopier;
 import com.MetroSub.database.DatabaseHelper;
 import com.MetroSub.database.LoadDatabaseTask;
 import com.MetroSub.database.QueryHelper;
-import com.MetroSub.datamine.GtfsParser;
+import com.MetroSub.datamine.GtfsFeed;
 import com.MetroSub.datamine.RetrieveFeedTask;
 import com.google.protobuf.ByteString;
 
@@ -33,7 +33,7 @@ public class MainApp extends Application {
 
     public boolean mNetworkConnectionStatus;
 
-    public GtfsParser mGtfsParser = null;
+    public GtfsFeed mGtfsFeed = null;
 
     public static MainApp getAppInstance() {
         return appInstance;
@@ -58,7 +58,7 @@ public class MainApp extends Application {
         mQueryHelper = new QueryHelper(mDatabaseHelper);
 
         // Need to wait for the first time GTFS data feed loads
-        mGtfsParser = fetchFeedData();
+        mGtfsFeed = fetchFeedData();
     }
 
     @Override
@@ -76,13 +76,13 @@ public class MainApp extends Application {
         return (networkInfo != null && networkInfo.isConnected());
     }
 
-    public GtfsParser fetchFeedData() {
+    private GtfsFeed fetchFeedData() {
         if (isNetworkAvailable()) {
             try {
                 RetrieveFeedTask task = new RetrieveFeedTask();
                 Log.d(TAG, "Retrieving feed...");
                 ByteString data = task.execute().get();
-                return new GtfsParser(data);
+                return new GtfsFeed(data);
             } catch (Exception e) {
                 Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
             }
@@ -113,8 +113,8 @@ public class MainApp extends Application {
         return mQueryHelper;
     }
 
-    public GtfsParser getGtfsParser() {
-        return mGtfsParser;
+    public GtfsFeed getGtfsFeed() {
+        return mGtfsFeed;
     }
 
     public boolean getNetworkConnectionStatus() {

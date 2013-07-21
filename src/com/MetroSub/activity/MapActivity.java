@@ -189,7 +189,7 @@ public class MapActivity extends BaseActivity {
         // example of how to retrieve data feed in the background
         //RetrieveFeedTask task = new RetrieveFeedTask();
         //task.execute();
-        //mGtfsParser.sampleAPILogger();
+        //mGtfsFeed.sampleAPILogger();
 
 
         //getShaKey(this);     //code to troubleshoot if key for google maps api is incorrect
@@ -246,9 +246,9 @@ public class MapActivity extends BaseActivity {
                 String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
                 // TODO : check for North or South here using switch to be added
                 String lineDirection = "N";
-                List<Integer> nextTrainTimes  = mGtfsParser.getNextTrainsArrival(line, stopId + lineDirection);
+                List<Integer> nextTrainTimes  = mGtfsFeed.getNextTrainsArrival(line, stopId + lineDirection);
                 String markerTitle = nextTrainTimes.isEmpty() ? "Live data not available."  : "Next subway:";
-                String minuteString = (nextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
+                String minuteString = (!nextTrainTimes.isEmpty() && nextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
                 String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + minuteString;
 
                 // TODO: Add custom info window to marker
