@@ -6,9 +6,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import com.MetroSub.R;
-import com.MetroSub.database.QueryHelper;
 import com.MetroSub.database.dataobjects.StationEntranceData;
-import com.MetroSub.datamine.GtfsParser;
 import com.MetroSub.ui.StationListAdapter;
 import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -34,9 +32,6 @@ public class MapActivity extends BaseActivity {
     public static final float DEFAULT_ZOOM_LEVEL = 12;
     public static final float CLOSE_UP_ZOOM_LEVEL = 17;
 
-    private QueryHelper mQueryHelper;
-    private GtfsParser mGtfsParser;
-
     protected GoogleMap map;
     protected View mMapOptionsBar;
     protected View mSelectTripByLinesScreen;
@@ -46,9 +41,6 @@ public class MapActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
-
-        mQueryHelper = getMainApp().getQueryHelper();
-        mGtfsParser = getMainApp().getGtfsParser();
 
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMapOptionsBar = findViewById(R.id.map_options_bar);

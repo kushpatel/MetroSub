@@ -1,7 +1,12 @@
 package com.MetroSub;
 
+import android.app.AlertDialog;
 import android.app.Application;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import com.MetroSub.database.DatabaseCopier;
@@ -28,6 +33,8 @@ public class MainApp extends Application {
     protected DatabaseHelper mDatabaseHelper = null;
     protected QueryHelper mQueryHelper = null;
 
+    public boolean mNetworkConnectionStatus;
+
     public GtfsParser mGtfsParser = null;
 
     public static MainApp getAppInstance() {
@@ -40,6 +47,8 @@ public class MainApp extends Application {
 
         appInstance = this;
 
+        mNetworkConnectionStatus = isNetworkAvailable();
+
         // Uncomment this line to load database on device --- !! TAKES VERY LONG !!
         // instead concatenate the .db chunks in res/raw and copy the .db file to device's database folder
         //setupDatabase();
@@ -50,15 +59,15 @@ public class MainApp extends Application {
         mDatabaseHelper = getDatabaseHelper();
         mQueryHelper = new QueryHelper(mDatabaseHelper);
 
-        try {
-            RetrieveFeedTask task = new RetrieveFeedTask();
-            ByteString data = task.execute().get();
-            mGtfsParser = new GtfsParser(data);
-        } catch (Exception e) {
-            Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
+        if (isNetworkAvailable()) {
+            try {
+                RetrieveFeedTask task = new RetrieveFeedTask();
+                ByteString data = task.execute().get();
+                mGtfsParser = new GtfsParser(data);
+            } catch (Exception e) {
+                Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
+            }
         }
-
-
     }
 
     @Override
@@ -68,6 +77,12 @@ public class MainApp extends Application {
         if (mDatabaseHelper != null) {
             mDatabaseHelper.close();
         }
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
     public void setupDatabase() {
@@ -95,5 +110,9 @@ public class MainApp extends Application {
 
     public GtfsParser getGtfsParser() {
         return mGtfsParser;
+    }
+
+    public boolean getNetworkConnectionStatus() {
+        return this.mNetworkConnectionStatus;
     }
 }
