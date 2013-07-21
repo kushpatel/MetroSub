@@ -227,10 +227,9 @@ public class MapActivity extends BaseActivity {
 
         List<StationEntranceData> stationEntranceDataList = mQueryHelper.queryForLineStops(line);
 
-        // TODO: setup proper subway line icon in the stations list
         int iconResId = UIUtils.getIconForLine(line.charAt(0));
         StationListAdapter stationListAdapter = new StationListAdapter(MapActivity.this, R.layout.station_list_item,
-                stationEntranceDataList, iconResId); //R.drawable.metro_icon_transparent);
+                stationEntranceDataList, iconResId);
 
         ListView stationsListView = (ListView) findViewById(R.id.stations_list);
         stationsListView.setAdapter(stationListAdapter);
@@ -268,20 +267,8 @@ public class MapActivity extends BaseActivity {
                         .title(markerTitle)
                         .snippet(markerSnippet)
                         .icon(BitmapDescriptorFactory.fromResource(iconResId)));
-                       // .icon(BitmapDescriptorFactory.fromResource(iconResId)));
             }
         });
 
     }
-
-//    public class CustomInfoWindowAdapter extends GoogleMap.InfoWindowAdapter {
-//
-//        public View getInfoWindow(Marker marker) {
-//            return getWindow();
-//        }
-//
-//    }
-
-
-
 }
