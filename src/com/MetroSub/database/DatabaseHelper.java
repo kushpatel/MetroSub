@@ -25,7 +25,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public static final String DATABASE_NAME = "NyctStaticData.db";
 
     // Increase database version when making changes to the database
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Singleton instance of DatabaseHelper
     private static DatabaseHelper mDatabaseInstance = null;

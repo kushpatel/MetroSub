@@ -15,25 +15,25 @@ public class UIUtils {
         int iconResId = 0;
         switch (line) {
             case '1':
-                iconResId = R.drawable.number_1;
+                iconResId = R.drawable.subway1icon;
                 break;
             case '2':
-                iconResId = R.drawable.number_2;
+                iconResId = R.drawable.subway2icon;
                 break;
             case '3':
-                iconResId = R.drawable.number_3;
+                iconResId = R.drawable.subway3icon;
                 break;
             case '4':
-                iconResId = R.drawable.number_4;
+                iconResId = R.drawable.subway4icon;
                 break;
             case '5':
-                iconResId = R.drawable.number_5;
+                iconResId = R.drawable.subway5icon;
                 break;
             case '6':
-                iconResId = R.drawable.number_6;
+                iconResId = R.drawable.subway6icon;
                 break;
             case '7':
-                iconResId = R.drawable.number_7;
+                iconResId = R.drawable.subway7icon;
                 break;
             case 'A':
                 iconResId = R.drawable.letter_a;
@@ -75,7 +75,7 @@ public class UIUtils {
                 iconResId = R.drawable.letter_r;
                 break;
             case 'S':
-                iconResId = R.drawable.letter_s;
+                iconResId = R.drawable.subwaysicon;
                 break;
             case 'Z':
                 iconResId = R.drawable.letter_z;
