@@ -248,7 +248,8 @@ public class MapActivity extends BaseActivity {
                 String lineDirection = "N";
                 List<Integer> nextTrainTimes  = mGtfsParser.getNextTrainsArrival(line, stopId + lineDirection);
                 String markerTitle = nextTrainTimes.isEmpty() ? "Live data not available."  : "Next subway:";
-                String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + " minutes.";
+                String minuteString = (nextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
+                String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + minuteString;
 
                 // TODO: Add custom info window to marker
                 // Set up marker on google map

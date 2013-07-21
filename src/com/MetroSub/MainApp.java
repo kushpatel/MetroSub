@@ -1,9 +1,7 @@
 package com.MetroSub;
 
-import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -59,15 +57,8 @@ public class MainApp extends Application {
         mDatabaseHelper = getDatabaseHelper();
         mQueryHelper = new QueryHelper(mDatabaseHelper);
 
-        if (isNetworkAvailable()) {
-            try {
-                RetrieveFeedTask task = new RetrieveFeedTask();
-                ByteString data = task.execute().get();
-                mGtfsParser = new GtfsParser(data);
-            } catch (Exception e) {
-                Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
-            }
-        }
+        // Need to wait for the first time GTFS data feed loads
+        mGtfsParser = fetchFeedData();
     }
 
     @Override
@@ -83,6 +74,20 @@ public class MainApp extends Application {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         return (networkInfo != null && networkInfo.isConnected());
+    }
+
+    public GtfsParser fetchFeedData() {
+        if (isNetworkAvailable()) {
+            try {
+                RetrieveFeedTask task = new RetrieveFeedTask();
+                Log.d(TAG, "Retrieving feed...");
+                ByteString data = task.execute().get();
+                return new GtfsParser(data);
+            } catch (Exception e) {
+                Log.e(TAG, "Unable to retrieve GTFS data: " + e.getMessage());
+            }
+        }
+        return null;
     }
 
     public void setupDatabase() {

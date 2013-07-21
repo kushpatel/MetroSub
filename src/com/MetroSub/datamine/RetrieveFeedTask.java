@@ -40,7 +40,7 @@ public class RetrieveFeedTask extends AsyncTask<Void, Void, ByteString> {
 
     protected void onPostExecute(ByteString data) {
 
-        Log.d(TAG, "Http data feed = " + data.toStringUtf8());
+        //Log.d(TAG, "Http data feed = " + data.toStringUtf8());
 
     }
 }
