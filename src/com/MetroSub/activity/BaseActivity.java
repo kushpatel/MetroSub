@@ -34,6 +34,8 @@ public class BaseActivity extends Activity {
     protected QueryHelper mQueryHelper;
     protected GtfsFeed mGtfsFeed;
 
+    private Timer mRetrieveFeedTimer;
+
     protected final long RETRIEVE_FEED_TASK_DELAY = 60 * 1000;
 
     @Override
@@ -48,8 +50,8 @@ public class BaseActivity extends Activity {
         mGtfsFeed = getMainApp().getGtfsFeed();
 
         // Periodically fetch new GTFS feed in the background .. after every 1 minute
-        Timer retrieveFeedTimer = new Timer();
-        retrieveFeedTimer.scheduleAtFixedRate(new RetrieveFeedTimerTask(), RETRIEVE_FEED_TASK_DELAY, RETRIEVE_FEED_TASK_DELAY);
+        mRetrieveFeedTimer = new Timer();
+        mRetrieveFeedTimer.scheduleAtFixedRate(new RetrieveFeedTimerTask(), RETRIEVE_FEED_TASK_DELAY, RETRIEVE_FEED_TASK_DELAY);
 
         mActionBar = getActionBar();
         //mActionBar.setTitle(ACTION_BAR_TITLE);
@@ -57,6 +59,12 @@ public class BaseActivity extends Activity {
         //mActionBar.setDisplayShowTitleEnabled(false);
         //mActionBar.setDisplayShowHomeEnabled(false);
         //mActionBar.setCustomView(R.layout.action_bar);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRetrieveFeedTimer.cancel();
     }
 
     public MainApp getMainApp() {
