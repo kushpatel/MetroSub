@@ -1,6 +1,7 @@
 package com.MetroSub.database;
 
 import com.MetroSub.database.dao.*;
+import com.MetroSub.database.dataobjects.ShapeData;
 import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.database.dataobjects.StopData;
 
@@ -61,6 +62,10 @@ public class QueryHelper {
 
     public String queryForStopId(String lat, String lon) {
         return mStopsDao.queryForStopId(lat,lon);
+    }
+
+    public List<ShapeData> queryForAllShapePoints() {
+        return mShapesDao.queryForAll();
     }
 
 }

@@ -65,8 +65,6 @@ public class MapActivity extends BaseActivity {
         // Center and zoom camera on New York City ... default onStart case
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
 
-        // TODO: add custom zoom buttons
-
         /* Map screen UI setup
         ================================================================================================================*/
 
@@ -222,7 +220,6 @@ public class MapActivity extends BaseActivity {
         mStationsListScreen.setVisibility(View.VISIBLE);
 
         //Toast.makeText(MapActivity.this, "Line " + line + " selected!", Toast.LENGTH_LONG).show();
-        // TODO: Add custom info window to marker
 
     }
 
@@ -258,9 +255,10 @@ public class MapActivity extends BaseActivity {
                 // TODO : check for North or South here using switch to be added
                 String lineDirection = "N";
                 List<Integer> nextTrainTimes  = mGtfsParser.getNextTrainsArrival(line, stopId + lineDirection);
-                String markerTitle = nextTrainTimes.isEmpty() ? "No subways available."  : "Next subway:";
+                String markerTitle = nextTrainTimes.isEmpty() ? "Live data not available."  : "Next subway:";
                 String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + " minutes.";
 
+                // TODO: Add custom info window to marker
                 // Set up marker on google map
                 LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat), Double.parseDouble(stationLon));
                 map.clear();
