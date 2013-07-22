@@ -7,10 +7,12 @@ import com.MetroSub.MainApp;
 import com.MetroSub.R;
 import android.os.Handler;
 
-public class SplashScreenActivity extends Activity {
+public class SplashScreenActivity extends BaseActivity {
     /**
      * Called when the activity is first created.
      */
+
+    private static final String TAG = "SplashScreenActivity";
 
     private final int SPLASH_SCREEN_DELAY = 3000;
 
@@ -22,7 +24,7 @@ public class SplashScreenActivity extends Activity {
         // Hide action bar in splash screen
         getActionBar().hide();
 
-        if (MainApp.getAppInstance().getNetworkConnectionStatus()) {
+        if (getMainApp().getNetworkConnectionStatus()) {
         /* New Handler to start the MapActivity
          * and close this Splash-Screen after some seconds.*/
             new Handler().postDelayed(new Runnable() {
