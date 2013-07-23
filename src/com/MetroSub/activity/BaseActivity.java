@@ -8,7 +8,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import com.MetroSub.MainApp;
+import com.MetroSub.R;
 import com.MetroSub.database.QueryHelper;
 import com.MetroSub.datamine.GtfsFeed;
 import com.MetroSub.datamine.RetrieveFeedTask;
@@ -103,26 +105,19 @@ public class BaseActivity extends Activity {
 
     public void showAlertDialog() {
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        // set title
-        alertDialogBuilder.setTitle(getApplicationName() + " requires internet connection.");
-
-        // set dialog message
-        alertDialogBuilder
-                .setMessage("Please restart the application after connecting to the internet.")
-                .setCancelable(false)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                                                    new ContextThemeWrapper(this, AlertDialog.THEME_HOLO_LIGHT));
+        alertDialogBuilder.setTitle("Connection Error");
+        alertDialogBuilder.setMessage("Please restart the application after connecting to the internet.");
+        alertDialogBuilder.setCancelable(false);
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // exit the activity/app
                         BaseActivity.this.finish();
                     }
                 });
 
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
     }
 }
