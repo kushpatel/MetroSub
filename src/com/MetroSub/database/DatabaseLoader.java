@@ -127,6 +127,7 @@ public class DatabaseLoader {
                 shapeData.setGeneratedKey(tokens[SHAPE_ID_POS], tokens[SHAPE_PT_SEQUENCE_POS]);
                 shapeData.setShapePtLat(tokens[SHAPE_PT_LAT_POS]);
                 shapeData.setShapePtLon(tokens[SHAPE_PT_LON_POS]);
+                shapeData.setShapePtLine(tokens[SHAPE_ID_POS].charAt(0));
 
                 shapesDao.create(shapeData);
             }

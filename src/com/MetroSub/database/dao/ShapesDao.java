@@ -58,4 +58,13 @@ public class ShapesDao extends BaseDaoImpl<ShapeData, String> {
     public ShapeData queryForId(String shapeId, String shapePtSequence) {
         return queryForId(shapeId + SHAPES_TABLE_KEY_SEPARATOR + shapePtSequence);
     }
+
+    public List<ShapeData> queryForLinePoints(char line) {
+        try {
+            return queryForEq(ShapeData.SHAPE_PT_LINE_COL_NAME, line);
+        } catch (SQLException e) {
+            Log.e(TAG,"Query for points on line " + line + " failed: " + e.getMessage());
+            return null;
+        }
+    }
 }

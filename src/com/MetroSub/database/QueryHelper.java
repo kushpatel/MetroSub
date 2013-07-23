@@ -72,4 +72,8 @@ public class QueryHelper {
         return mShapesDao.queryForAll();
     }
 
+    public List<ShapeData> queryForAllLineShapePoints(String line) {
+        return mShapesDao.queryForLinePoints(line.charAt(0));
+    }
+
 }
