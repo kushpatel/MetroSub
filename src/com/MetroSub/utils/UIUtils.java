@@ -1,5 +1,6 @@
 package com.MetroSub.utils;
 
+import android.graphics.Color;
 import com.MetroSub.R;
 
 /**
@@ -82,5 +83,56 @@ public class UIUtils {
                 break;
         }
         return iconResId;
+    }
+
+    public static int getArgbColor(char line) {
+        int colorCode = 0;
+        try {
+            String lineHexColor = getLineHexColor(line);
+            colorCode = toArgb(lineHexColor);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return colorCode;
+    }
+
+    public static int toArgb(String colorCode) {
+
+        int alpha = 1;
+        int red   = Integer.parseInt(colorCode.substring(1, 3), 16);
+        int green = Integer.parseInt(colorCode.substring(3, 5), 16);
+        int blue  = Integer.parseInt(colorCode.substring(5, 7), 16);
+
+        return Color.argb(alpha, red, green, blue);
+    }
+
+    public static String getLineHexColor(char line) throws Exception {
+        String color;
+        switch (line) {
+            case('1'):   color = ("#EE352E"); break;
+            case('2'):   color = ("#EE352E"); break;
+            case('3'):   color = ("#EE352E"); break;
+            case('4'):   color = ("#00933C"); break;
+            case('5'):   color = ("#00933C"); break;
+            case('6'):   color = ("#00933C"); break;
+            case('7'):   color = ("#B933AD"); break;
+            case('A'):   color = ("#2850AD"); break;
+            case('B'):   color = ("#FF6319"); break;
+            case('C'):   color = ("#2850AD"); break;
+            case('D'):   color = ("#FF6319"); break;
+            case('E'):   color = ("#2850AD"); break;
+            case('F'):   color = ("#FF6319"); break;
+            case('G'):   color = ("#6CBE45"); break;
+            case('J'):   color = ("#996633"); break;
+            case('L'):   color = ("#A7A9AC"); break;
+            case('M'):   color = ("#FF6319"); break;
+            case('N'):   color = ("#FCCC0A"); break;
+            case('Q'):   color = ("#FCCC0A"); break;
+            case('R'):   color = ("#FCCC0A"); break;
+            case('S'):   color = ("#808183"); break;
+            case('Z'):   color = ("#996633"); break;
+            default:     throw new Exception("Unknown line " + line);
+        }
+        return color;
     }
 }

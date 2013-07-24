@@ -6,8 +6,10 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import com.MetroSub.R;
+import com.MetroSub.database.dataobjects.ShapeData;
 import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.ui.StationListAdapter;
+import com.MetroSub.ui.SubwayLinePlotter;
 import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -56,6 +58,10 @@ public class MapActivity extends BaseActivity {
 
         // Center and zoom camera on New York City ... default onStart case
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
+
+        // Add subway polylines
+        List<ShapeData> shapePoints = mQueryHelper.queryForAllLineShapePoints("5");
+        SubwayLinePlotter.drawLine("5",shapePoints,map);
 
         /* Map screen UI setup
         ================================================================================================================*/

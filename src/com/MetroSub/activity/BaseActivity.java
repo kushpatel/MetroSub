@@ -112,7 +112,6 @@ public class BaseActivity extends Activity {
         alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // exit the activity/app
                         BaseActivity.this.finish();
                     }
                 });
