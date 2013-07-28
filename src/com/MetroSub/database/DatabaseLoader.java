@@ -124,9 +124,11 @@ public class DatabaseLoader {
                 String[] tokens = TextUtils.split(row,DELIMITER);
 
                 ShapeData shapeData = new ShapeData();
-                shapeData.setGeneratedKey(tokens[SHAPE_ID_POS], tokens[SHAPE_PT_SEQUENCE_POS]);
+                shapeData.setShapeId(tokens[SHAPE_ID_POS]);
+                //shapeData.setGeneratedKey(tokens[SHAPE_ID_POS], tokens[SHAPE_PT_SEQUENCE_POS]);
                 shapeData.setShapePtLat(tokens[SHAPE_PT_LAT_POS]);
                 shapeData.setShapePtLon(tokens[SHAPE_PT_LON_POS]);
+                shapeData.setShapePtSequence(tokens[SHAPE_PT_SEQUENCE_POS]);
                 shapeData.setShapePtLine(tokens[SHAPE_ID_POS].charAt(0));
 
                 shapesDao.create(shapeData);

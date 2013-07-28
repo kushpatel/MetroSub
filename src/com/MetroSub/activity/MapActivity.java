@@ -60,8 +60,8 @@ public class MapActivity extends BaseActivity {
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
 
         // Add subway polylines
-        List<ShapeData> shapePoints = mQueryHelper.queryForAllLineShapePoints("5");
-        SubwayLinePlotter.drawLine("5",shapePoints,map);
+        List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
+        SubwayLinePlotter.drawLine("4",shapePoints,map);
 
         /* Map screen UI setup
         ================================================================================================================*/
@@ -251,6 +251,9 @@ public class MapActivity extends BaseActivity {
                 // Set up marker on google map
                 LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat), Double.parseDouble(stationLon));
                 map.clear();
+                // Add subway polylines
+                List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
+                SubwayLinePlotter.drawLine("4",shapePoints,map);
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(stationCoordinates, CLOSE_UP_ZOOM_LEVEL));
                 map.addMarker(new MarkerOptions().position(stationCoordinates)
                         .title(markerTitle)

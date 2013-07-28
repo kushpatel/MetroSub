@@ -67,4 +67,13 @@ public class ShapesDao extends BaseDaoImpl<ShapeData, String> {
             return null;
         }
     }
+
+    public List<ShapeData> queryForShapeIdPoints(String shapeId) {
+        try {
+            return queryForEq(ShapeData.SHAPE_ID_COL_NAME, shapeId);
+        } catch (SQLException e) {
+            Log.e(TAG,"Query for shapeId " + shapeId + " points failed: " + e.getMessage());
+            return null;
+        }
+    }
 }

@@ -76,4 +76,8 @@ public class QueryHelper {
         return mShapesDao.queryForLinePoints(line.charAt(0));
     }
 
+    public List<ShapeData> queryForAllShapePoints(String shapeId) {
+        return mShapesDao.queryForShapeIdPoints(shapeId);
+    }
+
 }
