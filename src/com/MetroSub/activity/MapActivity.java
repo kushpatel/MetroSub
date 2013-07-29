@@ -39,6 +39,7 @@ public class MapActivity extends BaseActivity {
     protected View mMapOptionsBar;
     protected View mSelectTripByLinesScreen;
     protected View mStationsListScreen;
+    protected View mScheduleAlertsOptionsBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class MapActivity extends BaseActivity {
         mMapOptionsBar = findViewById(R.id.map_options_bar);
         mSelectTripByLinesScreen = findViewById(R.id.select_trip_by_line_screen);
         mStationsListScreen = findViewById(R.id.stations_list_screen);
+        mScheduleAlertsOptionsBar = findViewById(R.id.schedule_alerts_option_bar);
 
 
         /* Map setup
@@ -121,6 +123,17 @@ public class MapActivity extends BaseActivity {
 
                 //Show the select trip by lines screen
                 mSelectTripByLinesScreen.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button startOver = (Button) findViewById(R.id.start_over_button);
+        startOver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Hide the schedule alerts options bar
+
+                // Show the options bar with trip selector buttons
+
             }
         });
 

@@ -4,4 +4,6 @@
     <string name="plan_trip_location">Trip by Location</string>
     <string name="plan_trip_subway_lines">Trip by Lines</string>
     <string name="go_back">Back</string>
+    <string name="schedule_alerts">Schedule Alerts</string>
+    <string name="start_over">Start over</string>
 </resources>
