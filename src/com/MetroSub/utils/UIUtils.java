@@ -89,21 +89,11 @@ public class UIUtils {
         int colorCode = 0;
         try {
             String lineHexColor = getLineHexColor(line);
-            colorCode = toArgb(lineHexColor);
+            colorCode = Color.parseColor(lineHexColor);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return colorCode;
-    }
-
-    public static int toArgb(String colorCode) {
-
-        int alpha = 1;
-        int red   = Integer.parseInt(colorCode.substring(1, 3), 16);
-        int green = Integer.parseInt(colorCode.substring(3, 5), 16);
-        int blue  = Integer.parseInt(colorCode.substring(5, 7), 16);
-
-        return Color.argb(alpha, red, green, blue);
     }
 
     public static String getLineHexColor(char line) throws Exception {

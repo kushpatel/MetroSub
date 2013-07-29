@@ -1,6 +1,5 @@
 package com.MetroSub.ui;
 
-import android.graphics.Color;
 import com.MetroSub.database.dataobjects.ShapeData;
 import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.GoogleMap;
@@ -27,9 +26,7 @@ public class SubwayLinePlotter {
         char lineName = line.charAt(0);
         int colorCode = UIUtils.getArgbColor(lineName);
 
-        //LatLng previousPoint = null;
-
-        PolylineOptions polylineOptions = new PolylineOptions().width(LINE_WIDTH).color(Color.BLUE).geodesic(true);
+        PolylineOptions polylineOptions = new PolylineOptions().width(LINE_WIDTH).color(colorCode).geodesic(true);
 
         for (ShapeData linePoint : linePointsList) {
 
@@ -37,15 +34,6 @@ public class SubwayLinePlotter {
             double lng = Double.parseDouble(linePoint.getShapePtLon());
 
             LatLng coordinate = new LatLng(lat, lng);
-
-//            if (previousPoint != null) {
-//                map.addPolyline(new PolylineOptions()
-//                        .add(previousPoint, currentPoint)
-//                        .width(5)
-//                        .color(Color.BLUE));
-//            }
-//
-//            previousPoint = currentPoint;
 
             polylineOptions.add(coordinate);
         }

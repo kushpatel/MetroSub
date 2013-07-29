@@ -63,6 +63,9 @@ public class MapActivity extends BaseActivity {
         List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
         SubwayLinePlotter.drawLine("4",shapePoints,map);
 
+        shapePoints = mQueryHelper.queryForAllShapePoints("E..N66R");
+        SubwayLinePlotter.drawLine("E",shapePoints,map);
+
         /* Map screen UI setup
         ================================================================================================================*/
 
