@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class MapActivity extends BaseActivity {
         SubwayLinePlotter.drawLine("4",shapePoints,map);
 
         shapePoints = mQueryHelper.queryForAllShapePoints("E..N66R");
-        SubwayLinePlotter.drawLine("E",shapePoints,map);
+        SubwayLinePlotter.drawLine("E", shapePoints, map);
 
         /* Map screen UI setup
         ================================================================================================================*/
@@ -250,18 +251,18 @@ public class MapActivity extends BaseActivity {
                 String minuteString = (!nextTrainTimes.isEmpty() && nextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
                 String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + minuteString;
 
-                // TODO: Add custom info window to marker
                 // Set up marker on google map
                 LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat), Double.parseDouble(stationLon));
                 map.clear();
                 // Add subway polylines
                 List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
-                SubwayLinePlotter.drawLine("4",shapePoints,map);
+                SubwayLinePlotter.drawLine("4", shapePoints, map);
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(stationCoordinates, CLOSE_UP_ZOOM_LEVEL));
-                map.addMarker(new MarkerOptions().position(stationCoordinates)
+                Marker marker = map.addMarker(new MarkerOptions().position(stationCoordinates)
                         .title(markerTitle)
                         .snippet(markerSnippet)
                         .icon(BitmapDescriptorFactory.fromResource(iconResId)));
+                marker.showInfoWindow();
             }
         });
 
