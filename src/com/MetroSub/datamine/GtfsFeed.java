@@ -1,6 +1,7 @@
 package com.MetroSub.datamine;
 
 import android.util.Log;
+import com.MetroSub.utils.BackendUtils;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -9,7 +10,6 @@ import com.google.transit.realtime.NyctSubway;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -50,9 +50,9 @@ public class GtfsFeed {
         }
     }
 
-    private List<Long> getNextTrainsTimestamps(String line, String stopId) {
+    private ArrayList<Long> getNextTrainsTimestamps(String line, String stopId) {
 
-        List<Long> nextTrainTimesList = new ArrayList<Long>();
+        ArrayList<Long> nextTrainTimesList = new ArrayList<Long>();
 
         // for each entity (train) in the feed
         for (GtfsRealtime.FeedEntity feedEntity : feedMessage.getEntityList()) {
@@ -78,13 +78,13 @@ public class GtfsFeed {
         return calendar;
     }
 
-    public synchronized List<Integer> getNextTrainsArrival(String line, String stopId) {
+    public synchronized ArrayList<Integer> getNextTrainsArrival(String line, String stopId) {
 
         // Current time is in seconds
         long currentTime = System.currentTimeMillis() / 1000;
 
-        List<Long> trainTimestamps = getNextTrainsTimestamps(line, stopId);
-        List<Integer> nextTrainsInMinutesList = new ArrayList<Integer>();
+        ArrayList<Long> trainTimestamps = getNextTrainsTimestamps(line, stopId);
+        ArrayList<Integer> nextTrainsInMinutesList = new ArrayList<Integer>();
 
         for (long trainTimestamp : trainTimestamps) {
             int timeDifference = (int) (trainTimestamp - currentTime) / 60;
@@ -94,6 +94,7 @@ public class GtfsFeed {
             }
         }
 
+        nextTrainsInMinutesList = BackendUtils.quickSort(nextTrainsInMinutesList);
         return nextTrainsInMinutesList;
     }
 
@@ -188,7 +189,7 @@ public class GtfsFeed {
         // TODO: How to access StopTimeEvent?
 
 
-        List<Integer> times = getNextTrainsArrival("1","137N");
+        ArrayList<Integer> times = getNextTrainsArrival("1","137N");
         Log.d(TAG, "Next line 1 at station 137N times are: " + times.toString());
     }
 
