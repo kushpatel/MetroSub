@@ -32,19 +32,19 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="70dp"
                 android:textSize="25sp"
-                android:textColor="@color/white"
-                android:text="Times Square">
+                android:textColor="@color/white">
         </TextView>
 
         <TextView
                 android:id="@+id/schedule_next_subway_caption"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:paddingTop="80dp"
+                android:paddingTop="70dp"
                 android:paddingLeft="10dp"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:text="Next subways:"/>
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="@string/next_subways"/>
 
         <ListView
                 android:id="@+id/subway_times_list"

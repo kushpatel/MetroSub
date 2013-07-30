@@ -2,14 +2,13 @@ package com.MetroSub.activity;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.*;
 import com.MetroSub.R;
 import com.MetroSub.database.dataobjects.ShapeData;
 import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.ui.StationListAdapter;
 import com.MetroSub.ui.SubwayLinePlotter;
+import com.MetroSub.ui.SubwayTimesListAdapter;
 import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,6 +17,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.util.List;
 
 /**
@@ -41,6 +41,10 @@ public class MapActivity extends BaseActivity {
     protected View mStationsListScreen;
     protected View mScheduleAlertsOptionsBar;
     protected View mScheduleAlertsScreen;
+
+    protected List<Integer> mNextTrainTimes;
+    protected String mCurrentLine;
+    protected String mCurrentStation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +70,7 @@ public class MapActivity extends BaseActivity {
 
         // Add subway polylines
         List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
-        SubwayLinePlotter.drawLine("4",shapePoints,map);
+        SubwayLinePlotter.drawLine("4", shapePoints, map);
 
         shapePoints = mQueryHelper.queryForAllShapePoints("E..N66R");
         SubwayLinePlotter.drawLine("E", shapePoints, map);
@@ -144,11 +148,7 @@ public class MapActivity extends BaseActivity {
         scheduleAlertsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Hide the schedule alerts options bar
-                mScheduleAlertsOptionsBar.setVisibility(View.GONE);
-
-                // Show the schedule alerts screen
-                mScheduleAlertsScreen.setVisibility(View.VISIBLE);
+                setupSubwayTimesList();
             }
         });
 
@@ -257,6 +257,8 @@ public class MapActivity extends BaseActivity {
 
     public void setupStationsListScreen(final String line) {
 
+        mCurrentLine = line;
+
         List<StationEntranceData> stationEntranceDataList = mQueryHelper.queryForLineStops(line);
 
         int iconResId = UIUtils.getIconForLine(line.charAt(0));
@@ -271,11 +273,6 @@ public class MapActivity extends BaseActivity {
         stationsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Hide the stations list screen
-                mStationsListScreen.setVisibility(View.GONE);
-
-                // Show the schedule alerts options bar
-                mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
 
                 // Pre-processing before marker can be set up on the map
                 StationEntranceData stationEntranceData = (StationEntranceData) adapterView.getAdapter().getItem(position);
@@ -283,13 +280,26 @@ public class MapActivity extends BaseActivity {
                 String stationLat = stationEntranceData.getStationLat();
                 String stationLon = stationEntranceData.getStationLon();
 
+                mCurrentStation = stationEntranceData.getStationName();
+
                 String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
                 // TODO : check for North or South here using switch to be added
                 String lineDirection = "N";
-                List<Integer> nextTrainTimes  = mGtfsFeed.getNextTrainsArrival(line, stopId + lineDirection);
-                String markerTitle = nextTrainTimes.isEmpty() ? "Live data not available."  : "Next subway:";
-                String minuteString = (!nextTrainTimes.isEmpty() && nextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
-                String markerSnippet = nextTrainTimes.isEmpty() ? "" : "In " + nextTrainTimes.get(0) + minuteString;
+                mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(line, stopId + lineDirection);
+                String markerTitle = mNextTrainTimes.isEmpty() ? "Live data not available." : "Next subway:";
+                String minuteString = (!mNextTrainTimes.isEmpty() && mNextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
+                String markerSnippet = mNextTrainTimes.isEmpty() ? "" : "In " + mNextTrainTimes.get(0) + minuteString;
+
+                // Hide the stations list screen
+                mStationsListScreen.setVisibility(View.GONE);
+
+                if (mNextTrainTimes.isEmpty()) {
+                    /// Show the options bar with trip selector buttons
+                    mMapOptionsBar.setVisibility(View.VISIBLE);
+                } else {
+                    // Show the schedule alerts options bar
+                    mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
+                }
 
                 // Set up marker on google map
                 LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat), Double.parseDouble(stationLon));
@@ -305,6 +315,27 @@ public class MapActivity extends BaseActivity {
                 marker.showInfoWindow();
             }
         });
+
+    }
+
+    public void setupSubwayTimesList() {
+
+        SubwayTimesListAdapter timesAdapter = new SubwayTimesListAdapter(this, R.layout.subway_times_list_item,
+                                                                            mNextTrainTimes);
+        ListView subwayTimesListView = (ListView) findViewById(R.id.subway_times_list);
+        subwayTimesListView.setAdapter(timesAdapter);
+
+        TextView currentStationName = (TextView) findViewById(R.id.schedule_station_name);
+        currentStationName.setText(mCurrentStation);
+
+        ImageView currentStationIcon = (ImageView) findViewById(R.id.schedule_station_icon);
+        currentStationIcon.setImageResource(UIUtils.getIconForLine(mCurrentLine.charAt(0)));
+
+        // Hide the schedule alerts options bar
+        mScheduleAlertsOptionsBar.setVisibility(View.GONE);
+
+        // Show the schedule alerts screen
+        mScheduleAlertsScreen.setVisibility(View.VISIBLE);
 
     }
 }
