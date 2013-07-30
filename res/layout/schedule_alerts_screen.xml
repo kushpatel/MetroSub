@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/schedule_alerts_screen"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone">
+    <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <ImageView
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:background="@color/black"
+                android:alpha=".7"/>
+
+        <ImageView
+                android:id="@+id/schedule_station_icon"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:src="@drawable/number_1">
+        </ImageView>
+
+        <TextView
+                android:id="@+id/schedule_station_name"
+                android:layout_height="70dp"
+                android:layout_width="fill_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="70dp"
+                android:textSize="25sp"
+                android:textColor="@color/white"
+                android:text="Times Square">
+        </TextView>
+
+        <TextView
+                android:id="@+id/schedule_next_subway_caption"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:paddingTop="80dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:text="Next subways:"/>
+
+        <ListView
+                android:id="@+id/subway_times_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingTop="100dp"
+                android:paddingBottom="@dimen/option_bar_button_container_height"
+                android:divider="@color/grey"
+                android:dividerHeight="1dip">
+        </ListView>
+    </FrameLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/option_bar_button_container_height"
+            android:gravity="center"
+            android:layout_alignParentBottom="true">
+        <Button
+                android:id="@+id/go_back_button_schedule_screen"
+                style="@style/rectangle_button_style"
+                android:text="@string/go_back"
+                />
+    </LinearLayout>
+</RelativeLayout>

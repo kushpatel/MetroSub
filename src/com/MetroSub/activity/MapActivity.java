@@ -40,6 +40,7 @@ public class MapActivity extends BaseActivity {
     protected View mSelectTripByLinesScreen;
     protected View mStationsListScreen;
     protected View mScheduleAlertsOptionsBar;
+    protected View mScheduleAlertsScreen;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class MapActivity extends BaseActivity {
         mSelectTripByLinesScreen = findViewById(R.id.select_trip_by_line_screen);
         mStationsListScreen = findViewById(R.id.stations_list_screen);
         mScheduleAlertsOptionsBar = findViewById(R.id.schedule_alerts_option_bar);
+        mScheduleAlertsScreen = findViewById(R.id.schedule_alerts_screen);
 
 
         /* Map setup
@@ -126,14 +128,39 @@ public class MapActivity extends BaseActivity {
             }
         });
 
-        Button startOver = (Button) findViewById(R.id.start_over_button);
-        startOver.setOnClickListener(new View.OnClickListener() {
+        Button startOverButton = (Button) findViewById(R.id.start_over_button);
+        startOverButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Hide the schedule alerts options bar
+                mScheduleAlertsOptionsBar.setVisibility(View.GONE);
 
                 // Show the options bar with trip selector buttons
+                mMapOptionsBar.setVisibility(View.VISIBLE);
+            }
+        });
 
+        Button scheduleAlertsButton = (Button) findViewById(R.id.schedule_alerts_button);
+        scheduleAlertsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the schedule alerts options bar
+                mScheduleAlertsOptionsBar.setVisibility(View.GONE);
+
+                // Show the schedule alerts screen
+                mScheduleAlertsScreen.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button backButtonSchedule = (Button) findViewById(R.id.go_back_button_schedule_screen);
+        backButtonSchedule.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the schedule alerts screen
+                mScheduleAlertsScreen.setVisibility(View.GONE);
+
+                // Show the options bar with trip selector buttons
+                mMapOptionsBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -247,8 +274,8 @@ public class MapActivity extends BaseActivity {
                 // Hide the stations list screen
                 mStationsListScreen.setVisibility(View.GONE);
 
-                // show the default map options bar
-                mMapOptionsBar.setVisibility(View.VISIBLE);
+                // Show the schedule alerts options bar
+                mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
 
                 // Pre-processing before marker can be set up on the map
                 StationEntranceData stationEntranceData = (StationEntranceData) adapterView.getAdapter().getItem(position);
