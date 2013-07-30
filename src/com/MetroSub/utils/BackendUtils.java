@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
+import com.MetroSub.database.dataobjects.StationEntranceData;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -89,5 +90,61 @@ public class BackendUtils {
         int temp = a[i];
         a[i] = a[j];
         a[j] = temp;
+    }
+
+    /* Merge sort implementation to sort StationsData list in lexicographic order on station name
+    ====================================================================================================================*/
+
+    public static void merge(StationEntranceData[] stations, int left, int mid, int right)
+    {
+        StationEntranceData[] temp = new StationEntranceData[stations.length];
+
+        int leftEnd = (mid - 1);
+        int tmpPos = left;
+        int numElements = (right - left + 1);
+
+        while ((left <= leftEnd) && (mid <= right))
+        {
+            String stationLeft = stations[left].getStationName();
+            String stationMid = stations[mid].getStationName();
+            //if (stations[left] <= stations[mid])
+            if (stationLeft.compareTo(stationMid) < 0)
+                temp[tmpPos++] = stations[left++];
+            else
+                temp[tmpPos++] = stations[mid++];
+        }
+
+        while (left <= leftEnd)
+            temp[tmpPos++] = stations[left++];
+
+        while (mid <= right)
+            temp[tmpPos++] = stations[mid++];
+
+        for (int idx = 0; idx < numElements; idx++)
+        {
+            stations[right] = temp[right];
+            right--;
+        }
+    }
+
+    private static void mSort(StationEntranceData[] stations, int left, int right)
+    {
+        int mid;
+
+        if (right > left)
+        {
+            mid = (right + left) / 2;
+            mSort(stations, left, mid);
+            mSort(stations, (mid + 1), right);
+
+            merge(stations, left, (mid+1), right);
+        }
+    }
+
+    public static ArrayList<StationEntranceData> mergeSort(ArrayList<StationEntranceData> list) {
+        StationEntranceData[] stationsList = new StationEntranceData[list.size()];
+        list.toArray(stationsList);
+        mSort(stationsList, 0, list.size() - 1);
+        return new ArrayList<StationEntranceData>(Arrays.asList(stationsList));
     }
 }

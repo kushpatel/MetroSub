@@ -5,6 +5,7 @@ import com.MetroSub.database.dao.*;
 import com.MetroSub.database.dataobjects.ShapeData;
 import com.MetroSub.database.dataobjects.StationEntranceData;
 import com.MetroSub.database.dataobjects.StopData;
+import com.MetroSub.utils.BackendUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,10 +48,10 @@ public class QueryHelper {
         return stationEntranceData.getRouteLines();
     }
 
-    public List<StationEntranceData> queryForLineStops(String subwayLine) {
+    public ArrayList<StationEntranceData> queryForLineStops(String subwayLine) {
 
         List<StationEntranceData> dataWithDuplicateStations = mStationEntrancesDao.queryForStations(subwayLine);
-        List<StationEntranceData> uniqueStationsData = new ArrayList<StationEntranceData>();
+        ArrayList<StationEntranceData> uniqueStationsData = new ArrayList<StationEntranceData>();
 
         // Keep only unique entries in the list of stations
         HashSet<String> stationsHashSet = new HashSet<String>();
@@ -61,6 +62,7 @@ public class QueryHelper {
             }
         }
 
+        uniqueStationsData = BackendUtils.mergeSort(uniqueStationsData);
         return uniqueStationsData;
     }
 

@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -259,7 +260,7 @@ public class MapActivity extends BaseActivity {
 
         mCurrentLine = line;
 
-        List<StationEntranceData> stationEntranceDataList = mQueryHelper.queryForLineStops(line);
+        ArrayList<StationEntranceData> stationEntranceDataList = mQueryHelper.queryForLineStops(line);
 
         int iconResId = UIUtils.getIconForLine(line.charAt(0));
         StationListAdapter stationListAdapter = new StationListAdapter(MapActivity.this, R.layout.station_list_item,
