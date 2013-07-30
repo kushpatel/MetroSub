@@ -159,8 +159,8 @@ public class MapActivity extends BaseActivity {
                 // Hide the schedule alerts screen
                 mScheduleAlertsScreen.setVisibility(View.GONE);
 
-                // Show the options bar with trip selector buttons
-                mMapOptionsBar.setVisibility(View.VISIBLE);
+                // Show the schedule alerts options bar
+                mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
             }
         });
 
