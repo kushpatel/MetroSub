@@ -31,49 +31,35 @@ import java.util.List;
  */
 public class MapActivity extends BaseActivity {
 
-    private static final String TAG = "MapActivity";
-
     public static final LatLng MANHATTAN = new LatLng(40.7697, -73.9735);
     public static final float DEFAULT_ZOOM_LEVEL = 12;
     public static final float CLOSE_UP_ZOOM_LEVEL = 17;
-
+    private static final String TAG = "MapActivity";
     protected GoogleMap map;
     protected View mMapOptionsBar;
     protected View mSelectTripByLinesScreen;
     protected View mStationsListScreen;
     protected View mScheduleAlertsOptionsBar;
     protected View mScheduleAlertsScreen;
-
+    protected ActionBar mActionBar;
     protected List<Integer> mNextTrainTimes;
     protected String mCurrentLine;
     protected String mCurrentStation;
-
-
-    public void setDefaultActionBar()
-    {
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayShowCustomEnabled(false);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map);
 
-
-
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         mMapOptionsBar = findViewById(R.id.map_options_bar);
-       mSelectTripByLinesScreen = findViewById(R.id.select_trip_by_line_screen);
+        mSelectTripByLinesScreen = findViewById(R.id.select_trip_by_line_screen);
 
         mStationsListScreen = findViewById(R.id.stations_list_screen);
         mScheduleAlertsOptionsBar = findViewById(R.id.schedule_alerts_option_bar);
         mScheduleAlertsScreen = findViewById(R.id.schedule_alerts_screen);
 
-        final ActionBar actionBar = getActionBar();
-
-
-
+        mActionBar = getActionBar();
 
 
         /* Map setup
@@ -119,12 +105,8 @@ public class MapActivity extends BaseActivity {
                 // Hide the options bar with trip selector buttons
                 mMapOptionsBar.setVisibility(View.GONE);
 
-
-
                 // Show the select trip by lines screen
                 mSelectTripByLinesScreen.setVisibility(View.VISIBLE);
-
-
             }
         });
 
@@ -138,7 +120,6 @@ public class MapActivity extends BaseActivity {
 
                 // Show the options bar with trip selector buttons
                 mMapOptionsBar.setVisibility(View.VISIBLE);
-
 
             }
         });
@@ -269,20 +250,18 @@ public class MapActivity extends BaseActivity {
 
         // Hide the select trip by lines screen
         mSelectTripByLinesScreen.setVisibility(View.GONE);
-        ActionBar actionBar = getActionBar();
-
-
 
         // Set up stations list screen using list view adapter
         setupStationsListScreen(line);
 
         // Show the stations list screen
         mStationsListScreen.setVisibility(View.VISIBLE);
-        actionBar.setCustomView(R.layout.actionbar_custom_stationlist);
-        actionBar.setDisplayShowCustomEnabled(true);
+
+        mActionBar.setCustomView(R.layout.actionbar_custom_stationlist);
+        mActionBar.setDisplayShowCustomEnabled(true);
         final RadioGroup selectDirection = (RadioGroup) findViewById(R.id.select_dir);
         final String theline = line;
-         selectDirection.setOnClickListener(new View.OnClickListener() {
+        selectDirection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 setupStationsListScreen(theline);
@@ -332,13 +311,11 @@ public class MapActivity extends BaseActivity {
                 mCurrentStation = stationEntranceData.getStationName();
 
                 String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
-                // TODO : check for North or South here using switch to be added
 
                 String lineDirection = "N"; //default
                 RadioGroup selectDirection = (RadioGroup) findViewById(R.id.select_dir);
                 int selectedID = selectDirection.getCheckedRadioButtonId();
-                if (selectedID == R.id.dir_south)
-                {
+                if (selectedID == R.id.dir_south) {
                     lineDirection = "S";
                 }
 
@@ -379,7 +356,7 @@ public class MapActivity extends BaseActivity {
     public void setupSubwayTimesList() {
 
         SubwayTimesListAdapter timesAdapter = new SubwayTimesListAdapter(this, R.layout.subway_times_list_item,
-                                                                            mNextTrainTimes);
+                mNextTrainTimes);
         ListView subwayTimesListView = (ListView) findViewById(R.id.subway_times_list);
         subwayTimesListView.setAdapter(timesAdapter);
 
@@ -395,5 +372,9 @@ public class MapActivity extends BaseActivity {
         // Show the schedule alerts screen
         mScheduleAlertsScreen.setVisibility(View.VISIBLE);
 
+    }
+
+    public void setDefaultActionBar() {
+        mActionBar.setDisplayShowCustomEnabled(false);
     }
 }
