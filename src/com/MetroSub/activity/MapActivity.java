@@ -32,7 +32,7 @@ import java.util.List;
 public class MapActivity extends BaseActivity {
 
     public static final LatLng MANHATTAN = new LatLng(40.7697, -73.9735);
-    public static final float DEFAULT_ZOOM_LEVEL = 12;
+    public static final float DEFAULT_ZOOM_LEVEL = 10;//12;
     public static final float CLOSE_UP_ZOOM_LEVEL = 17;
     private static final String TAG = "MapActivity";
     protected GoogleMap map;
@@ -72,11 +72,10 @@ public class MapActivity extends BaseActivity {
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
 
         // Add subway polylines
-        List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
-        SubwayLinePlotter.drawLine("4", shapePoints, map);
-
-        shapePoints = mQueryHelper.queryForAllShapePoints("E..N66R");
-        SubwayLinePlotter.drawLine("E", shapePoints, map);
+        //List<ShapeData> shapePoints = mQueryHelper.queryForAllShapePoints("4..S01R");
+        //SubwayLinePlotter.drawLine("4", shapePoints, map);
+        List<ShapeData> shapePoints = mQueryHelper.queryForAllLineShapePoints("4");
+        SubwayLinePlotter.drawLine("4",shapePoints,map);
 
         /* Map screen UI setup
         ================================================================================================================*/
