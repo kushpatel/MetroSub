@@ -7,4 +7,18 @@
     <string name="schedule_alerts">Schedule Alerts</string>
     <string name="start_over">Start over</string>
     <string name="next_subways">Next Subways: </string>
+    <string name="set_alerts">Set Alerts</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="alert_times_prompt">Start alerts after:</string>
+    <string-array name="alert_times_array">
+        <item>Off</item>
+        <item>Now</item>
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>45 minutes</item>
+        <item>1 hour</item>
+        <item>1.5 hours</item>
+        <item>2 hours</item>
+    </string-array>
 </resources>

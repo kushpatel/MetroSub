@@ -149,6 +149,9 @@ public class MapActivity extends BaseActivity {
 
                 // Show the options bar with trip selector buttons
                 mMapOptionsBar.setVisibility(View.VISIBLE);
+
+                // Center and zoom camera on New York City ... default onStart case
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
             }
         });
 
@@ -157,6 +160,7 @@ public class MapActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 setupSubwayTimesList();
+                setupAlertTimesSelector();
             }
         });
 
@@ -314,11 +318,12 @@ public class MapActivity extends BaseActivity {
 
                 String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
 
-                String lineDirection = "N"; //default
+                // Trips suffixed with "S" are northbound!!
+                String lineDirection = "S"; //default
                 RadioGroup selectDirection = (RadioGroup) findViewById(R.id.select_dir);
                 int selectedID = selectDirection.getCheckedRadioButtonId();
                 if (selectedID == R.id.dir_south) {
-                    lineDirection = "S";
+                    lineDirection = "N";
                 }
 
                 mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(line, stopId + lineDirection);
@@ -372,6 +377,23 @@ public class MapActivity extends BaseActivity {
 
         // Show the schedule alerts screen
         mScheduleAlertsScreen.setVisibility(View.VISIBLE);
+
+    }
+
+    public void setupAlertTimesSelector() {
+        Spinner alertTimesSelector = (Spinner) findViewById(R.id.alert_times_selector);
+        alertTimesSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MapActivity.this, "Alerts in " + parent.getItemAtPosition(position).toString() +
+                " selected!", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
 
     }
 
