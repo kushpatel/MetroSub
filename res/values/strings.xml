@@ -13,7 +13,6 @@
     <string name="alert_times_prompt">Start alerts after:</string>
     <string-array name="alert_times_array">
         <item>Off</item>
-        <item>Now</item>
         <item>15 minutes</item>
         <item>30 minutes</item>
         <item>45 minutes</item>

@@ -125,4 +125,23 @@ public class UIUtils {
         }
         return color;
     }
+
+    public static long getNotificationTime(String startAlertsAfter) {
+        long duration = -1;
+        int minutesMultiplier = 60 * 1000;
+        if (startAlertsAfter.equals("15 minutes")) {
+            duration = 15 * minutesMultiplier;
+        } else if (startAlertsAfter.equals("30 minutes")) {
+            duration = 30 * minutesMultiplier;
+        } else if (startAlertsAfter.equals("45 minutes")) {
+            duration = 45 * minutesMultiplier;
+        } else if (startAlertsAfter.equals("1 hour")) {
+            duration = 60 * minutesMultiplier;
+        } else if (startAlertsAfter.equals("1.5 hours")) {
+            duration = 90 * minutesMultiplier;
+        } else if (startAlertsAfter.equals("2 hours")) {
+            duration = 120 * minutesMultiplier;
+        }
+        return duration;
+    }
 }

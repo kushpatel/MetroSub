@@ -197,9 +197,12 @@ public class MapActivity extends BaseActivity {
                 // Show the schedule alerts options bar
                 mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
 
-                long notificationDelay = 5000;   // set this from mStartAlertsAfter value selected
-                Timer notificationTimer = new Timer();
-                notificationTimer.schedule(new NotificationTimerTask(), notificationDelay);
+                long notificationDelay = 5000;
+                //long notificationDelay = UIUtils.getNotificationTime(mStartAlertsAfter);
+                if (notificationDelay > 0) {
+                    Timer notificationTimer = new Timer();
+                    notificationTimer.schedule(new NotificationTimerTask(), notificationDelay);
+                }
             }
         });
 
