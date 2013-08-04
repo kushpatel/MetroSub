@@ -1,6 +1,12 @@
 package com.MetroSub.activity;
 
 import android.app.ActionBar;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -21,6 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,6 +53,9 @@ public class MapActivity extends BaseActivity {
     protected List<Integer> mNextTrainTimes;
     protected String mCurrentLine;
     protected String mCurrentStation;
+    protected String mCurrentStopId;
+    protected String mCurrentLineDirection;
+    protected String mStartAlertsAfter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,13 +83,13 @@ public class MapActivity extends BaseActivity {
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL));
 
         // Add subway polylines
-        SubwayLinePlotter.plotLine("1",mQueryHelper,map);
-        SubwayLinePlotter.plotLine("2",mQueryHelper,map);
-        SubwayLinePlotter.plotLine("3",mQueryHelper,map);
-        SubwayLinePlotter.plotLine("4",mQueryHelper,map);
-        SubwayLinePlotter.plotLine("5",mQueryHelper,map);
-        SubwayLinePlotter.plotLine("6",mQueryHelper,map);
-        SubwayLinePlotter.plotLine("7",mQueryHelper,map);
+        SubwayLinePlotter.plotLine("1", mQueryHelper, map);
+        SubwayLinePlotter.plotLine("2", mQueryHelper, map);
+        SubwayLinePlotter.plotLine("3", mQueryHelper, map);
+        SubwayLinePlotter.plotLine("4", mQueryHelper, map);
+        SubwayLinePlotter.plotLine("5", mQueryHelper, map);
+        SubwayLinePlotter.plotLine("6", mQueryHelper, map);
+        SubwayLinePlotter.plotLine("7", mQueryHelper, map);
 
         /* Map screen UI setup
         ================================================================================================================*/
@@ -173,6 +184,22 @@ public class MapActivity extends BaseActivity {
 
                 // Show the schedule alerts options bar
                 mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button setAlertsButton = (Button) findViewById(R.id.set_alerts_button);
+        setAlertsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the schedule alerts screen
+                mScheduleAlertsScreen.setVisibility(View.GONE);
+
+                // Show the schedule alerts options bar
+                mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
+
+                long notificationDelay = 5000;   // set this from mStartAlertsAfter value selected
+                Timer notificationTimer = new Timer();
+                notificationTimer.schedule(new NotificationTimerTask(), notificationDelay);
             }
         });
 
@@ -317,6 +344,7 @@ public class MapActivity extends BaseActivity {
                 mCurrentStation = stationEntranceData.getStationName();
 
                 String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
+                mCurrentStopId = stopId;
 
                 // Trips suffixed with "S" are northbound!!
                 String lineDirection = "S"; //default
@@ -325,6 +353,7 @@ public class MapActivity extends BaseActivity {
                 if (selectedID == R.id.dir_south) {
                     lineDirection = "N";
                 }
+                mCurrentLineDirection = lineDirection;
 
                 mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(line, stopId + lineDirection);
                 String markerTitle = mNextTrainTimes.isEmpty() ? "Live data not available." : "Next subway:";
@@ -347,7 +376,7 @@ public class MapActivity extends BaseActivity {
                 LatLng stationCoordinates = new LatLng(Double.parseDouble(stationLat), Double.parseDouble(stationLon));
                 map.clear();
                 // Add subway polylines
-                SubwayLinePlotter.plotLine(line,mQueryHelper,map);
+                SubwayLinePlotter.plotLine(line, mQueryHelper, map);
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(stationCoordinates, CLOSE_UP_ZOOM_LEVEL));
                 Marker marker = map.addMarker(new MarkerOptions().position(stationCoordinates)
                         .title(markerTitle)
@@ -385,8 +414,9 @@ public class MapActivity extends BaseActivity {
         alertTimesSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MapActivity.this, "Alerts in " + parent.getItemAtPosition(position).toString() +
-                " selected!", Toast.LENGTH_LONG).show();
+                //Toast.makeText(MapActivity.this, "Alerts in " + parent.getItemAtPosition(position).toString() +
+                //        " selected!", Toast.LENGTH_LONG).show();
+                mStartAlertsAfter = parent.getItemAtPosition(position).toString();
             }
 
             @Override
@@ -395,6 +425,40 @@ public class MapActivity extends BaseActivity {
         });
 
 
+    }
+
+    public void setupNotificationForAlert() {
+
+        mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(mCurrentLine, mCurrentStopId + mCurrentLineDirection);
+        if (mNextTrainTimes.isEmpty()) return;
+        String minuteString = (mNextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
+        String contentText = "Next subway is arriving in " + mNextTrainTimes.get(0) + minuteString;
+
+        // Prepare intent which is triggered if the notification is selected
+        Intent intent = new Intent(this, MapActivity.class);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        // Build notification
+        Notification notification = new Notification.Builder(this)
+                .setContentTitle("Subway Alert")
+                .setContentText(contentText)
+                .setLargeIcon(((BitmapDrawable) getResources().getDrawable(R.drawable.metro_icon_transparent)).getBitmap())
+                .setSmallIcon(R.drawable.metro_icon_transparent)
+                .setContentIntent(pIntent).build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+        // Hide the notification after its selected
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        //notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE;
+
+        notificationManager.notify(0, notification);
+    }
+
+    private class NotificationTimerTask extends TimerTask {
+        public void run() {
+            setupNotificationForAlert();
+        }
     }
 
     public void setDefaultActionBar() {
