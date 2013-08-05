@@ -40,11 +40,8 @@ public class QueryHelper {
 
     public ArrayList<Character> queryForStopLines(String stopId) {
         StopData stopData = mStopsDao.queryForId(stopId);
-        Log.e("Msg", stopData.getStopName());
         StationEntranceData stationEntranceData = mStationEntrancesDao.
                 queryForStation(stopData.getStopLat(),stopData.getStopLon());
-        Boolean b = stationEntranceData.equals(null);
-        Log.e("MSG", b.toString());
         return stationEntranceData.getRouteLines();
     }
 
