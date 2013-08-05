@@ -7,6 +7,7 @@ import android.content.pm.Signature;
 import android.util.Base64;
 import android.util.Log;
 import com.MetroSub.database.dataobjects.StationEntranceData;
+import com.MetroSub.database.dataobjects.StopData;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -146,5 +147,82 @@ public class BackendUtils {
         list.toArray(stationsList);
         mSort(stationsList, 0, list.size() - 1);
         return new ArrayList<StationEntranceData>(Arrays.asList(stationsList));
+    }
+
+    /* Merge sort implementation to sort StationsData list on stopId found in StopData
+    ====================================================================================================================*/
+
+    public static void merge(StopData[] stops, int left, int mid, int right, StationEntranceData[] stations)
+    {
+        StopData[] tempStops = new StopData[stops.length];
+        StationEntranceData[] tempStations = new StationEntranceData[stations.length];
+
+        int leftEnd = (mid - 1);
+        int tmpPos = left;
+        int numElements = (right - left + 1);
+
+        while ((left <= leftEnd) && (mid <= right))
+        {
+            String stopLeft = stops[left].getStopId();
+            String stopMid = stops[mid].getStopId();
+            //if (stops[left] <= stops[mid])
+            if (stopLeft.compareTo(stopMid) < 0) {
+                tempStops[tmpPos] = stops[left];
+                tempStations[tmpPos] = stations[left];
+                tmpPos++;
+                left++;
+            }
+            else {
+                tempStops[tmpPos] = stops[mid];
+                tempStations[tmpPos++] = stations[mid];
+                tmpPos++;
+                mid++;
+            }
+        }
+
+        while (left <= leftEnd) {
+            tempStops[tmpPos] = stops[left];
+            tempStations[tmpPos] = stations[left];
+            tmpPos++;
+            left++;
+        }
+
+        while (mid <= right) {
+            tempStops[tmpPos] = stops[mid];
+            tempStations[tmpPos] = stations[mid];
+            tmpPos++;
+            mid++;
+        }
+
+        for (int idx = 0; idx < numElements; idx++)
+        {
+            stations[right] = tempStations[right];
+            stops[right] = tempStops[right];
+            right--;
+        }
+    }
+
+    private static void mSort(StopData[] stops, int left, int right, StationEntranceData[] stations)
+    {
+        int mid;
+
+        if (right > left)
+        {
+            mid = (right + left) / 2;
+            mSort(stops, left, mid, stations);
+            mSort(stops, (mid + 1), right, stations);
+
+            merge(stops, left, (mid+1), right, stations);
+        }
+    }
+
+    public static ArrayList<StationEntranceData> mergeSort(ArrayList<StationEntranceData> stationsList,
+                                                           ArrayList<StopData> stopsList) {
+        StationEntranceData[] stationsArray = new StationEntranceData[stationsList.size()];
+        StopData[] stopsArray = new StopData[stopsList.size()];
+        stationsList.toArray(stationsArray);
+        stopsList.toArray(stopsArray);
+        mSort(stopsArray, 0, stopsList.size() - 1, stationsArray);
+        return new ArrayList<StationEntranceData>(Arrays.asList(stationsArray));
     }
 }

@@ -72,4 +72,18 @@ public class StopsDao extends BaseDaoImpl<StopData, String> {
         return stopId;
     }
 
+    public StopData queryForStation(String lat, String lon) {
+        StopData stopData = null;
+        try {
+            QueryBuilder<StopData, String> queryBuilder = queryBuilder();
+            queryBuilder.where().eq(StopData.STOP_LAT_COL_NAME, lat).and()
+                    .eq(StopData.STOP_LON_COL_NAME, lon);
+            PreparedQuery<StopData> preparedQuery = queryBuilder.prepare();
+            stopData = queryForFirst(preparedQuery);
+        } catch (SQLException e) {
+            Log.e(TAG, "Query for station lat = " + lat + " lon = " + lon + " failed: " + e.getMessage());
+        }
+        return stopData;
+    }
+
 }
