@@ -77,7 +77,7 @@ public class DatabaseLoader {
             String row = in.readLine();
 
             while ((row = in.readLine()) != null) {
-                String[] tokens = TextUtils.split(row,DELIMITER);
+                String[] tokens = TextUtils.split(row, DELIMITER);
 
                 RouteData routeData = new RouteData();
                 routeData.setRouteId(tokens[ROUTE_ID_POS]);
@@ -121,7 +121,7 @@ public class DatabaseLoader {
             String row = in.readLine();
 
             while ((row = in.readLine()) != null) {
-                String[] tokens = TextUtils.split(row,DELIMITER);
+                String[] tokens = TextUtils.split(row, DELIMITER);
 
                 ShapeData shapeData = new ShapeData();
                 shapeData.setShapeId(tokens[SHAPE_ID_POS]);
@@ -165,6 +165,8 @@ public class DatabaseLoader {
         BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
         StopsDao stopsDao = databaseHelper.getStopsDao();
 
+        StationEntrancesDao stationEntrancesDao = databaseHelper.getStationEntrancesDao();
+
         try {
             // skip the first header line
             String row = in.readLine();
@@ -180,6 +182,14 @@ public class DatabaseLoader {
                 stopData.setLocationType(tokens[LOCATION_TYPE_POS]);
                 stopData.setParentStation(tokens[PARENT_STATION_POS]);
 
+                // Copy lines passing through each stop from station_entrances.csv data
+                String lat = tokens[STOP_LAT_POS];
+                String lon = tokens[STOP_LON_POS];
+                StationEntranceData stationEntranceData = stationEntrancesDao.queryForStation(lat, lon);
+                if (stationEntranceData != null) {
+                    copyLinesDataFromStationsToStops(stationEntranceData, stopData);
+                }
+
                 stopsDao.create(stopData);
             }
 
@@ -192,6 +202,31 @@ public class DatabaseLoader {
                 // don't really care what happens here
             }
         }
+    }
+
+    private static void copyLinesDataFromStationsToStops(StationEntranceData station, StopData stop) {
+        stop.setLine_1(station.getLine_1());
+        stop.setLine_2(station.getLine_2());
+        stop.setLine_3(station.getLine_3());
+        stop.setLine_4(station.getLine_4());
+        stop.setLine_5(station.getLine_5());
+        stop.setLine_6(station.getLine_6());
+        stop.setLine_7(station.getLine_7());
+        stop.setLine_A(station.getLine_A());
+        stop.setLine_B(station.getLine_B());
+        stop.setLine_C(station.getLine_C());
+        stop.setLine_D(station.getLine_D());
+        stop.setLine_E(station.getLine_E());
+        stop.setLine_F(station.getLine_F());
+        stop.setLine_G(station.getLine_G());
+        stop.setLine_J(station.getLine_J());
+        stop.setLine_L(station.getLine_L());
+        stop.setLine_M(station.getLine_M());
+        stop.setLine_N(station.getLine_N());
+        stop.setLine_Q(station.getLine_Q());
+        stop.setLine_R(station.getLine_R());
+        stop.setLine_S(station.getLine_S());
+        stop.setLine_Z(station.getLine_Z());
     }
 
     /* Function for loading data from transfers.txt
@@ -212,7 +247,7 @@ public class DatabaseLoader {
             String row = in.readLine();
 
             while ((row = in.readLine()) != null) {
-                String[] tokens = TextUtils.split(row,DELIMITER);
+                String[] tokens = TextUtils.split(row, DELIMITER);
 
                 TransferData transferData = new TransferData();
                 transferData.setFromStopId(tokens[FROM_STOP_ID_POS]);
@@ -255,7 +290,7 @@ public class DatabaseLoader {
             String row = in.readLine();
 
             while ((row = in.readLine()) != null) {
-                String[] tokens = TextUtils.split(row,DELIMITER);
+                String[] tokens = TextUtils.split(row, DELIMITER);
 
                 TripData tripData = new TripData();
                 tripData.setTripId(tokens[TRIP_ID_POS]);
@@ -313,7 +348,7 @@ public class DatabaseLoader {
             String row = in.readLine();
 
             while ((row = in.readLine()) != null) {
-                String[] tokens = TextUtils.split(row,DELIMITER);
+                String[] tokens = TextUtils.split(row, DELIMITER);
 
                 StationEntranceData stationEntranceData = new StationEntranceData();
                 stationEntranceData.setDivision(tokens[DIVISION_POS]);
@@ -322,16 +357,16 @@ public class DatabaseLoader {
                 stationEntranceData.setStationLat(tokens[STATION_LAT_POS]);
                 stationEntranceData.setStationLon(tokens[STATION_LON_POS]);
                 ArrayList<Character> routeLines = new ArrayList<Character>();
-                for(int collectionCount = 0; collectionCount < NUM_ROUTE_LINES; collectionCount++) {
+                for (int collectionCount = 0; collectionCount < NUM_ROUTE_LINES; collectionCount++) {
                     String routeLine = tokens[ROUTES_START_POS + collectionCount];
-                    if(routeLine != null && !routeLine.equals("")) {
+                    if (routeLine != null && !routeLine.equals("")) {
                         routeLines.add(routeLine.charAt(0));
                     } else {
                         // reached end of route lines list
                         break;
                     }
                 }
-                stationEntranceData = loadLinesPassingStation(routeLines,stationEntranceData);
+                stationEntranceData = loadLinesPassingStation(routeLines, stationEntranceData);
                 stationEntranceData.setRouteLines(routeLines);
                 stationEntranceData.setNorthSouthStreet(tokens[NORTH_SOUTH_STREET_POS]);
                 stationEntranceData.setEastWestStreet(tokens[EAST_WEST_STREET_POS]);

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.MetroSub.R;
 import com.MetroSub.database.dataobjects.StationEntranceData;
+import com.MetroSub.database.dataobjects.StopData;
 
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class StationListAdapter extends ArrayAdapter {
     private Context mContext;
     private int mImageResId;
 
-    public StationListAdapter(Context context, int resourceId, List<StationEntranceData> stationsList, int imageResId) {
-        super(context, resourceId, stationsList);
+    public StationListAdapter(Context context, int resourceId, List<StopData> stopsList, int imageResId) {
+        super(context, resourceId, stopsList);
         mResourceId = resourceId;
         mContext = context;
         mLayoutInflator = LayoutInflater.from(context);
@@ -40,10 +41,10 @@ public class StationListAdapter extends ArrayAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         convertView = mLayoutInflator.inflate(mResourceId, null);
-        final StationEntranceData stationEntranceData = (StationEntranceData) getItem(position);
+        final StopData stopData = (StopData) getItem(position);
 
         final TextView stationName = (TextView) convertView.findViewById(R.id.station_name);
-        stationName.setText(stationEntranceData.getStationName());
+        stationName.setText(stopData.getStopName());
 
         final ImageView lineImage = (ImageView) convertView.findViewById(R.id.line_image);
         lineImage.setImageDrawable(mContext.getResources().getDrawable(mImageResId));

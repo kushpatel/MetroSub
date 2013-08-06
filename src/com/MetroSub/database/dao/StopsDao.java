@@ -86,4 +86,22 @@ public class StopsDao extends BaseDaoImpl<StopData, String> {
         return stopData;
     }
 
+    public List<StopData> queryForStations(String line) {
+
+        String lineColumn = StopData.LINE_COL_NAME_PREFIX + line;
+
+        List<StopData> data = null;
+        try {
+//            QueryBuilder<StopData, String> queryBuilder = queryBuilder();
+//            queryBuilder.where().eq(StopData.STOP_PARENT_STATION_COL_NAME, null).and()
+//                    .eq(lineColumn, true);
+//            PreparedQuery<StopData> preparedQuery = queryBuilder.prepare();
+//            data = query(preparedQuery);
+            data = queryForEq(lineColumn, true);
+        } catch (SQLException e) {
+            Log.e(TAG, "Query for stations with line " + line + " failed: " + e.getMessage());
+        }
+        return data;
+    }
+
 }

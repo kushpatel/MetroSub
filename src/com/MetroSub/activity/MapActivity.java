@@ -13,6 +13,7 @@ import android.widget.*;
 import com.MetroSub.R;
 import com.MetroSub.database.dataobjects.ShapeData;
 import com.MetroSub.database.dataobjects.StationEntranceData;
+import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.ui.StationListAdapter;
 import com.MetroSub.ui.SubwayLinePlotter;
 import com.MetroSub.ui.SubwayTimesListAdapter;
@@ -323,11 +324,11 @@ public class MapActivity extends BaseActivity {
 
         mCurrentLine = line;
 
-        ArrayList<StationEntranceData> stationEntranceDataList = mQueryHelper.queryForLineStops(line);
+        ArrayList<StopData> stopDataList = mQueryHelper.queryForLineStops(line);
 
         int iconResId = UIUtils.getIconForLine(line.charAt(0));
         StationListAdapter stationListAdapter = new StationListAdapter(MapActivity.this, R.layout.station_list_item,
-                stationEntranceDataList, iconResId);
+                stopDataList, iconResId);
 
         ListView stationsListView = (ListView) findViewById(R.id.stations_list);
         stationsListView.setAdapter(stationListAdapter);
@@ -339,12 +340,12 @@ public class MapActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
                 // Pre-processing before marker can be set up on the map
-                StationEntranceData stationEntranceData = (StationEntranceData) adapterView.getAdapter().getItem(position);
+                StopData stopData = (StopData) adapterView.getAdapter().getItem(position);
                 int iconResId = UIUtils.getIconForLine(line.charAt(0));
-                String stationLat = stationEntranceData.getStationLat();
-                String stationLon = stationEntranceData.getStationLon();
+                String stationLat = stopData.getStopLat();
+                String stationLon = stopData.getStopLon();
 
-                mCurrentStation = stationEntranceData.getStationName();
+                mCurrentStation = stopData.getStopName();
 
                 String stopId = mQueryHelper.queryForStopId(stationLat, stationLon);
                 mCurrentStopId = stopId;

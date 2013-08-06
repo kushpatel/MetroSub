@@ -45,21 +45,38 @@ public class QueryHelper {
         return stationEntranceData.getRouteLines();
     }
 
-    public ArrayList<StationEntranceData> queryForLineStops(String subwayLine) {
+//    public ArrayList<StationEntranceData> queryForLineStops(String subwayLine) {
+//
+//        List<StationEntranceData> dataWithDuplicateStations = mStationEntrancesDao.queryForStations(subwayLine);
+//        ArrayList<StationEntranceData> uniqueStationsData = new ArrayList<StationEntranceData>();
+//
+//        // Keep only unique entries in the list of stations
+//        HashSet<String> stationsHashSet = new HashSet<String>();
+//        for (StationEntranceData entry : dataWithDuplicateStations) {
+//            if (!stationsHashSet.contains(entry.getStationName())) {
+//                uniqueStationsData.add(entry);
+//                stationsHashSet.add(entry.getStationName());
+//            }
+//        }
+//
+//        uniqueStationsData = BackendUtils.mergeSort(uniqueStationsData);
+//        return uniqueStationsData;
+//    }
 
-        List<StationEntranceData> dataWithDuplicateStations = mStationEntrancesDao.queryForStations(subwayLine);
-        ArrayList<StationEntranceData> uniqueStationsData = new ArrayList<StationEntranceData>();
+    public ArrayList<StopData> queryForLineStops(String subwayLine) {
+
+        List<StopData> dataWithDuplicateStations = mStopsDao.queryForStations(subwayLine);
+        ArrayList<StopData> uniqueStationsData = new ArrayList<StopData>();
 
         // Keep only unique entries in the list of stations
         HashSet<String> stationsHashSet = new HashSet<String>();
-        for (StationEntranceData entry : dataWithDuplicateStations) {
-            if (!stationsHashSet.contains(entry.getStationName())) {
+        for (StopData entry : dataWithDuplicateStations) {
+            if (!stationsHashSet.contains(entry.getStopName())) {
                 uniqueStationsData.add(entry);
-                stationsHashSet.add(entry.getStationName());
+                stationsHashSet.add(entry.getStopName());
             }
         }
 
-        uniqueStationsData = BackendUtils.mergeSort(uniqueStationsData);
         return uniqueStationsData;
     }
 
