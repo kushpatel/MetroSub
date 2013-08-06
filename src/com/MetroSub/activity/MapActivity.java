@@ -4,10 +4,16 @@ import android.app.ActionBar;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.*;
 import com.MetroSub.R;
@@ -38,7 +44,7 @@ import java.util.TimerTask;
  * Time: 5:23 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MapActivity extends BaseActivity {
+public class MapActivity extends BaseActivity implements LocationListener {
 
     public static final LatLng MANHATTAN = new LatLng(40.7697, -73.9735);
     public static final float DEFAULT_ZOOM_LEVEL = 12;
@@ -58,6 +64,68 @@ public class MapActivity extends BaseActivity {
     protected String mCurrentLineDirection;
     protected String mStartAlertsAfter;
 
+    protected Marker currentLocationMarker = null;
+    private TextView latituteField;
+    private TextView longitudeField;
+    private LocationManager locationManager;
+    private String provider;
+
+
+
+    /* Request updates at startup */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
+    }
+
+    /* Remove the locationlistener updates when Activity is paused */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        double lat =  (location.getLatitude());
+        double lng = (location.getLongitude());
+        Toast.makeText(this, "LOC CHANGED", Toast.LENGTH_SHORT).show();
+
+
+     //   Toast.makeText(this, "lat = " + String.valueOf(lng), Toast.LENGTH_LONG).show();
+   //     latituteField.setText(String.valueOf(lat));
+     //   longitudeField.setText(String.valueOf(lng));
+
+        LatLng personCoords = new LatLng(lat, lng);
+
+        if (currentLocationMarker != null)
+            currentLocationMarker.remove();
+
+        currentLocationMarker = map.addMarker(new MarkerOptions().position(personCoords)
+                .title("Your location")
+
+              );
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(this, "Enabled new provider " + provider,
+                Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(this, "Disabled provider " + provider,
+                Toast.LENGTH_SHORT).show();
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +140,34 @@ public class MapActivity extends BaseActivity {
         mScheduleAlertsScreen = findViewById(R.id.schedule_alerts_screen);
 
         mActionBar = getActionBar();
+
+
+
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean enabled = service
+                .isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+
+// Check if enabled and if not send user to the GSP settings
+// Better solution would be to display a dialog and suggesting to
+// go to the settings
+        if (!enabled) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
+        // Get the location manager
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the locatioin provider -> use
+        // default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        locationManager.requestLocationUpdates(provider, 500, 0, this);
+
+        // needed for geo fix to work with emulator (ie. emulating GPS locations)
+        locationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
 
 
         /* Map setup
