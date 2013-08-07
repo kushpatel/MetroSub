@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Criteria;
 import android.location.Location;
@@ -14,6 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.MetroSub.R;
@@ -27,11 +29,30 @@ import com.MetroSub.utils.UIUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.*;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.loopj.android.http.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -69,8 +90,11 @@ public class MapActivity extends BaseActivity implements LocationListener {
     private TextView longitudeField;
     private LocationManager locationManager;
     private String provider;
+    double lat, lng;
 
+    private LatLng coords;
 
+    boolean havelocation;
 
     /* Request updates at startup */
     @Override
@@ -86,10 +110,23 @@ public class MapActivity extends BaseActivity implements LocationListener {
         locationManager.removeUpdates(this);
     }
 
+    private void drawCurrentPositionMarker()
+    {
+        if (!havelocation)
+            return;
+        if (currentLocationMarker != null)
+            currentLocationMarker.remove();
+
+        currentLocationMarker = map.addMarker(new MarkerOptions().position(coords)
+                .title("Your location")
+
+        );
+    }
     @Override
     public void onLocationChanged(Location location) {
-        double lat =  (location.getLatitude());
-        double lng = (location.getLongitude());
+        havelocation = true;
+         lat =  (location.getLatitude());
+         lng = (location.getLongitude());
         Toast.makeText(this, "LOC CHANGED", Toast.LENGTH_SHORT).show();
 
 
@@ -97,15 +134,9 @@ public class MapActivity extends BaseActivity implements LocationListener {
    //     latituteField.setText(String.valueOf(lat));
      //   longitudeField.setText(String.valueOf(lng));
 
-        LatLng personCoords = new LatLng(lat, lng);
+        coords = new LatLng(lat, lng);
 
-        if (currentLocationMarker != null)
-            currentLocationMarker.remove();
-
-        currentLocationMarker = map.addMarker(new MarkerOptions().position(personCoords)
-                .title("Your location")
-
-              );
+          drawCurrentPositionMarker();
     }
 
     @Override
@@ -141,7 +172,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
         mActionBar = getActionBar();
 
-
+        havelocation = false;
 
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -416,6 +447,40 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
     }
 
+    private List<LatLng> decodePoly(String encoded) {
+
+        List<LatLng> poly = new ArrayList<LatLng>();
+        int index = 0, len = encoded.length();
+        int lat = 0, lng = 0;
+
+        while (index < len) {
+            int b, shift = 0, result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lat += dlat;
+
+            shift = 0;
+            result = 0;
+            do {
+                b = encoded.charAt(index++) - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            } while (b >= 0x20);
+            int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+            lng += dlng;
+            LatLng p = new LatLng((((double) lat / 1E5)),(((double) lng / 1E5)));
+
+
+            poly.add(p);
+        }
+
+        return poly;
+    }
+
     public void setupStationsListScreen(final String line) {
 
         mCurrentLine = line;
@@ -483,6 +548,90 @@ public class MapActivity extends BaseActivity implements LocationListener {
                         .snippet(markerSnippet)
                         .icon(BitmapDescriptorFactory.fromResource(iconResId)));
                 marker.showInfoWindow();
+
+                // show directions to selected station from current location
+                if (!havelocation)
+                     return;
+
+                String url = "https://maps.googleapis.com/maps/api/directions/json";
+                String charset = "UTF-8";
+                String origin = Double.toString(lat) + "," + Double.toString(lng);
+                String destination = stationLat + "," + stationLon;
+// ...
+                HttpClient httpClient = new DefaultHttpClient();
+                try
+                {
+                    String query = String.format("origin=%s&destination=%s&sensor=true&mode=walking",
+                        URLEncoder.encode(origin, charset),
+                        URLEncoder.encode(destination, charset));
+
+
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    client.get(url + "?" + query, new AsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(String response) {
+
+
+                            Document doc = null;
+                            try
+                            {
+                                JSONObject obj = new JSONObject(response);
+                                JSONArray jarr = (JSONArray) obj.getJSONArray("routes");
+                              //  Log.e("SHENIL", "LEN: " + Integer.toString(jarr.length()));
+                                JSONObject theroute = jarr.getJSONObject(0);
+                             //   Log.e("SHENIL", theroute.toString());
+                                JSONObject thepath = theroute.getJSONObject("overview_polyline");
+
+                                String thedirections  = thepath.getString("points");
+
+                                List<LatLng> thepoints = decodePoly(thedirections);
+
+                                for (LatLng ll : thepoints)
+                                    Log.e("SHENIL", "curval:" + ll.toString());
+                                Log.e("SHENIL","SIZE: " + Integer.toString(thepoints.size()));
+                                PolylineOptions lineopts = new PolylineOptions()
+                                        .color(Color.CYAN)
+                                        .width(10);
+
+                                for (LatLng ll : thepoints)
+                                      lineopts.add(ll);
+
+                                Polyline pl = map.addPolyline(lineopts);
+                                drawCurrentPositionMarker();
+
+                             //   pl.setVisible(true);
+
+
+                            }
+                            catch (Exception e)
+                            {
+                                        Toast.makeText(MapActivity.this, "Error finding directions to station", Toast.LENGTH_SHORT).show();
+                            }
+
+                     /*
+                            Toast.makeText(MapActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MapActivity.this, response, Toast.LENGTH_LONG).show();*/
+                        }
+                    });
+
+                }
+                catch (Exception e)
+                {
+                    //e.printStackTrace();
+
+
+                    for (StackTraceElement ee : e.getStackTrace())
+                    {
+                        Log.e("SHENIL", ee.toString());
+                    }
+                  //  Log.e("SHENIL",e.getStackTrace().toString());
+                     Toast.makeText(MapActivity.this, "Error directions: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+                finally
+                {
+                    httpClient.getConnectionManager().shutdown();
+                }
+
             }
         });
 
