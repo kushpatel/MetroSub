@@ -14,10 +14,13 @@ import com.MetroSub.R;
 import com.MetroSub.database.QueryHelper;
 import com.MetroSub.datamine.GtfsFeed;
 import com.MetroSub.datamine.RetrieveFeedTask;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.google.protobuf.ByteString;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,11 +29,11 @@ import java.util.TimerTask;
  * Time: 8:36 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BaseActivity extends Activity {
+public class BaseActivity extends SherlockFragmentActivity {
 
     private static final String TAG = "BaseActivity";
 
-    protected ActionBar mActionBar;
+    protected com.actionbarsherlock.app.ActionBar mActionBar;
     private MainApp mainApp = MainApp.getAppInstance();
 
     protected QueryHelper mQueryHelper;
@@ -55,7 +58,7 @@ public class BaseActivity extends Activity {
         mRetrieveFeedTimer = new Timer();
         mRetrieveFeedTimer.scheduleAtFixedRate(new RetrieveFeedTimerTask(), RETRIEVE_FEED_TASK_DELAY, RETRIEVE_FEED_TASK_DELAY);
 
-        mActionBar = getActionBar();
+        mActionBar = getSupportActionBar();
         //mActionBar.setTitle(ACTION_BAR_TITLE);
         mActionBar.setDisplayShowCustomEnabled(true);
         //mActionBar.setDisplayShowTitleEnabled(false);

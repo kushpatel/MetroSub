@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_height="match_parent"
-                android:layout_width="match_parent">
+                android:layout_width="match_parent"
+                orientation="vertical">
 
     <!-- map fragment -->
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+ <!--   <fragment xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/map"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:name="com.google.android.gms.maps.MapFragment"/>
+              android:name="com.google.android.gms.maps.SupportMapFragment"/>
+     -->
+    <fragment
+            android:id="@+id/map"
+            android:name="com.MetroSub.ui.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tag="tag_fragment_map" />
 
     <!-- custom zoom buttons -->
     <Button
@@ -26,6 +34,10 @@
             android:layout_below="@+id/zoomin"
             android:layout_marginLeft="11dp"/>
 
+    <include layout="@layout/select_trip_by_line_screen"/>
+    <include layout="@layout/stations_list_screen"/>
+    <include layout="@layout/schedule_alerts_option_bar"/>
+    <include layout="@layout/schedule_alerts_screen"/>
     <!-- option bar showing plan trip by line and location buttons overlaid on map fragment -->
     <FrameLayout
             android:id="@+id/map_options_bar"
@@ -57,8 +69,8 @@
         </LinearLayout>
     </FrameLayout>
 
-    <include layout="@layout/select_trip_by_line_screen"/>
+<!--    <include layout="@layout/select_trip_by_line_screen"/>
     <include layout="@layout/stations_list_screen"/>
     <include layout="@layout/schedule_alerts_option_bar"/>
-    <include layout="@layout/schedule_alerts_screen"/>
+    <include layout="@layout/schedule_alerts_screen"/>             -->
 </RelativeLayout>

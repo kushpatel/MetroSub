@@ -15,6 +15,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.*;
@@ -26,6 +27,10 @@ import com.MetroSub.ui.StationListAdapter;
 import com.MetroSub.ui.SubwayLinePlotter;
 import com.MetroSub.ui.SubwayTimesListAdapter;
 import com.MetroSub.utils.UIUtils;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.app.SherlockFragment;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.app.SherlockMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -57,6 +62,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import com.actionbarsherlock.ActionBarSherlock;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -77,7 +84,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
     protected View mStationsListScreen;
     protected View mScheduleAlertsOptionsBar;
     protected View mScheduleAlertsScreen;
-    protected ActionBar mActionBar;
+    protected com.actionbarsherlock.app.ActionBar mActionBar;
     protected List<Integer> mNextTrainTimes;
     protected String mCurrentLine;
     protected String mCurrentStation;
@@ -95,6 +102,8 @@ public class MapActivity extends BaseActivity implements LocationListener {
     private LatLng coords;
 
     boolean havelocation;
+    //protected ActionBarSherlock sherlock = ActionBarSherlock.wrap(this);
+
 
     /* Request updates at startup */
     @Override
@@ -160,9 +169,11 @@ public class MapActivity extends BaseActivity implements LocationListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.map);
 
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+
+        map = ((SherlockMapFragment)(getSupportFragmentManager().findFragmentById(R.id.map))).getMap();
         mMapOptionsBar = findViewById(R.id.map_options_bar);
         mSelectTripByLinesScreen = findViewById(R.id.select_trip_by_line_screen);
 
@@ -170,7 +181,9 @@ public class MapActivity extends BaseActivity implements LocationListener {
         mScheduleAlertsOptionsBar = findViewById(R.id.schedule_alerts_option_bar);
         mScheduleAlertsScreen = findViewById(R.id.schedule_alerts_screen);
 
-        mActionBar = getActionBar();
+        mSelectTripByLinesScreen.setVisibility(View.INVISIBLE);
+
+        mActionBar = getSupportActionBar();
 
         havelocation = false;
 
@@ -195,10 +208,10 @@ public class MapActivity extends BaseActivity implements LocationListener {
         provider = locationManager.getBestProvider(criteria, false);
         Location location = locationManager.getLastKnownLocation(provider);
 
-        locationManager.requestLocationUpdates(provider, 500, 0, this);
+     //   locationManager.requestLocationUpdates(provider, 500, 0, this);
 
         // needed for geo fix to work with emulator (ie. emulating GPS locations)
-        locationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
+    //    locationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
 
 
         /* Map setup
@@ -247,7 +260,12 @@ public class MapActivity extends BaseActivity implements LocationListener {
                 mMapOptionsBar.setVisibility(View.GONE);
 
                 // Show the select trip by lines screen
+
                 mSelectTripByLinesScreen.setVisibility(View.VISIBLE);
+                mSelectTripByLinesScreen.requestLayout();
+                mSelectTripByLinesScreen.bringToFront();
+
+                //setContentView(mSelectTripByLinesScreen);
             }
         });
 

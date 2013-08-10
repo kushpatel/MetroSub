@@ -22,7 +22,7 @@ public class SplashScreenActivity extends BaseActivity {
         setContentView(R.layout.splash_screen);
 
         // Hide action bar in splash screen
-        getActionBar().hide();
+        getSupportActionBar().hide();
 
         if (getMainApp().getNetworkConnectionStatus()) {
         /* New Handler to start the MapActivity
