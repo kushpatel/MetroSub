@@ -7,7 +7,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical"
-        android:visibility="visible">
+        android:visibility="gone">
     <ScrollView
             android:id="@+id/select_trip_by_line_scrollview"
             android:layout_width="fill_parent"
