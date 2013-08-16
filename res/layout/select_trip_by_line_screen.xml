@@ -35,17 +35,17 @@
                             android:id="@+id/line_1_button"
                             android:background="@drawable/custom_round_button_red"
                             android:text="1"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="1"/>
                     <Button
                             android:id="@+id/line_2_button"
                             android:background="@drawable/custom_round_button_red"
                             android:text="2"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="2"/>
                     <Button
                             android:id="@+id/line_3_button"
                             android:background="@drawable/custom_round_button_red"
                             android:text="3"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="3"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -57,17 +57,17 @@
                             android:id="@+id/line_4_button"
                             android:background="@drawable/custom_round_button_green"
                             android:text="4"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="1"/>
                     <Button
                             android:id="@+id/line_5_button"
                             android:background="@drawable/custom_round_button_green"
                             android:text="5"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="2"/>
                     <Button
                             android:id="@+id/line_6_button"
                             android:background="@drawable/custom_round_button_green"
                             android:text="6"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="3"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -79,18 +79,36 @@
                             android:id="@+id/line_7_button"
                             android:background="@drawable/custom_round_button_purple"
                             android:text="7"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="1"/>
                     <Button
                             android:id="@+id/line_S_button"
                             android:background="@drawable/custom_round_button_grey"
                             android:text="S"
-                            style="@style/subway_round_button_style"/>
+                            style="@style/subway_round_button_style" android:layout_column="2"/>
+                    <!--
                     <Button
                             android:id="@+id/line_L_button"
                             android:background="@drawable/custom_round_button_grey"
                             android:text="L"
                             style="@style/subway_round_button_style"/>
+                            -->
                 </TableRow>
+                <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                    <TextView android:layout_height="wrap_content"
+                              android:layout_width="match_parent"
+                              android:textColor="#ffffff"
+                              android:textAlignment="4"
+                              android:gravity="center"
+                              android:paddingTop="30dp"
+                              android:textStyle="italic"
+
+
+                              android:text="Currently, only these lines have live data available."
+                              android:layout_column="1" android:layout_span="4"></TextView>
+                </TableRow>
+                <!--
                 <TableRow
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
@@ -134,7 +152,8 @@
                             android:background="@drawable/custom_round_button_orange"
                             android:text="F"
                             style="@style/subway_round_button_style"/>
-                </TableRow>
+                </TableRow>                                              -->
+                <!--
                 <TableRow
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
@@ -156,7 +175,8 @@
                             android:background="@drawable/custom_round_button_brown"
                             android:text="Z"
                             style="@style/subway_round_button_style"/>
-                </TableRow>
+                </TableRow>                           -->
+                <!--
                 <TableRow
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
@@ -181,9 +201,14 @@
                             android:text="R"
                             style="@style/subway_round_button_style"
                             android:textColor="@color/black"/>
-                </TableRow>
+                </TableRow>                          -->
+
+
+
             </TableLayout>
+
         </FrameLayout>
+
     </ScrollView>
     <FrameLayout
             android:layout_width="match_parent"
