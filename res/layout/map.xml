@@ -38,6 +38,7 @@
     <include layout="@layout/stations_list_screen"/>
     <include layout="@layout/schedule_alerts_option_bar"/>
     <include layout="@layout/schedule_alerts_screen"/>
+    <include layout="@layout/view_lines_screen"/>
     <!-- option bar showing plan trip by line and location buttons overlaid on map fragment -->
     <FrameLayout
             android:id="@+id/map_options_bar"
@@ -61,8 +62,8 @@
                     />
 
             <Button
-                    android:id="@+id/plan_trip_location_button"
-                    android:text="@string/plan_trip_location"
+                    android:id="@+id/view_lines_button"
+                    android:text="@string/view_lines"
                     style="@style/rectangle_button_style"
                     />
 

@@ -2,6 +2,11 @@ package com.MetroSub.utils;
 
 import android.graphics.Color;
 import com.MetroSub.R;
+import com.MetroSub.database.QueryHelper;
+import com.MetroSub.ui.SubwayLinePlotter;
+import com.google.android.gms.maps.GoogleMap;
+
+import java.util.HashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +16,41 @@ import com.MetroSub.R;
  * To change this template use File | Settings | File Templates.
  */
 public class UIUtils {
+
+    public static final int NUMBER_SUBWAY_LINES = 22;
+    public static final int LINE_1_POS = 0;
+    public static final int LINE_2_POS = 1;
+    public static final int LINE_3_POS = 2;
+    public static final int LINE_4_POS = 3;
+    public static final int LINE_5_POS = 4;
+    public static final int LINE_6_POS = 5;
+    public static final int LINE_7_POS = 6;
+    public static final int LINE_A_POS = 7;
+    public static final int LINE_B_POS = 8;
+    public static final int LINE_C_POS = 9;
+    public static final int LINE_D_POS = 10;
+    public static final int LINE_E_POS = 11;
+    public static final int LINE_F_POS = 12;
+    public static final int LINE_G_POS = 13;
+    public static final int LINE_J_POS = 14;
+    public static final int LINE_L_POS = 15;
+    public static final int LINE_M_POS = 16;
+    public static final int LINE_N_POS = 17;
+    public static final int LINE_Q_POS = 18;
+    public static final int LINE_R_POS = 19;
+    public static final int LINE_S_POS = 20;
+    public static final int LINE_Z_POS = 21;
+
+    private static String[] lineNames = {"1", "2", "3", "4", "5", "6", "7", "A", "B", "C", "D",
+                                         "E", "F", "G", "J", "L", "M", "N", "Q", "R", "S", "Z"};
+
+    public static void plotSelectedLines(boolean[] selectedCheckBoxes, QueryHelper queryHelper, GoogleMap map) {
+        for (int selectedIdx = 0; selectedIdx < selectedCheckBoxes.length; selectedIdx++) {
+            if (selectedCheckBoxes[selectedIdx]) {
+                SubwayLinePlotter.plotLine(lineNames[selectedIdx],queryHelper,map);
+            }
+        }
+    }
 
     public static int getIconForLine(char line) {
         int iconResId = 0;

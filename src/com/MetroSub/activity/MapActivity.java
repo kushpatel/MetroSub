@@ -62,6 +62,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
     protected View mStationsListScreen;
     protected View mScheduleAlertsOptionsBar;
     protected View mScheduleAlertsScreen;
+    protected View mViewLinesScreen;
     protected com.actionbarsherlock.app.ActionBar mActionBar;
     protected List<Integer> mNextTrainTimes;
     protected String mCurrentLine;
@@ -79,8 +80,10 @@ public class MapActivity extends BaseActivity implements LocationListener {
     private double mCurrentLng;
     private LatLng mCurrentCoordinates;
 
-    boolean havelocation;
+    private boolean havelocation;
     //protected ActionBarSherlock sherlock = ActionBarSherlock.wrap(this);
+
+    private boolean[] mLinesCheckBoxes;
 
 
     /* Request updates at startup */
@@ -154,16 +157,17 @@ public class MapActivity extends BaseActivity implements LocationListener {
         map = ((SherlockMapFragment)(getSupportFragmentManager().findFragmentById(R.id.map))).getMap();
         mMapOptionsBar = findViewById(R.id.map_options_bar);
         mSelectTripByLinesScreen = findViewById(R.id.select_trip_by_line_screen);
+        mViewLinesScreen = findViewById(R.id.view_lines_screen);
 
         mStationsListScreen = findViewById(R.id.stations_list_screen);
         mScheduleAlertsOptionsBar = findViewById(R.id.schedule_alerts_option_bar);
         mScheduleAlertsScreen = findViewById(R.id.schedule_alerts_screen);
 
-        mSelectTripByLinesScreen.setVisibility(View.INVISIBLE);
-
         mActionBar = getSupportActionBar();
 
         havelocation = false;
+
+        mLinesCheckBoxes = new boolean[UIUtils.NUMBER_SUBWAY_LINES];
 
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
@@ -395,6 +399,118 @@ public class MapActivity extends BaseActivity implements LocationListener {
             }
         });
 
+        CheckBox lineCheckbox_1 = (CheckBox) findViewById(R.id.checkbox_1);
+        lineCheckbox_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_1_POS] = !mLinesCheckBoxes[UIUtils.LINE_1_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_2 = (CheckBox) findViewById(R.id.checkbox_2);
+        lineCheckbox_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_2_POS] = !mLinesCheckBoxes[UIUtils.LINE_2_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_3 = (CheckBox) findViewById(R.id.checkbox_3);
+        lineCheckbox_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_3_POS] = !mLinesCheckBoxes[UIUtils.LINE_3_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_4 = (CheckBox) findViewById(R.id.checkbox_4);
+        lineCheckbox_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_4_POS] = !mLinesCheckBoxes[UIUtils.LINE_4_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_5 = (CheckBox) findViewById(R.id.checkbox_5);
+        lineCheckbox_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_5_POS] = !mLinesCheckBoxes[UIUtils.LINE_5_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_6 = (CheckBox) findViewById(R.id.checkbox_6);
+        lineCheckbox_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_6_POS] = !mLinesCheckBoxes[UIUtils.LINE_6_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_7 = (CheckBox) findViewById(R.id.checkbox_7);
+        lineCheckbox_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_7_POS] = !mLinesCheckBoxes[UIUtils.LINE_7_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_S = (CheckBox) findViewById(R.id.checkbox_S);
+        lineCheckbox_S.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_S_POS] = !mLinesCheckBoxes[UIUtils.LINE_S_POS];
+            }
+        });
+
+        Button viewLinesButton = (Button) findViewById(R.id.view_lines_button);
+        viewLinesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the options bar with trip selector buttons
+                mMapOptionsBar.setVisibility(View.GONE);
+
+                // Show the view lines selector screen
+                mViewLinesScreen.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button displayButtonViewLines = (Button) findViewById(R.id.display_button_view_lines_screen);
+        displayButtonViewLines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Display the selected lines on map
+                map.clear();
+                UIUtils.plotSelectedLines(mLinesCheckBoxes, mQueryHelper, map);
+
+                // Hide the view lines selector screen
+                mViewLinesScreen.setVisibility(View.GONE);
+
+                // Show the options bar with trip selector buttons
+                mMapOptionsBar.setVisibility(View.VISIBLE);
+            }
+        });
+
+        Button cancelButtonViewLines = (Button) findViewById(R.id.cancel_button_view_lines_screen);
+        cancelButtonViewLines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Hide the view lines selector screen
+                mViewLinesScreen.setVisibility(View.GONE);
+
+                // Show the options bar with trip selector buttons
+                mMapOptionsBar.setVisibility(View.VISIBLE);
+            }
+        });
+
 
         //mGtfsFeed.sampleAPILogger();
 
@@ -507,7 +623,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
                 mCurrentLineDirection = lineDirection;
 
                 mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(line, stopId + lineDirection);
-                String markerTitle = mNextTrainTimes.isEmpty() ? "Live data not available." : "Next subway:";
+                String markerTitle = mNextTrainTimes.isEmpty() ? "Live data not available." : mCurrentStation;
                 String minuteString = (!mNextTrainTimes.isEmpty() && mNextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
                 String markerSnippet = mNextTrainTimes.isEmpty() ? "" : "In " + mNextTrainTimes.get(0) + minuteString;
 

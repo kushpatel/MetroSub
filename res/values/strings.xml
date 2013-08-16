@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MetroSub</string>
-    <string name="plan_trip_location">Trip by Location</string>
+    <string name="view_lines">View Lines</string>
     <string name="plan_trip_subway_lines">Trip by Lines</string>
     <string name="go_back">Back</string>
     <string name="schedule_alerts">Schedule Alerts</string>
@@ -9,6 +9,7 @@
     <string name="next_subways">Next Subways: </string>
     <string name="set_alerts">Set Alerts</string>
     <string name="cancel">Cancel</string>
+    <string name="display">Display</string>
 
     <string name="alert_times_prompt">Start alerts after:</string>
     <string-array name="alert_times_array">
