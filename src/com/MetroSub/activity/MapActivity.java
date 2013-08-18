@@ -192,7 +192,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
      //   locationManager.requestLocationUpdates(provider, 500, 0, this);
 
         // needed for geo fix to work with emulator (ie. emulating GPS locations)
-    //    locationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
+        mLocationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
 
 
         /* Map setup
@@ -677,7 +677,15 @@ public class MapActivity extends BaseActivity implements LocationListener {
     }
 
     public void showPathFromCurrentLocation(String stationLat, String stationLon) {
-
+        float[] distbetween = new float[1];
+         double LAT_NYC= 40.714623;
+        double LNG_NYC =  -74.006605;
+        float DIST_CUTOFF = 80467;  //in meters (50 miles)
+        Location.distanceBetween(mCurrentLat, mCurrentLng, Double.parseDouble(stationLat), Double.parseDouble(stationLon), distbetween);
+        if (distbetween[0] > DIST_CUTOFF)
+        {
+            return;
+        }
         String url = "https://maps.googleapis.com/maps/api/directions/json";
         String charset = "UTF-8";
         String origin = Double.toString(mCurrentLat) + "," + Double.toString(mCurrentLng);
