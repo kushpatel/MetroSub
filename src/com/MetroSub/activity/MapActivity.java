@@ -680,7 +680,8 @@ public class MapActivity extends BaseActivity implements LocationListener {
         float[] distbetween = new float[1];
          double LAT_NYC= 40.714623;
         double LNG_NYC =  -74.006605;
-        float DIST_CUTOFF = 80467;  //in meters (50 miles)
+        float METERS_PER_MILE = 1609;
+        float DIST_CUTOFF = 50 * METERS_PER_MILE;  //in meters (50 miles)
         Location.distanceBetween(mCurrentLat, mCurrentLng, Double.parseDouble(stationLat), Double.parseDouble(stationLon), distbetween);
         if (distbetween[0] > DIST_CUTOFF)
         {
