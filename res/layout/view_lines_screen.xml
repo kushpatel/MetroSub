@@ -215,14 +215,14 @@
                             android:textColor="@color/subway_line_brown"
                             android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
-                    <CheckBox
+                    <!--CheckBox
                             android:id="@+id/checkbox_Z"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Z"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_brown"
-                            android:paddingLeft="10dp"/>
+                            android:paddingLeft="10dp"/-->
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
