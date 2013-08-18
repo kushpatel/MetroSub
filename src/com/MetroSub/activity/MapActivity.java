@@ -795,6 +795,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
         // Hide the notification after its selected
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.defaults |= Notification.DEFAULT_ALL;
         //notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE;
 
         notificationManager.notify(0, notification);
