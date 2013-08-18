@@ -192,7 +192,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
      //   locationManager.requestLocationUpdates(provider, 500, 0, this);
 
         // needed for geo fix to work with emulator (ie. emulating GPS locations)
-        mLocationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
+        //mLocationManager.addTestProvider("test",false,true,false,false,false,false,false,Criteria.POWER_LOW,Criteria.ACCURACY_FINE);
 
 
         /* Map setup
