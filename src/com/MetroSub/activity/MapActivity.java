@@ -1,5 +1,6 @@
 package com.MetroSub.activity;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -21,6 +22,7 @@ import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.ui.StationListAdapter;
 import com.MetroSub.ui.SubwayLinePlotter;
 import com.MetroSub.ui.SubwayTimesListAdapter;
+import com.MetroSub.utils.AlarmReceiver;
 import com.MetroSub.utils.UIUtils;
 import com.actionbarsherlock.app.SherlockMapFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,10 +37,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 /**
@@ -328,8 +327,25 @@ public class MapActivity extends BaseActivity implements LocationListener {
                 long notificationDelay = 5000;
                 //long notificationDelay = UIUtils.getNotificationTime(mStartAlertsAfter);
                 if (notificationDelay > 0) {
+                    /*
                     Timer notificationTimer = new Timer();
                     notificationTimer.schedule(new NotificationTimerTask(), notificationDelay);
+                    */
+
+                    Calendar cal = Calendar.getInstance();
+
+                    Intent alarmintent = new Intent(getApplicationContext(), AlarmReceiver.class);
+                    mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(mCurrentLine, mCurrentStopId + mCurrentLineDirection);
+                    if (mNextTrainTimes.isEmpty()) return;
+                    String minuteString = (mNextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
+                    alarmintent.putExtra("note","Next subway is arriving in " + mNextTrainTimes.get(0) + minuteString);
+                    PendingIntent sender = PendingIntent.getBroadcast(getApplicationContext(), 1,
+                            alarmintent,PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
+
+                    AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 5000, sender);
+                    Toast.makeText(MapActivity.this , "Alarm set", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -795,6 +811,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
         // Hide the notification after its selected
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        // Vibrate/ring/light for notification
         notification.defaults |= Notification.DEFAULT_ALL;
         //notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE;
 
