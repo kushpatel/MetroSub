@@ -343,7 +343,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
                             alarmintent,PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
 
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-                    am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 5000, sender);
+                    am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + notificationDelay, sender);
                     Toast.makeText(MapActivity.this , "Alarm set", Toast.LENGTH_SHORT).show();
 
                 }
