@@ -183,7 +183,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
         // Get the location manager
 
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the locatioin provider -> use
+        // Define the criteria how to select the location provider -> use
         // default
         Criteria criteria = new Criteria();
         mProvider = mLocationManager.getBestProvider(criteria, false);
@@ -350,142 +350,9 @@ public class MapActivity extends BaseActivity implements LocationListener {
             }
         });
 
+        setLineSelectorButtonListeners();
 
-        Button lineButton_1 = (Button) findViewById(R.id.line_1_button);
-        lineButton_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("1");
-            }
-        });
-
-        Button lineButton_2 = (Button) findViewById(R.id.line_2_button);
-        lineButton_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("2");
-            }
-        });
-
-        Button lineButton_3 = (Button) findViewById(R.id.line_3_button);
-        lineButton_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("3");
-            }
-        });
-
-        Button lineButton_4 = (Button) findViewById(R.id.line_4_button);
-        lineButton_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("4");
-            }
-        });
-
-        Button lineButton_5 = (Button) findViewById(R.id.line_5_button);
-        lineButton_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("5");
-            }
-        });
-
-        Button lineButton_6 = (Button) findViewById(R.id.line_6_button);
-        lineButton_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("6");
-            }
-        });
-
-        Button lineButton_7 = (Button) findViewById(R.id.line_7_button);
-        lineButton_7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("7");
-            }
-        });
-
-        Button lineButton_S = (Button) findViewById(R.id.line_S_button);
-        lineButton_S.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectLine("S");
-            }
-        });
-
-        CheckBox lineCheckbox_1 = (CheckBox) findViewById(R.id.checkbox_1);
-        lineCheckbox_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_1_POS] = !mLinesCheckBoxes[UIUtils.LINE_1_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_2 = (CheckBox) findViewById(R.id.checkbox_2);
-        lineCheckbox_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_2_POS] = !mLinesCheckBoxes[UIUtils.LINE_2_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_3 = (CheckBox) findViewById(R.id.checkbox_3);
-        lineCheckbox_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_3_POS] = !mLinesCheckBoxes[UIUtils.LINE_3_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_4 = (CheckBox) findViewById(R.id.checkbox_4);
-        lineCheckbox_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_4_POS] = !mLinesCheckBoxes[UIUtils.LINE_4_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_5 = (CheckBox) findViewById(R.id.checkbox_5);
-        lineCheckbox_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_5_POS] = !mLinesCheckBoxes[UIUtils.LINE_5_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_6 = (CheckBox) findViewById(R.id.checkbox_6);
-        lineCheckbox_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_6_POS] = !mLinesCheckBoxes[UIUtils.LINE_6_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_7 = (CheckBox) findViewById(R.id.checkbox_7);
-        lineCheckbox_7.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_7_POS] = !mLinesCheckBoxes[UIUtils.LINE_7_POS];
-            }
-        });
-
-        CheckBox lineCheckbox_S = (CheckBox) findViewById(R.id.checkbox_S);
-        lineCheckbox_S.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Toggle the approriate value in the checkbox array
-                mLinesCheckBoxes[UIUtils.LINE_S_POS] = !mLinesCheckBoxes[UIUtils.LINE_S_POS];
-            }
-        });
+        setLineCheckBoxListeners();
 
         Button viewLinesButton = (Button) findViewById(R.id.view_lines_button);
         viewLinesButton.setOnClickListener(new View.OnClickListener() {
@@ -835,5 +702,253 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
     public void setDefaultActionBar() {
         mActionBar.setDisplayShowCustomEnabled(false);
+    }
+
+    public void setLineSelectorButtonListeners() {
+        Button lineButton_1 = (Button) findViewById(R.id.line_1_button);
+        lineButton_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("1");
+            }
+        });
+
+        Button lineButton_2 = (Button) findViewById(R.id.line_2_button);
+        lineButton_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("2");
+            }
+        });
+
+        Button lineButton_3 = (Button) findViewById(R.id.line_3_button);
+        lineButton_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("3");
+            }
+        });
+
+        Button lineButton_4 = (Button) findViewById(R.id.line_4_button);
+        lineButton_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("4");
+            }
+        });
+
+        Button lineButton_5 = (Button) findViewById(R.id.line_5_button);
+        lineButton_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("5");
+            }
+        });
+
+        Button lineButton_6 = (Button) findViewById(R.id.line_6_button);
+        lineButton_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("6");
+            }
+        });
+
+        Button lineButton_7 = (Button) findViewById(R.id.line_7_button);
+        lineButton_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("7");
+            }
+        });
+
+        Button lineButton_S = (Button) findViewById(R.id.line_S_button);
+        lineButton_S.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("S");
+            }
+        });
+    }
+
+    public void setLineCheckBoxListeners() {
+        CheckBox lineCheckbox_1 = (CheckBox) findViewById(R.id.checkbox_1);
+        lineCheckbox_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_1_POS] = !mLinesCheckBoxes[UIUtils.LINE_1_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_2 = (CheckBox) findViewById(R.id.checkbox_2);
+        lineCheckbox_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_2_POS] = !mLinesCheckBoxes[UIUtils.LINE_2_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_3 = (CheckBox) findViewById(R.id.checkbox_3);
+        lineCheckbox_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_3_POS] = !mLinesCheckBoxes[UIUtils.LINE_3_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_4 = (CheckBox) findViewById(R.id.checkbox_4);
+        lineCheckbox_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_4_POS] = !mLinesCheckBoxes[UIUtils.LINE_4_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_5 = (CheckBox) findViewById(R.id.checkbox_5);
+        lineCheckbox_5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_5_POS] = !mLinesCheckBoxes[UIUtils.LINE_5_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_6 = (CheckBox) findViewById(R.id.checkbox_6);
+        lineCheckbox_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_6_POS] = !mLinesCheckBoxes[UIUtils.LINE_6_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_7 = (CheckBox) findViewById(R.id.checkbox_7);
+        lineCheckbox_7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_7_POS] = !mLinesCheckBoxes[UIUtils.LINE_7_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_A = (CheckBox) findViewById(R.id.checkbox_A);
+        lineCheckbox_A.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_A_POS] = !mLinesCheckBoxes[UIUtils.LINE_A_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_B = (CheckBox) findViewById(R.id.checkbox_B);
+        lineCheckbox_B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_B_POS] = !mLinesCheckBoxes[UIUtils.LINE_B_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_C = (CheckBox) findViewById(R.id.checkbox_C);
+        lineCheckbox_C.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_C_POS] = !mLinesCheckBoxes[UIUtils.LINE_C_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_D = (CheckBox) findViewById(R.id.checkbox_D);
+        lineCheckbox_D.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_D_POS] = !mLinesCheckBoxes[UIUtils.LINE_D_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_E = (CheckBox) findViewById(R.id.checkbox_E);
+        lineCheckbox_E.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_E_POS] = !mLinesCheckBoxes[UIUtils.LINE_E_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_F = (CheckBox) findViewById(R.id.checkbox_F);
+        lineCheckbox_F.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_F_POS] = !mLinesCheckBoxes[UIUtils.LINE_F_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_J = (CheckBox) findViewById(R.id.checkbox_J);
+        lineCheckbox_J.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_J_POS] = !mLinesCheckBoxes[UIUtils.LINE_J_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_L = (CheckBox) findViewById(R.id.checkbox_L);
+        lineCheckbox_L.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_L_POS] = !mLinesCheckBoxes[UIUtils.LINE_L_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_M = (CheckBox) findViewById(R.id.checkbox_M);
+        lineCheckbox_M.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_M_POS] = !mLinesCheckBoxes[UIUtils.LINE_M_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_N = (CheckBox) findViewById(R.id.checkbox_N);
+        lineCheckbox_N.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_N_POS] = !mLinesCheckBoxes[UIUtils.LINE_N_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_Q = (CheckBox) findViewById(R.id.checkbox_Q);
+        lineCheckbox_Q.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_Q_POS] = !mLinesCheckBoxes[UIUtils.LINE_Q_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_R = (CheckBox) findViewById(R.id.checkbox_R);
+        lineCheckbox_R.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_R_POS] = !mLinesCheckBoxes[UIUtils.LINE_R_POS];
+            }
+        });
+
+        CheckBox lineCheckbox_S = (CheckBox) findViewById(R.id.checkbox_S);
+        lineCheckbox_S.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Toggle the approriate value in the checkbox array
+                mLinesCheckBoxes[UIUtils.LINE_S_POS] = !mLinesCheckBoxes[UIUtils.LINE_S_POS];
+            }
+        });
     }
 }
