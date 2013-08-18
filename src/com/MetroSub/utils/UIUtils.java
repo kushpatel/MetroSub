@@ -56,70 +56,70 @@ public class UIUtils {
         int iconResId = 0;
         switch (line) {
             case '1':
-                iconResId = R.drawable.subway1icon;
+                iconResId = R.drawable.icon1;
                 break;
             case '2':
-                iconResId = R.drawable.subway2icon;
+                iconResId = R.drawable.icon2;
                 break;
             case '3':
-                iconResId = R.drawable.subway3icon;
+                iconResId = R.drawable.icon3;
                 break;
             case '4':
-                iconResId = R.drawable.subway4icon;
+                iconResId = R.drawable.icon4;
                 break;
             case '5':
-                iconResId = R.drawable.subway5icon;
+                iconResId = R.drawable.icon5;
                 break;
             case '6':
-                iconResId = R.drawable.subway6icon;
+                iconResId = R.drawable.icon6;
                 break;
             case '7':
-                iconResId = R.drawable.subway7icon;
+                iconResId = R.drawable.icon7;
                 break;
             case 'A':
-                iconResId = R.drawable.letter_a;
+                iconResId = R.drawable.icona;
                 break;
             case 'B':
-                iconResId = R.drawable.letter_b;
+                iconResId = R.drawable.iconb;
                 break;
             case 'C':
-                iconResId = R.drawable.letter_c;
+                iconResId = R.drawable.iconc;
                 break;
             case 'D':
-                iconResId = R.drawable.letter_d;
+                iconResId = R.drawable.icond;
                 break;
             case 'E':
-                iconResId = R.drawable.letter_e;
+                iconResId = R.drawable.icone;
                 break;
             case 'F':
-                iconResId = R.drawable.letter_f;
+                iconResId = R.drawable.iconf;
                 break;
-            case 'G':
+            case 'G':                            // no G line exists?
                 iconResId = R.drawable.letter_g;
                 break;
             case 'J':
-                iconResId = R.drawable.letter_j;
+                iconResId = R.drawable.iconj;
                 break;
             case 'L':
-                iconResId = R.drawable.letter_l;
+                iconResId = R.drawable.iconl;
                 break;
             case 'M':
-                iconResId = R.drawable.letter_m;
+                iconResId = R.drawable.iconm;
                 break;
             case 'N':
-                iconResId = R.drawable.letter_n;
+                iconResId = R.drawable.iconn;
                 break;
             case 'Q':
-                iconResId = R.drawable.letter_q;
+                iconResId = R.drawable.iconq;
                 break;
             case 'R':
-                iconResId = R.drawable.letter_r;
+                iconResId = R.drawable.iconr;
                 break;
             case 'S':
-                iconResId = R.drawable.subwaysicon;
+                iconResId = R.drawable.icons;
                 break;
             case 'Z':
-                iconResId = R.drawable.letter_z;
+                iconResId = R.drawable.iconz;
                 break;
         }
         return iconResId;
