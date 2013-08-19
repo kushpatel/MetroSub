@@ -6,11 +6,14 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.widget.Toast;
 import com.MetroSub.R;
 import com.MetroSub.activity.MapActivity;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,21 +42,35 @@ public class AlarmReceiver extends BroadcastReceiver {
         PendingIntent pIndent = PendingIntent.getActivity(context, 1, new Intent(context, MapActivity.class), 0);
 
         // Build notification
-        Notification notification = new Notification.Builder(context)
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+
+        builder.setContentTitle("Subway Alert")
+                .setContentText(contentText)
+                .setLargeIcon(((BitmapDrawable) context.getResources().getDrawable(R.drawable.metro_icon_transparent)).getBitmap())
+                .setSmallIcon(R.drawable.metro_icon_transparent)
+                .setContentIntent(pIndent);
+        builder.setDefaults(Notification.DEFAULT_ALL);
+        builder.setAutoCancel(true);
+        builder.setWhen(System.currentTimeMillis());
+
+             /*
+        NotificationCompat notification = new NotificationCompat.Builder(context)
                 .setContentTitle("Subway Alert")
                 .setContentText(contentText)
                 .setLargeIcon(((BitmapDrawable) context.getResources().getDrawable(R.drawable.metro_icon_transparent)).getBitmap())
                 .setSmallIcon(R.drawable.metro_icon_transparent)
-                .setContentIntent(pIndent).build();
+                .setContentIntent(pIndent).build();     */
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
 
         // Hide the notification after its selected
+        /*
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         // Vibrate/ring/light for notification
         notification.defaults |= Notification.DEFAULT_ALL;
-        //notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE;
+        //notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE; */
 
-        notificationManager.notify(0, notification);
+        notificationManager.notify(0, builder.build());
     }
 }

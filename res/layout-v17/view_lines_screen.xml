@@ -39,8 +39,7 @@
                             android:text="1"
                             android:textColor="@color/subway_line_red"
                             android:textSize="25sp"
-                            android:paddingLeft="40dp"
-                            android:checked="true"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_2"
@@ -49,8 +48,7 @@
                             android:text="2"
                             android:textColor="@color/subway_line_red"
                             android:textSize="25sp"
-                            android:paddingLeft="40dp"
-                            android:checked="true"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_3"
@@ -58,9 +56,8 @@
                             android:layout_height="wrap_content"
                             android:text="3"
                             android:textSize="25sp"
-                            android:checked="true"
                             android:textColor="@color/subway_line_red"
-                            android:paddingLeft="40dp"/>
+                            android:paddingLeft="10dp"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -75,8 +72,7 @@
                             android:text="4"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_green"
-                            android:paddingLeft="40dp"
-                            android:checked="true"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_5"
@@ -85,8 +81,7 @@
                             android:text="5"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_green"
-                            android:paddingLeft="40dp"
-                            android:checked="true"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_6"
@@ -94,9 +89,8 @@
                             android:layout_height="wrap_content"
                             android:text="6"
                             android:textSize="25sp"
-                            android:checked="true"
                             android:textColor="@color/subway_line_green"
-                            android:paddingLeft="40dp"/>
+                            android:paddingLeft="10dp"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -111,8 +105,7 @@
                             android:text="7"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_purple"
-                            android:paddingLeft="40dp"
-                            android:checked="true"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_S"
@@ -121,7 +114,7 @@
                             android:text="S"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_grey"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_L"
@@ -130,7 +123,7 @@
                             android:text="L"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_light_grey"
-                            android:paddingLeft="40dp"/>
+                            android:paddingLeft="10dp"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -145,7 +138,7 @@
                             android:text="A"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_blue"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_C"
@@ -154,7 +147,7 @@
                             android:text="C"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_blue"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_E"
@@ -163,7 +156,7 @@
                             android:text="E"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_blue"
-                            android:paddingLeft="40dp"/>
+                            android:paddingLeft="10dp"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -178,7 +171,7 @@
                             android:text="B"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_orange"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_D"
@@ -187,7 +180,7 @@
                             android:text="D"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_orange"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_F"
@@ -196,7 +189,7 @@
                             android:text="F"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_orange"
-                            android:paddingLeft="40dp"/>
+                            android:paddingLeft="10dp"/>
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -211,7 +204,7 @@
                             android:text="M"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_orange"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_J"
@@ -220,7 +213,7 @@
                             android:text="J"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_brown"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <!--CheckBox
                             android:id="@+id/checkbox_Z"
@@ -229,7 +222,7 @@
                             android:text="Z"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_brown"
-                            android:paddingLeft="40dp"/-->
+                            android:paddingLeft="10dp"/-->
                 </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
@@ -244,7 +237,7 @@
                             android:text="N"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_yellow"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_Q"
@@ -253,7 +246,7 @@
                             android:text="Q"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_yellow"
-                            android:paddingLeft="40dp"
+                            android:paddingLeft="10dp"
                             android:paddingRight="25dp"/>
                     <CheckBox
                             android:id="@+id/checkbox_R"
@@ -262,7 +255,7 @@
                             android:text="R"
                             android:textSize="25sp"
                             android:textColor="@color/subway_line_yellow"
-                            android:paddingLeft="40dp"/>
+                            android:paddingLeft="10dp"/>
                 </TableRow>
             </TableLayout>
         </FrameLayout>
