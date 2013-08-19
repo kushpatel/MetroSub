@@ -116,7 +116,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
         havelocation = true;
          mCurrentLat =  (location.getLatitude());
          mCurrentLng = (location.getLongitude());
-        Toast.makeText(this, "LOC CHANGED", Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, "LOC CHANGED", Toast.LENGTH_SHORT).show();
 
 
      //   Toast.makeText(this, "lat = " + String.valueOf(lng), Toast.LENGTH_LONG).show();
@@ -136,15 +136,15 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
     @Override
     public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider,
-                Toast.LENGTH_SHORT).show();
+     //   Toast.makeText(this, "Enabled new provider " + provider,
+       //         Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider,
-                Toast.LENGTH_SHORT).show();
+ //       Toast.makeText(this, "Disabled provider " + provider,
+   //             Toast.LENGTH_SHORT).show();
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -324,27 +324,79 @@ public class MapActivity extends BaseActivity implements LocationListener {
                 // Show the schedule alerts options bar
                 mScheduleAlertsOptionsBar.setVisibility(View.VISIBLE);
 
+                Spinner mySpinner = (Spinner)findViewById(R.id.alert_times_selector);
+                int selection = mySpinner.getSelectedItemPosition();
+
+          //      Toast.makeText(MapActivity.this, Integer.toString(selection),Toast.LENGTH_LONG).show();
                 long notificationDelay = 5000;
                 //long notificationDelay = UIUtils.getNotificationTime(mStartAlertsAfter);
-                if (notificationDelay > 0) {
-                    /*
-                    Timer notificationTimer = new Timer();
-                    notificationTimer.schedule(new NotificationTimerTask(), notificationDelay);
-                    */
+                int nMins;
+                switch (selection)
+                {
+                    case 0:
+                        nMins = 0;
+                        break;
+                    case 1:
+                        nMins = 2;
+                        break;
+                    case 2:
+                        nMins = 5;
+                        break;
+                    case 3:
+                        nMins = 10;
+                        break;
+                    case 4:
+                        nMins = 15;
+                        break;
+                    case 5:
+                        nMins = 30;
+                        break;
+                    default:
+                        nMins = 0;
+                        break;
+                }
+
+
+                if (selection != 0) {
 
                     Calendar cal = Calendar.getInstance();
 
                     Intent alarmintent = new Intent(getApplicationContext(), AlarmReceiver.class);
                     mNextTrainTimes = mGtfsFeed.getNextTrainsArrival(mCurrentLine, mCurrentStopId + mCurrentLineDirection);
-                    if (mNextTrainTimes.isEmpty()) return;
-                    String minuteString = (mNextTrainTimes.get(0) == 1) ? " minute." : " minutes.";
-                    alarmintent.putExtra("note","Next subway is arriving in " + mNextTrainTimes.get(0) + minuteString);
+
+                    if (mNextTrainTimes.isEmpty())
+                    {
+                        return;
+                    }
+
+                    int currentTrain = 0;
+
+                    for (;currentTrain < mNextTrainTimes.size(); currentTrain++)
+                    {
+                        if (mNextTrainTimes.get(currentTrain) > nMins)
+                            break;
+                    }
+
+                    if (currentTrain == mNextTrainTimes.size())
+                    {
+                        Toast.makeText(MapActivity.this, "Sorry, unable to create alarm (no subways detected that far in the future)", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    notificationDelay = (mNextTrainTimes.get(currentTrain) - nMins) * 60 * 1000;
+
+                    String minuteString = (nMins == 1) ? " minute." : " minutes.";
+                    alarmintent.putExtra("note","Subway will be arriving in " + nMins + minuteString);
                     PendingIntent sender = PendingIntent.getBroadcast(getApplicationContext(), 1,
                             alarmintent,PendingIntent.FLAG_UPDATE_CURRENT|  Intent.FILL_IN_DATA);
 
                     AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
                     am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + notificationDelay, sender);
-                    Toast.makeText(MapActivity.this , "Alarm set", Toast.LENGTH_SHORT).show();
+           //         Toast.makeText(MapActivity.this , "Alarm set", Toast.LENGTH_SHORT).show();
+                    int timedif = mNextTrainTimes.get(currentTrain) - nMins;
+                    String minuteString2 = (timedif == 1) ? " minute." : " minutes.";
+                    Toast.makeText(MapActivity.this, "Alarm set! The subway will be " + Integer.toString(nMins) + " minutes away in about " + Integer.toString(timedif) + minuteString2, Toast.LENGTH_SHORT).show();
+
 
                 }
             }
@@ -602,7 +654,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
 
                     } catch (Exception e) {
-                        Toast.makeText(MapActivity.this, "Error finding directions to station", Toast.LENGTH_SHORT).show();
+                    //    Toast.makeText(MapActivity.this, "Error finding directions to station", Toast.LENGTH_SHORT).show();
                     }
 
                      /*
@@ -616,10 +668,10 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
 
             for (StackTraceElement ee : e.getStackTrace()) {
-                Log.e("SHENIL", ee.toString());
+         //       Log.e("SHENIL", ee.toString());
             }
             //  Log.e("SHENIL",e.getStackTrace().toString());
-            Toast.makeText(MapActivity.this, "Error directions: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        //    Toast.makeText(MapActivity.this, "Error directions: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } finally {
             httpClient.getConnectionManager().shutdown();
         }

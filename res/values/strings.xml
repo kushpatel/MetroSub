@@ -11,14 +11,13 @@
     <string name="cancel">Cancel</string>
     <string name="display">Display</string>
 
-    <string name="alert_times_prompt">Start alerts after:</string>
+    <string name="alert_times_prompt">Alert Me When Subway is:</string>
     <string-array name="alert_times_array">
         <item>Off</item>
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>45 minutes</item>
-        <item>1 hour</item>
-        <item>1.5 hours</item>
-        <item>2 hours</item>
+        <item>2 minutes away</item>
+        <item>5 minutes away</item>
+        <item>10 minutes away</item>
+        <item>15 minutes away</item>
+        <item>30 minutes away</item>
     </string-array>
 </resources>
