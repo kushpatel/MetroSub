@@ -426,6 +426,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
                 // Display the selected lines on map
                 map.clear();
                 UIUtils.plotSelectedLines(mLinesCheckBoxes, mQueryHelper, map);
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(MANHATTAN, DEFAULT_ZOOM_LEVEL + 2));
 
                 // Hide the view lines selector screen
                 mViewLinesScreen.setVisibility(View.GONE);
@@ -638,9 +639,9 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
                         List<LatLng> thepoints = decodePoly(thedirections);
 
-                        for (LatLng ll : thepoints)
-                            Log.e("SHENIL", "curval:" + ll.toString());
-                        Log.e("SHENIL", "SIZE: " + Integer.toString(thepoints.size()));
+                   //     for (LatLng ll : thepoints)
+                     //       Log.e("SHENIL", "curval:" + ll.toString());
+                       // Log.e("SHENIL", "SIZE: " + Integer.toString(thepoints.size()));
                         PolylineOptions lineopts = new PolylineOptions()
                                 .color(Color.CYAN)
                                 .width(10);
