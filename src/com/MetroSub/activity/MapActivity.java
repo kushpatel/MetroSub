@@ -813,6 +813,94 @@ public class MapActivity extends BaseActivity implements LocationListener {
             }
         });
 
+        Button lineButton_A = (Button) findViewById(R.id.line_A_button);
+        lineButton_A.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("A");
+            }
+        });
+
+        Button lineButton_B = (Button) findViewById(R.id.line_B_button);
+        lineButton_B.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("B");
+            }
+        });
+
+        Button lineButton_C = (Button) findViewById(R.id.line_C_button);
+        lineButton_C.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("C");
+            }
+        });
+
+        Button lineButton_D = (Button) findViewById(R.id.line_D_button);
+        lineButton_D.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("D");
+            }
+        });
+
+        Button lineButton_E = (Button) findViewById(R.id.line_E_button);
+        lineButton_E.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("E");
+            }
+        });
+
+        Button lineButton_F = (Button) findViewById(R.id.line_F_button);
+        lineButton_F.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("F");
+            }
+        });
+
+        Button lineButton_J = (Button) findViewById(R.id.line_J_button);
+        lineButton_J.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("J");
+            }
+        });
+
+        Button lineButton_M = (Button) findViewById(R.id.line_M_button);
+        lineButton_M.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("M");
+            }
+        });
+
+        Button lineButton_N = (Button) findViewById(R.id.line_N_button);
+        lineButton_N.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("N");
+            }
+        });
+
+        Button lineButton_Q = (Button) findViewById(R.id.line_Q_button);
+        lineButton_Q.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("Q");
+            }
+        });
+
+        Button lineButton_R = (Button) findViewById(R.id.line_R_button);
+        lineButton_R.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectLine("R");
+            }
+        });
+
         Button lineButton_S = (Button) findViewById(R.id.line_S_button);
         lineButton_S.setOnClickListener(new View.OnClickListener() {
             @Override

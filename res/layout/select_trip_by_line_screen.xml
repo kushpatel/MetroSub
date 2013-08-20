@@ -85,15 +85,13 @@
                             android:background="@drawable/custom_round_button_grey"
                             android:text="S"
                             style="@style/subway_round_button_style" android:layout_column="2"/>
-                    <!--
                     <Button
                             android:id="@+id/line_L_button"
                             android:background="@drawable/custom_round_button_grey"
                             android:text="L"
                             style="@style/subway_round_button_style"/>
-                            -->
                 </TableRow>
-                <TableRow
+                <!--TableRow
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent">
                     <TextView android:layout_height="wrap_content"
@@ -107,8 +105,7 @@
 
                               android:text="Currently, only these lines have live data available."
                               android:layout_column="1" android:layout_span="4"></TextView>
-                </TableRow>
-                <!--
+                </TableRow-->
                 <TableRow
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
@@ -152,8 +149,7 @@
                             android:background="@drawable/custom_round_button_orange"
                             android:text="F"
                             style="@style/subway_round_button_style"/>
-                </TableRow>                                              -->
-                <!--
+                </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
@@ -170,13 +166,12 @@
                             android:background="@drawable/custom_round_button_brown"
                             android:text="J"
                             style="@style/subway_round_button_style"/>
-                    <Button
+                    <!--Button
                             android:id="@+id/line_Z_button"
                             android:background="@drawable/custom_round_button_brown"
                             android:text="Z"
-                            style="@style/subway_round_button_style"/>
-                </TableRow>                           -->
-                <!--
+                            style="@style/subway_round_button_style"/-->
+                </TableRow>
                 <TableRow
                         android:layout_height="wrap_content"
                         android:layout_width="fill_parent"
@@ -201,7 +196,7 @@
                             android:text="R"
                             style="@style/subway_round_button_style"
                             android:textColor="@color/black"/>
-                </TableRow>                          -->
+                </TableRow>
 
 
 
