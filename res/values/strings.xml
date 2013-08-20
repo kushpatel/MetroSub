@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MetroSub</string>
+    <string name="app_name">SubSage</string>
     <string name="view_lines">View Lines</string>
     <string name="plan_trip_subway_lines">Trip by Lines</string>
     <string name="go_back">Back</string>
