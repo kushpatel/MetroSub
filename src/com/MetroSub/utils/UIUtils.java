@@ -3,10 +3,16 @@ package com.MetroSub.utils;
 import android.graphics.Color;
 import com.MetroSub.R;
 import com.MetroSub.database.QueryHelper;
+import com.MetroSub.database.dataobjects.StopData;
 import com.MetroSub.ui.SubwayLinePlotter;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -48,6 +54,21 @@ public class UIUtils {
         for (int selectedIdx = 0; selectedIdx < selectedCheckBoxes.length; selectedIdx++) {
             if (selectedCheckBoxes[selectedIdx]) {
                 SubwayLinePlotter.plotLine(lineNames[selectedIdx],queryHelper,map);
+
+                List<StopData> lineStops = queryHelper.queryForLineStops(lineNames[selectedIdx]);
+                int iconResId = UIUtils.getIconForLine(lineNames[selectedIdx].charAt(0));
+                for (StopData stop : lineStops) {
+
+                    String markerTitle = stop.getStopName();
+                    String stopLat = stop.getStopLat();
+                    String stopLon = stop.getStopLon();
+                    LatLng stopCoordinates = new LatLng(Double.parseDouble(stopLat), Double.parseDouble(stopLon));
+
+                    Marker marker = map.addMarker(new MarkerOptions().position(stopCoordinates)
+                            .title(markerTitle)
+                            .icon(BitmapDescriptorFactory.fromResource(iconResId)));
+                    marker.showInfoWindow();
+                }
             }
         }
     }
