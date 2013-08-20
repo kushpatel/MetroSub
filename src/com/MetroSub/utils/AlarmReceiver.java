@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -45,9 +46,19 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
 
+        BitmapDrawable largeIcon = (BitmapDrawable) context.getResources().getDrawable(R.drawable.metro_icon_transparent);
+
+        Bitmap thepic = largeIcon.getBitmap();
+
+        Resources res = context.getResources();
+        int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+        int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+        thepic   = Bitmap.createScaledBitmap(thepic, width, height, false);
+
+
         builder.setContentTitle("Subway Alert")
                 .setContentText(contentText)
-                .setLargeIcon(((BitmapDrawable) context.getResources().getDrawable(R.drawable.metro_icon_transparent)).getBitmap())
+                .setLargeIcon(thepic) //((BitmapDrawable) context.getResources().getDrawable(R.drawable.metro_icon_transparent)).getBitmap())
                 .setSmallIcon(R.drawable.metro_icon_transparent)
                 .setContentIntent(pIndent);
         builder.setDefaults(Notification.DEFAULT_ALL);

@@ -385,6 +385,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
 
                     notificationDelay = (mNextTrainTimes.get(currentTrain) - nMins) * 60 * 1000;
 
+                    notificationDelay =  2000;
                     String minuteString = (nMins == 1) ? " minute." : " minutes.";
                     alarmintent.putExtra("note","Subway will be arriving in " + nMins + minuteString);
                     PendingIntent sender = PendingIntent.getBroadcast(getApplicationContext(), 1,
