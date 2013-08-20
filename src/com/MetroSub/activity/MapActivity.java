@@ -813,7 +813,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
             }
         });
 
-        Button lineButton_A = (Button) findViewById(R.id.line_A_button);
+        /*Button lineButton_A = (Button) findViewById(R.id.line_A_button);
         lineButton_A.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -899,7 +899,7 @@ public class MapActivity extends BaseActivity implements LocationListener {
             public void onClick(View v) {
                 selectLine("R");
             }
-        });
+        }); */
 
         Button lineButton_S = (Button) findViewById(R.id.line_S_button);
         lineButton_S.setOnClickListener(new View.OnClickListener() {
