@@ -7,28 +7,45 @@
                 android:gravity="center">
     <LinearLayout
             android:id="@+id/splash_screen_icon"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_width="fill_parent"
-            android:gravity="center">
+
+            android:gravity="center" android:layout_alignParentTop="true" android:layout_alignParentRight="true">
+
         <ImageView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:src="@drawable/metro_icon_transparent">
+                android:src="@drawable/metro_icon_transparent" android:layout_gravity="center">
         </ImageView>
+
     </LinearLayout>
     <LinearLayout
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:layout_below="@id/splash_screen_icon"
-            android:gravity="center">
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center" android:id="@+id/linearLayout">
         <TextView
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:text="MetroSub"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="SubSage"
 
-                android:textColor="@color/white"
-                android:textSize="35dp">
-        </TextView>
+            android:textColor="@color/white"
+            android:textSize="35dp" android:layout_gravity="center">
+    </TextView>
     </LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Subway Tracker and Alarm"
+            android:textSize="25dp"
+            android:textColor="@color/white"
+            android:id="@+id/textView" android:layout_centerHorizontal="true" android:layout_below="@+id/linearLayout"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Made by Shenil Dodhia and Kush Patel"
+            android:id="@+id/textView1" android:layout_centerHorizontal="true" android:layout_alignParentBottom="true"/>
 </RelativeLayout>
-
